@@ -1,0 +1,10 @@
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\bin\Release\CyberBiology2.exe.config
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\bin\Release\CyberBiology2.exe
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\bin\Release\CyberBiology2.pdb
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.csproj.AssemblyReference.cache
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.Form1.resources
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.Properties.Resources.resources
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.csproj.GenerateResource.cache
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.csproj.CoreCompileInputs.cache
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.exe
+C:\Users\RobbiePunk\Projects\CyberBiology2\CyberBiology2\obj\Release\CyberBiology2.pdb
