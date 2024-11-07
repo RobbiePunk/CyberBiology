@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -18,10 +19,20 @@ namespace CyberBiology2
     {
         Stopwatch clock = new Stopwatch();
 
+        Barrier saveBarrier = new Barrier(2, (bar) =>
+        {
+
+        });
+
+        Barrier drawBarrier = new Barrier(2, (bar) =>
+        {
+
+        });
+
         Bitmap bmp;
         Bitmap bmpSave;
         Random rand = new Random();
-        System.Threading.Thread t;
+        Thread t;
         Graphics GR;
         Graphics GR_save;
         SolidBrush BR = new SolidBrush(Color.White);
@@ -29,17 +40,19 @@ namespace CyberBiology2
         String SaveImageDirectory;
         String season_str = "Summer";
         bool GO = false;
-        bool saveImage = false;
-        bool tryToSave = false;
-        bool isDrawing = false;
         bool performanceTest = false;
 
+        bool isDrawing = false;
+
+        bool saveImage = false;
+        bool tryToSave = false;
         public int imageSaveStep = 100;
         public int imageSaveSize = 1;
         public int[] imageSaveViewMode = { 1, 0, 0};
 
         int viewMode = 1;
         int WORLD_SIZE = 3;
+
         int ETM = 5;
         int MTE = 2;
         int ETL = 3;
@@ -105,7 +118,8 @@ namespace CyberBiology2
 
         int[,] cells;
         int[,] world;
-
+        int[,] drawWorld;
+        int[,] drawCells;
 
         public Form1()
         {
@@ -113,9 +127,12 @@ namespace CyberBiology2
             WORLD_WIDTH = 180 * WorldSizeScroll.Value;
             WORLD_HEIGHT = 96 * WorldSizeScroll.Value;
             MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH;
+
             cells = new int[MAX_CELLS, CELL_SIZE];
+            drawCells = new int[MAX_CELLS, CELL_SIZE];
             world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-            
+            drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
             bmp = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
             bmpSave = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
             GR = Graphics.FromImage(bmp);
@@ -127,12 +144,18 @@ namespace CyberBiology2
                 world[x, WORLD_HEIGHT + 1] = WC_WALL;
                 x++;
             }
+
+            drawWorld = (int[,])world.Clone();
             FirstCell();
         }
 
         public void MainFunction()
         {
             new_circle:
+                
+                //if(isDrawing)
+                    //drawBarrier.SignalAndWait();
+
                 CELL = cells[0, NEXT];
                 cell_count = 0;
             cs:
@@ -146,7 +169,10 @@ namespace CyberBiology2
                     if(imageSaveStep != 0 && age % imageSaveStep == 0)
                     {
                         if (saveImage && !tryToSave)
+                        {
                             tryToSave = true;
+                            saveBarrier.SignalAndWait();
+                        }   
                     }
                     if(age % 1000 == 0)
                     {
@@ -234,7 +260,12 @@ namespace CyberBiology2
             if (cyc < 10)
             {
                 int command = cells[num, cells[num, ADR]];
-                if (command == 23)//смена направления относительно
+                if(command == 22)//Деление с абсолютной сменой команды
+                {
+                    cell_double(num);
+                    inc_command_address(num, 1);
+                }
+                else if (command == 23)//смена направления относительно
                 {
                     int param = get_param(num) % 8;
                     int newdrct = cells[num, DIRECT] + param;
@@ -318,25 +349,25 @@ namespace CyberBiology2
                     indirect_inc_cmd_address(num, cell_look(num, drct, 1));
                     goto ag;
                 }
-                else if (command == 32 || command == 42)//поделиться лишними ресурсами в относительном направлении
+                else if (command == 32)//поделиться лишними ресурсами в относительном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_care(num, drct, 0));
                     goto ag;
                 }
-                else if (command == 33 || command == 51)//поделиться лишними ресурсами в абсолютном направлении
+                else if (command == 33)//поделиться лишними ресурсами в абсолютном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_care(num, drct, 1));
                     goto ag;
                 }
-                else if (command == 34 || command == 50)//отдать ресурсы в относительном направлении
+                else if (command == 34)//отдать ресурсы в относительном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_give(num, drct, 0));
                     goto ag;
                 }
-                else if (command == 35 || command == 52)//отдать ресурсы в абсолютном направлении
+                else if (command == 35)//отдать ресурсы в абсолютном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_give(num, drct, 1));
@@ -1017,6 +1048,7 @@ namespace CyberBiology2
             }
             return (a);
         }
+
         int get_param(int num)
         {
             int adr = cells[num, ADR] + 1;
@@ -1347,7 +1379,7 @@ namespace CyberBiology2
                 cells[1, i] = 25;
                 i++;
             }
-
+            //cells[1, MIND_SIZE - 1] = 22; //Деление
         }
         void CreatePerformanceTestWorld()
         {
@@ -1506,6 +1538,20 @@ namespace CyberBiology2
             }
             return (0);
         }
+
+        int isMultiForDrawing(int num)
+        {
+            int a = 0;
+            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            {
+                if (drawCells[num, i] != 0)
+                {
+                    a++;
+                }
+            }
+            return (a);
+        }
+
         #endregion
 
         #region Events
@@ -1529,7 +1575,7 @@ namespace CyberBiology2
             {
                 for (int y = 0; y < WORLD_HEIGHT + 2; y++)
                 {
-                    int celln = world[x, y];
+                    int celln = drawWorld[x, y];
                     if (celln == WC_EMPTY)
                     {
 
@@ -1539,14 +1585,14 @@ namespace CyberBiology2
                         br.Color = Color.FromArgb(255, 40, 40, 40);
                         GR_save.FillRectangle(br, x * size + 40, y * size + 40, size, size);
                     }
-                    else if (cells[celln, LIVING] == LV_EARTH)
+                    else if (drawCells[celln, LIVING] == LV_EARTH)
                     {
                         br.Color = Color.FromArgb(255, 150, 100, 0);
                         GR_save.FillRectangle(br, x * size + 40, y * size + 40, size, size);
                     }
                     else
                     {
-                        if (cells[celln, LIVING] == LV_ALIVE)
+                        if (drawCells[celln, LIVING] == LV_ALIVE)
                         {
                             Color C;
                             if (mode == 1)
@@ -1555,7 +1601,7 @@ namespace CyberBiology2
                             }
                             else if (mode == 2)
                             {
-                                int a = isMulti(celln);
+                                int a = isMultiForDrawing(celln);
                                 if (a > 0)
                                 {
 
@@ -1568,7 +1614,7 @@ namespace CyberBiology2
                             }
                             else
                             {
-                                int E = cells[celln, ENERGY];
+                                int E = drawCells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
                                 {
                                     C = Color.FromArgb(255, 255, 255 - E / 4, 0);
@@ -1607,7 +1653,7 @@ namespace CyberBiology2
 
             br.Color = Color.Black;
             GR.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            br, 50, 10);
+            br, 40, 10);
             GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             br, 150, 10);
 
@@ -1648,6 +1694,9 @@ namespace CyberBiology2
             if (isDrawing)
                 return;
 
+            drawWorld = (int[,])world.Clone();
+            drawCells = (int[,])cells.Clone();
+
             isDrawing = true;
             BR = new SolidBrush(Color.White);
             GR.Clear(Color.White);
@@ -1655,7 +1704,7 @@ namespace CyberBiology2
             {
                 for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
                 {
-                    int celln = world[x + xDrawStartIndex, y + yDrawStartIndex];
+                    int celln = drawWorld[x + xDrawStartIndex, y + yDrawStartIndex];
                     if(celln == WC_EMPTY)
                     {
 
@@ -1665,14 +1714,14 @@ namespace CyberBiology2
                         BR.Color = Color.FromArgb(255, 40, 40, 40);
                         GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
                     }
-                    else if(cells[celln,LIVING] == LV_EARTH)
+                    else if(drawCells[celln,LIVING] == LV_EARTH)
                     {
                         BR.Color = Color.FromArgb(255, 150, 100, 0);
                         GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
                     }
                     else
                     {
-                        if (cells[celln, LIVING] == LV_ALIVE)
+                        if (drawCells[celln, LIVING] == LV_ALIVE)
                         {
                             Color C;
                             if (viewMode == 1)
@@ -1681,7 +1730,7 @@ namespace CyberBiology2
                             }
                             else if(viewMode == 2)
                             {
-                                int a = isMulti(celln);
+                                int a = isMultiForDrawing(celln);
                                 if (a > 0)
                                 {
 
@@ -1694,7 +1743,7 @@ namespace CyberBiology2
                             }
                             else
                             {
-                                int E = cells[celln, ENERGY];
+                                int E = drawCells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
                                 {
                                     C = Color.FromArgb(255, 255, 255 - E / 4, 0);
@@ -1733,7 +1782,7 @@ namespace CyberBiology2
 
             BR.Color = Color.Black;
             GR.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 50, 10);
+            BR, 40, 10);
             GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             BR, 150, 10);
                
@@ -1761,7 +1810,11 @@ namespace CyberBiology2
                     if (imageSaveViewMode[i] == 1)
                         SaveImagePng(i + 1, imageSaveSize);
                 }
+                saveBarrier.SignalAndWait();
             }
+
+            //if(GO)
+                //drawBarrier.SignalAndWait();
 
             isDrawing = false;
         }
@@ -1928,9 +1981,12 @@ namespace CyberBiology2
                 WORLD_WIDTH = 180 * WorldSizeScroll.Value;
                 WORLD_HEIGHT = 96 * WorldSizeScroll.Value;
                 MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH;
+
                 cells = new int[MAX_CELLS, CELL_SIZE];
+                drawCells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-                
+                drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
                 int x = 0;
                 while (x < WORLD_WIDTH)
                 {
@@ -1950,8 +2006,12 @@ namespace CyberBiology2
             GO = false;
             age = 0;
             WorldSizeChange(sender, e);
+
             cells = new int[MAX_CELLS, CELL_SIZE];
+            drawCells = new int[MAX_CELLS, CELL_SIZE];
             world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+            drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
             season = 11;
             season_max = 10;
             season_time = 0;
