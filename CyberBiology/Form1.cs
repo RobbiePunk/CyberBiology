@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Diagnostics;
+using CyberBiology;
 
 namespace CyberBiology2
 {
@@ -28,11 +29,16 @@ namespace CyberBiology2
         String SaveImageDirectory;
         String season_str = "Summer";
         bool GO = false;
-        bool SaveImage;
+        bool saveImage = false;
+        bool tryToSave = false;
         bool isDrawing = false;
         bool performanceTest = false;
 
-        int ViewMode = 1;
+        public int imageSaveStep = 100;
+        public int imageSaveSize = 1;
+        public int[] imageSaveViewMode = { 1, 0, 0};
+
+        int viewMode = 1;
         int WORLD_SIZE = 3;
         int ETM = 5;
         int MTE = 2;
@@ -137,9 +143,10 @@ namespace CyberBiology2
                 {
                     Print_cell_count = cell_count;
                     age++;
-                    if(age % 100 == 0)
-                    {   
-                        //SaveImage = true;
+                    if(imageSaveStep != 0 && age % imageSaveStep == 0)
+                    {
+                        if (saveImage && !tryToSave)
+                            tryToSave = true;
                     }
                     if(age % 1000 == 0)
                     {
@@ -200,7 +207,7 @@ namespace CyberBiology2
                 {
                     
                 }
-                if (lv == LV_FALLING_EARTH)
+                else if (lv == LV_FALLING_EARTH)
                 {
                     Fall(num);
                 }
@@ -224,7 +231,7 @@ namespace CyberBiology2
             int cyc = 0;
         ag:
             cyc++;
-            if (cyc < 15)
+            if (cyc < 10)
             {
                 int command = cells[num, cells[num, ADR]];
                 if (command == 23)//смена направления относительно
@@ -236,19 +243,19 @@ namespace CyberBiology2
                     inc_command_address(num, 2);
                     goto ag;
                 }
-                if (command == 24)//смена направления абсолютно
+                else if (command == 24)//смена направления абсолютно
                 {
                     cells[num, DIRECT] = get_param(num) % 8;
                     inc_command_address(num, 2);
                     goto ag;
                 }
-                if (command == 25)//фотосинтез
+                else if (command == 25)//фотосинтез
                 {
                     fotosintez(num);
                     inc_command_address(num, 1);
                     goto Out;
                 }
-                if (command == 26)//движение относительно
+                else if (command == 26)//движение относительно
                 {
                     int a = isMulti(num);
                     if (a == 0)
@@ -268,7 +275,7 @@ namespace CyberBiology2
 
                     goto Out;
                 }
-                if (command == 27)//движение абсолютно
+                else if (command == 27)//движение абсолютно
                 {
                     int a = isMulti(num);
                     if (a == 0)
@@ -287,55 +294,55 @@ namespace CyberBiology2
                     }
                     goto Out;
                 }
-                if (command == 28)//съесть в относителном направлении
+                else if (command == 28)//съесть в относителном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_eat(num, drct, 0));
                     goto Out;
                 }
-                if (command == 29)//съесть в абсолютном направлении
+                else if (command == 29)//съесть в абсолютном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_eat(num, drct, 1));
                     goto Out;
                 }
-                if (command == 30)//посмотреть в относительном направлении
+                else if (command == 30)//посмотреть в относительном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_look(num, drct, 0));
                     goto ag;
                 }
-                if (command == 31)//посмотреть в абсолютном направлении
+                else if (command == 31)//посмотреть в абсолютном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_look(num, drct, 1));
                     goto ag;
                 }
-                if (command == 32 || command == 42)//поделиться лишними ресурсами в относительном направлении
+                else if (command == 32 || command == 42)//поделиться лишними ресурсами в относительном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_care(num, drct, 0));
                     goto ag;
                 }
-                if (command == 33 || command == 51)//поделиться лишними ресурсами в абсолютном направлении
+                else if (command == 33 || command == 51)//поделиться лишними ресурсами в абсолютном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_care(num, drct, 1));
                     goto ag;
                 }
-                if (command == 34 || command == 50)//отдать ресурсы в относительном направлении
+                else if (command == 34 || command == 50)//отдать ресурсы в относительном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_give(num, drct, 0));
                     goto ag;
                 }
-                if (command == 35 || command == 52)//отдать ресурсы в абсолютном направлении
+                else if (command == 35 || command == 52)//отдать ресурсы в абсолютном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, cell_give(num, drct, 1));
                     goto ag;
                 }
-                if (command == 36)//выровняться по горизонтали
+                else if (command == 36)//выровняться по горизонтали
                 {
                     if (rand.Next() % 2 == 0)
                     {
@@ -348,7 +355,7 @@ namespace CyberBiology2
                     inc_command_address(num, 1);
                     goto ag;
                 }
-                if (command == 37)//узнать высоту
+                else if (command == 37)//узнать высоту
                 {
                     float param = get_param(num) * WORLD_HEIGHT / 64;
                     if (cells[num, Y_COORD]  < param)
@@ -361,7 +368,7 @@ namespace CyberBiology2
                     }
                     goto ag;
                 }
-                if (command == 38)//узнать количество энергии
+                else if (command == 38)//узнать количество энергии
                 {
                     int param = get_param(num) * 15;
                     if (cells[num, ENERGY] < param)
@@ -374,7 +381,7 @@ namespace CyberBiology2
                     }
                     goto ag;
                 }
-                if (command == 39)//узнать количество минералов
+                else if (command == 39)//узнать количество минералов
                 {
                     int param = get_param(num) * 15;
                     if (cells[num, MINERAL] < param)
@@ -387,29 +394,29 @@ namespace CyberBiology2
                     }
                     goto ag;
                 }
-                if (command == 40)//многоклеточное деление
+                else if (command == 40)//многоклеточное деление
                 {
                     cell_multi(num);
                     inc_command_address(num, 1);
                     goto Out;
                 }
-                if (command == 41)//свободное деление
+                else if (command == 41)//свободное деление
                 {
                     cell_double(num);
                     inc_command_address(num, 1);
                     goto Out;
                 }
-                if (command == 43)//окружена ли клетка?
+                else if (command == 43)//окружена ли клетка?
                 {
                     indirect_inc_cmd_address(num, full_around(num));
                     goto ag;
                 }
-                if (command == 44)//приход энергии есть?
+                else if (command == 44)//приход энергии есть?
                 {
                     indirect_inc_cmd_address(num, is_energy_grow(num));
                     goto ag;
                 }
-                if (command == 45)//минералы прибавляются?
+                else if (command == 45)//минералы прибавляются?
                 {
                     if (cells[num, Y_COORD] > WORLD_HEIGHT / 2)
                     {
@@ -421,7 +428,7 @@ namespace CyberBiology2
                     }
                     goto ag;
                 }
-                if (command == 46)//многоклеточный ли бот?
+                else if (command == 46)//многоклеточный ли бот?
                 {
                     int mu = isMulti(num);
                     if (mu == 0) { indirect_inc_cmd_address(num, 1); }
@@ -429,7 +436,7 @@ namespace CyberBiology2
                     else { indirect_inc_cmd_address(num, 2); }
                     goto ag;
                 }
-                if (command == 47)//преобразовать минералы в энергию
+                else if (command == 47)//преобразовать минералы в энергию
                 {
                     cell_mineral2energy(num);
                     inc_command_address(num, 1);
@@ -522,7 +529,7 @@ namespace CyberBiology2
             if (cells[num,MINERAL] < 100) { t = 0; }
             else if(cells[num,MINERAL] < 400) { t = 1; }
             else{ t = 2; }
-            int hlt = season - ((cells[num, Y_COORD] / (WORLD_HEIGHT / 96)- 1) / 8) + t;
+            int hlt = season - ((cells[num, Y_COORD] / (WORLD_HEIGHT / 96) - 1) / 8) + t;
             if(hlt > 0)
             {
                 cells[num, ENERGY] += hlt;
@@ -566,10 +573,8 @@ namespace CyberBiology2
             {
                 return (6);
             }
-            else
-            {
-                return (5);
-            }
+
+            return (5);
         }
 
         int cell_multi_move(int num, int dr, int ra)
@@ -613,10 +618,8 @@ namespace CyberBiology2
             {
                 return (6);
             }
-            else
-            {
-                return (5);
-            }
+
+            return (5);
         }
 
         int cell_eat(int num, int dr, int ra)
@@ -1277,7 +1280,6 @@ namespace CyberBiology2
                 world[x, y - 1] = WC_EMPTY;
                 world[x, y] = num;
                 cells[num, Y_COORD] = y;
-
             }
         }
 
@@ -1593,45 +1595,47 @@ namespace CyberBiology2
             }
 
             if (season_str == "Summer")
-            {
                 br.Color = Color.FromArgb(255, 240, 240, 20);
-                GR_save.FillRectangle(br, 180, WORLD_HEIGHT * WORLD_SIZE + 60, 70, 20);
-            }
             else if (season_str == "Autumn")
-            {
                 br.Color = Color.FromArgb(255, 240, 60, 0);
-                GR_save.FillRectangle(br, 180, WORLD_HEIGHT * WORLD_SIZE + 60, 70, 20);
-            }
             else if (season_str == "Winter")
-            {
                 br.Color = Color.FromArgb(255, 30, 60, 240);
-                GR_save.FillRectangle(br, 180, WORLD_HEIGHT * WORLD_SIZE + 60, 70, 20);
-            }
             else
-            {
                 br.Color = Color.FromArgb(255, 50, 240, 50);
-                GR_save.FillRectangle(br, 180, WORLD_HEIGHT * WORLD_SIZE + 60, 70, 20);
-            }
+
+            GR_save.FillRectangle(br, 180, WORLD_HEIGHT * WORLD_SIZE + 60, 70, 20);
 
             br.Color = Color.Black;
-            GR_save.DrawString(Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            br, 50, WORLD_HEIGHT * WORLD_SIZE + 60);
-            GR_save.DrawString(age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            br, 110, WORLD_HEIGHT * WORLD_SIZE + 60);
-            GR_save.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            br, 180, WORLD_HEIGHT * WORLD_SIZE + 60);
+            GR.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            br, 50, 10);
+            GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            br, 150, 10);
 
+            GR.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            br, 300, 10);
+
+            string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
+            clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
+
+            GR.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            br, 400, 10);
+
+            if (clock.ElapsedMilliseconds != 0)
+                GR.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                br, 600, 10);
+
+            string catalogName = @"Image\" + mode.ToString();
+            string path;
             if (SaveImageDirectory == null)
-            {
-                string catalogName = @"Image";
-                string path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-                bmp.Save($"{path}/{age.ToString()}.png");
-            }
+                path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
             else
-                bmp.Save(SaveImageDirectory + age.ToString() + ".png");
-            SaveImage = false;
+                path = $"{SaveImageDirectory}/{catalogName}";
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            bmpSave.Save($"{path}/{age.ToString()}.png");
+
+            tryToSave = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1671,11 +1675,11 @@ namespace CyberBiology2
                         if (cells[celln, LIVING] == LV_ALIVE)
                         {
                             Color C;
-                            if (ViewMode == 1)
+                            if (viewMode == 1)
                             {
                                 C = Color.FromArgb(255, CheckColor(celln, 1), CheckColor(celln, 2), CheckColor(celln, 3));
                             }
-                            else if(ViewMode == 2)
+                            else if(viewMode == 2)
                             {
                                 int a = isMulti(celln);
                                 if (a > 0)
@@ -1732,22 +1736,33 @@ namespace CyberBiology2
             BR, 50, 10);
             GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             BR, 150, 10);
-            
-            
+               
 
             GR.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             BR, 300, 10);
 
-            GR.DrawString(clock.Elapsed.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
+            clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
+
+            GR.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             BR, 400, 10);
-            
+
+            if(clock.ElapsedMilliseconds != 0)
+                GR.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 600, 10);
+
 
             WORLD_BOX.Image = bmp;
 
-            if (SaveImage)
+            if (tryToSave)
             {
-                SaveImagePng(1, 1);
+                for (int i = 0; i < imageSaveViewMode.Length; i++)
+                {
+                    if (imageSaveViewMode[i] == 1)
+                        SaveImagePng(i + 1, imageSaveSize);
+                }
             }
+
             isDrawing = false;
         }
 
@@ -1789,7 +1804,7 @@ namespace CyberBiology2
 
                 StreamWriter sw = new StreamWriter(SaveFileName);
                 sw.WriteLine(season_str);
-                sw.WriteLine(ViewMode.ToString());
+                sw.WriteLine(viewMode.ToString());
                 sw.WriteLine(WORLD_SIZE.ToString());
                 sw.WriteLine(ETM.ToString());
                 sw.WriteLine(MTE.ToString());
@@ -1846,7 +1861,7 @@ namespace CyberBiology2
                 SaveFileName = openFileDialog1.FileName;
                 String[] Str = File.ReadAllLines(SaveFileName);
                 season_str = Str[0];
-                ViewMode = int.Parse(Str[1]);
+                viewMode = int.Parse(Str[1]);
                 WORLD_SIZE = int.Parse(Str[2]);
                 ETM = int.Parse(Str[3]);
                 MTE = int.Parse(Str[4]);
@@ -1885,19 +1900,19 @@ namespace CyberBiology2
 
         private void ViewMode1(object sender, EventArgs e)
         {
-            ViewMode = 1;
+            viewMode = 1;
             Refresh();
         }
 
         private void ViewMode2(object sender, EventArgs e)
         {
-            ViewMode = 2;
+            viewMode = 2;
             Refresh();
         }
 
         private void ViewMode3(object sender, EventArgs e)
         {
-            ViewMode = 3;
+            viewMode = 3;
             Refresh();
         }
 
@@ -2019,12 +2034,22 @@ namespace CyberBiology2
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             performanceTest = !performanceTest;
-            if(performanceTest)
-            {
-                toolStripMenuItem1.Checked = true;
-            }
-            else
-                toolStripMenuItem1.Checked = true;
+            toolStripMenuItem1.Checked = performanceTest;
+        }
+
+        private void saveImagesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            saveImage = !saveImage;
+            saveImagesToolStripMenuItem1.Checked = saveImage;
+        }
+
+        private void saveParametresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImageSaveParametresFrom imageSaveParametresFrom = new ImageSaveParametresFrom();
+            
+            imageSaveParametresFrom.mainForm = this;
+            
+            imageSaveParametresFrom.ShowDialog();
         }
     }
     #endregion

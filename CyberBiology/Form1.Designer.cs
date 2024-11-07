@@ -50,6 +50,7 @@
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.saveImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImagesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lacationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveParametresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -264,24 +265,33 @@
             // saveImagesToolStripMenuItem
             // 
             this.saveImagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveImagesToolStripMenuItem1,
             this.lacationToolStripMenuItem,
             this.saveParametresToolStripMenuItem});
             this.saveImagesToolStripMenuItem.Name = "saveImagesToolStripMenuItem";
             this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
             this.saveImagesToolStripMenuItem.Text = "Save Images";
             // 
+            // saveImagesToolStripMenuItem1
+            // 
+            this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.saveImagesToolStripMenuItem1.Text = "Save Images";
+            this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.saveImagesToolStripMenuItem1_Click);
+            // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
-            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.lacationToolStripMenuItem.Text = "Lacation";
             this.lacationToolStripMenuItem.Click += new System.EventHandler(this.lacationToolStripMenuItem_Click);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
-            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
+            this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.saveParametresToolStripMenuItem_Click);
             // 
             // тестыToolStripMenuItem
             // 
@@ -321,6 +331,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.WORLD_BOX);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
@@ -368,6 +379,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ToolStripMenuItem тестыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveImagesToolStripMenuItem1;
     }
 }
 

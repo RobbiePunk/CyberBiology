@@ -28,3 +28,4 @@ C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.csproj.CoreCompileInputs.cache
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.exe
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.pdb
+C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.ImageSaveParametresFrom.resources
