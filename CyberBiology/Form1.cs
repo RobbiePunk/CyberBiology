@@ -1649,25 +1649,25 @@ namespace CyberBiology2
             else
                 br.Color = Color.FromArgb(255, 50, 240, 50);
 
-            GR_save.FillRectangle(br, 180, WORLD_HEIGHT * WORLD_SIZE + 60, 70, 20);
+            GR_save.FillRectangle(br, 300, 10, 70, 20);
 
             br.Color = Color.Black;
-            GR.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            GR_save.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             br, 40, 10);
-            GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            GR_save.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             br, 150, 10);
 
-            GR.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            GR_save.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             br, 300, 10);
 
             string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
             clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
 
-            GR.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            GR_save.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             br, 400, 10);
 
             if (clock.ElapsedMilliseconds != 0)
-                GR.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                GR_save.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 br, 600, 10);
 
             string catalogName = @"Image\" + mode.ToString();
@@ -1679,6 +1679,7 @@ namespace CyberBiology2
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
+
             bmpSave.Save($"{path}/{age.ToString()}.png");
 
             tryToSave = false;
@@ -2081,7 +2082,7 @@ namespace CyberBiology2
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                SaveFileName = folderBrowserDialog1.SelectedPath;
+                SaveImageDirectory = folderBrowserDialog1.SelectedPath;
             }
         }
 
