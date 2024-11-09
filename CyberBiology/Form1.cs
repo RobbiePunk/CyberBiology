@@ -86,7 +86,8 @@ namespace CyberBiology
             drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
             bmp = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
-            bmpSave = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
+            bmpSave = new Bitmap(1920, 1080);
+
             GR = Graphics.FromImage(bmp);
             GR_save = Graphics.FromImage(bmpSave);
             int x = 0;
@@ -906,6 +907,8 @@ namespace CyberBiology
                 drawCells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
                 drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
+                imageSaveSize = 1920 / (WORLD_WIDTH);
 
                 int x = 0;
                 while (x < WORLD_WIDTH)

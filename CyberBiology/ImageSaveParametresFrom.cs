@@ -40,18 +40,12 @@ namespace CyberBiology
             mainForm.imageSaveViewMode[2] = checkBox3.Checked ? 1 : 0;
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            mainForm.imageSaveSize = (int)numericUpDown1.Value;
-        }
-
         private void ImageSaveParametresFrom_Load(object sender, EventArgs e)
         {
             numericSaveStep.Value = mainForm.imageSaveStep;
             checkBox1.Checked = mainForm.imageSaveViewMode[0] == 1;
             checkBox2.Checked = mainForm.imageSaveViewMode[1] == 1;
             checkBox3.Checked = mainForm.imageSaveViewMode[2] == 1;
-            numericUpDown1.Value = mainForm.imageSaveSize;
         }
     }
 }
