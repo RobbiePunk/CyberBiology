@@ -1,4 +1,4 @@
-﻿namespace CyberBiology2
+﻿namespace CyberBiology
 {
     partial class Form1
     {
