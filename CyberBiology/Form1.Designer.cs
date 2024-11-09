@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.WORLD_BOX = new System.Windows.Forms.PictureBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -56,6 +54,7 @@
             this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.viewMode4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
@@ -65,26 +64,18 @@
             // WORLD_BOX
             // 
             this.WORLD_BOX.InitialImage = null;
-            this.WORLD_BOX.Location = new System.Drawing.Point(3, 34);
-            this.WORLD_BOX.Margin = new System.Windows.Forms.Padding(4);
+            this.WORLD_BOX.Location = new System.Drawing.Point(2, 28);
             this.WORLD_BOX.Name = "WORLD_BOX";
-            this.WORLD_BOX.Size = new System.Drawing.Size(1920, 988);
+            this.WORLD_BOX.Size = new System.Drawing.Size(1440, 803);
             this.WORLD_BOX.TabIndex = 0;
             this.WORLD_BOX.TabStop = false;
             this.WORLD_BOX.Paint += new System.Windows.Forms.PaintEventHandler(this.WORLD_BOX_Paint);
             // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1775, 34);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(1331, 28);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 63);
+            this.button1.Size = new System.Drawing.Size(94, 51);
             this.button1.TabIndex = 1;
             this.button1.Text = "Size+";
             this.button1.UseVisualStyleBackColor = true;
@@ -92,10 +83,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1640, 34);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(1230, 28);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(125, 63);
+            this.button2.Size = new System.Drawing.Size(94, 51);
             this.button2.TabIndex = 2;
             this.button2.Text = "Size-";
             this.button2.UseVisualStyleBackColor = true;
@@ -103,10 +93,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1640, 105);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(1230, 85);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(57, 74);
+            this.button3.Size = new System.Drawing.Size(43, 60);
             this.button3.TabIndex = 3;
             this.button3.Text = "1";
             this.button3.UseVisualStyleBackColor = true;
@@ -114,10 +103,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(1640, 384);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Location = new System.Drawing.Point(1230, 312);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(263, 74);
+            this.button4.Size = new System.Drawing.Size(197, 60);
             this.button4.TabIndex = 4;
             this.button4.Text = "Save";
             this.button4.UseVisualStyleBackColor = true;
@@ -125,10 +113,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1640, 203);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Location = new System.Drawing.Point(1230, 165);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(259, 74);
+            this.button5.Size = new System.Drawing.Size(194, 60);
             this.button5.TabIndex = 5;
             this.button5.Text = "Stop/Play";
             this.button5.UseVisualStyleBackColor = true;
@@ -136,10 +123,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(1640, 481);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Location = new System.Drawing.Point(1230, 391);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(259, 74);
+            this.button6.Size = new System.Drawing.Size(194, 60);
             this.button6.TabIndex = 6;
             this.button6.Text = "Load";
             this.button6.UseVisualStyleBackColor = true;
@@ -155,10 +141,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(1740, 105);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Location = new System.Drawing.Point(1281, 85);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(57, 74);
+            this.button7.Size = new System.Drawing.Size(43, 60);
             this.button7.TabIndex = 7;
             this.button7.Text = "2";
             this.button7.UseVisualStyleBackColor = true;
@@ -166,10 +151,9 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(1840, 105);
-            this.button8.Margin = new System.Windows.Forms.Padding(4);
+            this.button8.Location = new System.Drawing.Point(1331, 85);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(57, 74);
+            this.button8.Size = new System.Drawing.Size(43, 60);
             this.button8.TabIndex = 8;
             this.button8.Text = "3";
             this.button8.UseVisualStyleBackColor = true;
@@ -177,54 +161,51 @@
             // 
             // FPS_Scroll
             // 
-            this.FPS_Scroll.Location = new System.Drawing.Point(1640, 321);
-            this.FPS_Scroll.Margin = new System.Windows.Forms.Padding(4);
+            this.FPS_Scroll.Location = new System.Drawing.Point(1230, 261);
             this.FPS_Scroll.Maximum = 1000;
-            this.FPS_Scroll.Minimum = 10;
+            this.FPS_Scroll.Minimum = 1;
             this.FPS_Scroll.Name = "FPS_Scroll";
-            this.FPS_Scroll.Size = new System.Drawing.Size(259, 56);
+            this.FPS_Scroll.Size = new System.Drawing.Size(194, 45);
             this.FPS_Scroll.TabIndex = 9;
-            this.FPS_Scroll.Value = 10;
+            this.FPS_Scroll.Value = 100;
+            this.FPS_Scroll.Visible = false;
             this.FPS_Scroll.Scroll += new System.EventHandler(this.ChangeFPS);
             // 
             // WorldSizeScroll
             // 
-            this.WorldSizeScroll.Location = new System.Drawing.Point(1640, 633);
-            this.WorldSizeScroll.Margin = new System.Windows.Forms.Padding(4);
+            this.WorldSizeScroll.Location = new System.Drawing.Point(1230, 514);
             this.WorldSizeScroll.Maximum = 5;
             this.WorldSizeScroll.Minimum = 1;
             this.WorldSizeScroll.Name = "WorldSizeScroll";
-            this.WorldSizeScroll.Size = new System.Drawing.Size(263, 56);
+            this.WorldSizeScroll.Size = new System.Drawing.Size(197, 45);
             this.WorldSizeScroll.TabIndex = 10;
             this.WorldSizeScroll.Value = 1;
             this.WorldSizeScroll.Scroll += new System.EventHandler(this.WorldSizeChange);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(1640, 289);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(1230, 235);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(257, 22);
+            this.textBox1.Size = new System.Drawing.Size(194, 20);
             this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "FPS Control";
+            this.textBox1.Text = "Draw every 100 iteration";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox1.Visible = false;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(1640, 590);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Location = new System.Drawing.Point(1230, 479);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(253, 22);
+            this.textBox2.Size = new System.Drawing.Size(191, 20);
             this.textBox2.TabIndex = 12;
             this.textBox2.Text = "World Size";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(1740, 900);
-            this.button9.Margin = new System.Windows.Forms.Padding(4);
+            this.button9.Location = new System.Drawing.Point(1305, 731);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(125, 43);
+            this.button9.Size = new System.Drawing.Size(94, 35);
             this.button9.TabIndex = 13;
             this.button9.Text = "New Simulate";
             this.button9.UseVisualStyleBackColor = true;
@@ -233,20 +214,20 @@
             // hScrollBar1
             // 
             this.hScrollBar1.LargeChange = 1;
-            this.hScrollBar1.Location = new System.Drawing.Point(26, 922);
+            this.hScrollBar1.Location = new System.Drawing.Point(20, 749);
             this.hScrollBar1.Maximum = 0;
             this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(1671, 21);
+            this.hScrollBar1.Size = new System.Drawing.Size(1253, 21);
             this.hScrollBar1.TabIndex = 14;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // vScrollBar1
             // 
             this.vScrollBar1.LargeChange = 1;
-            this.vScrollBar1.Location = new System.Drawing.Point(13, 49);
+            this.vScrollBar1.Location = new System.Drawing.Point(10, 40);
             this.vScrollBar1.Maximum = 0;
             this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(21, 873);
+            this.vScrollBar1.Size = new System.Drawing.Size(21, 709);
             this.vScrollBar1.TabIndex = 15;
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
@@ -258,7 +239,8 @@
             this.тестыToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1443, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -269,27 +251,27 @@
             this.lacationToolStripMenuItem,
             this.saveParametresToolStripMenuItem});
             this.saveImagesToolStripMenuItem.Name = "saveImagesToolStripMenuItem";
-            this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
+            this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.saveImagesToolStripMenuItem.Text = "Save Images";
             // 
             // saveImagesToolStripMenuItem1
             // 
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.saveImagesToolStripMenuItem1_Click);
             // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
-            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.lacationToolStripMenuItem.Text = "Lacation";
             this.lacationToolStripMenuItem.Click += new System.EventHandler(this.lacationToolStripMenuItem_Click);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
-            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
             this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.saveParametresToolStripMenuItem_Click);
             // 
@@ -298,22 +280,33 @@
             this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
-            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.тестыToolStripMenuItem.Text = "Tests";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
             this.toolStripMenuItem1.Text = "Performans Test";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
+            // viewMode4
+            // 
+            this.viewMode4.Location = new System.Drawing.Point(1381, 85);
+            this.viewMode4.Name = "viewMode4";
+            this.viewMode4.Size = new System.Drawing.Size(43, 60);
+            this.viewMode4.TabIndex = 18;
+            this.viewMode4.Text = "4";
+            this.viewMode4.UseVisualStyleBackColor = true;
+            this.viewMode4.Click += new System.EventHandler(this.viewMode4_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1924, 956);
+            this.ClientSize = new System.Drawing.Size(1443, 777);
+            this.Controls.Add(this.viewMode4);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
@@ -333,7 +326,6 @@
             this.Controls.Add(this.WORLD_BOX);
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Cyeber Biology";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -364,7 +356,6 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.TrackBar FPS_Scroll;
-        public System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TrackBar WorldSizeScroll;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
@@ -379,6 +370,7 @@
         private System.Windows.Forms.ToolStripMenuItem тестыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem saveImagesToolStripMenuItem1;
+        private System.Windows.Forms.Button viewMode4;
     }
 }
 

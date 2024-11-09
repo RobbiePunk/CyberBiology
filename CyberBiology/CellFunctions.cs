@@ -398,6 +398,7 @@ namespace CyberBiology
             cells[newcell, NEXT] = num;
             cells[num, PREV] = newcell;
 
+            cells[num, CELL_AGE] = 0;
 
             for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
             {
@@ -458,6 +459,7 @@ namespace CyberBiology
             cells[newcell, NEXT] = num;
             cells[num, PREV] = newcell;
 
+            cells[num, CELL_AGE] = 0;
 
             for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
             {

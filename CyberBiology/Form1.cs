@@ -29,11 +29,6 @@ namespace CyberBiology
 
         });
 
-        Barrier drawBarrier = new Barrier(2, (bar) =>
-        {
-
-        });
-
         Bitmap bmp;
         Bitmap bmpSave;
         
@@ -48,12 +43,14 @@ namespace CyberBiology
         bool performanceTest = false;
 
         bool isDrawing = false;
+        bool wantToDraw = true;
+        int drawInterval = 100;
 
         bool saveImage = false;
         bool tryToSave = false;
         public int imageSaveStep = 100;
-        public int imageSaveSize = 1;
-        public int[] imageSaveViewMode = { 1, 0, 0};
+        public int imageSaveSize = 10;
+        public int[] imageSaveViewMode = { 1, 0, 0, 0};
 
         int viewMode = 1;
         int WORLD_SIZE = 3;
@@ -105,9 +102,6 @@ namespace CyberBiology
         public void MainFunction()
         {
             new_circle:
-                
-                //if(isDrawing)
-                    //drawBarrier.SignalAndWait();
 
                 CELL = cells[0, NEXT];
                 cell_count = 0;
@@ -126,6 +120,10 @@ namespace CyberBiology
                             tryToSave = true;
                             saveBarrier.SignalAndWait();
                         }   
+                    }
+                    if (!wantToDraw && (age % drawInterval == 0))
+                    {
+                        wantToDraw = true;
                     }
                     if(age % 1000 == 0)
                     {
@@ -456,6 +454,8 @@ namespace CyberBiology
                     if (cells[num, Y_COORD] > WORLD_HEIGHT / 96 * 90) { cells[num, MINERAL]++; }
                     if(cells[num,MINERAL] > 499) { cells[num, MINERAL] = 499; }
                 }
+
+                cells[num, CELL_AGE]++;
             }
             return (cells[num, NEXT]);
         }
@@ -531,7 +531,7 @@ namespace CyberBiology
                                     C = Color.FromArgb(255, 0, 240, 240);
                                 }
                             }
-                            else
+                            else if(mode == 3)
                             {
                                 int E = drawCells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
@@ -545,6 +545,22 @@ namespace CyberBiology
                                 else
                                 {
                                     C = Color.FromArgb(255, 150, 150, 150);
+                                }
+                            }
+                            else
+                            {
+                                int cellAge = drawCells[celln, CELL_AGE];
+                                if (cellAge <= 1000 && cellAge >= 0)
+                                {
+                                    C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
+                                }
+                                else if (cellAge > 1000 && cellAge <= 10000)
+                                {
+                                    C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
+                                }
+                                else
+                                {
+                                    C = Color.FromArgb(255, 55, 20, 200);
                                 }
                             }
                             br.Color = C;
@@ -609,19 +625,13 @@ namespace CyberBiology
             
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //if (!isDrawing)
-                //WORLD_BOX.Invalidate();
-                //Refresh();
-        }
-
         private void Size_plus(object sender, EventArgs e)
         {
             if(WORLD_SIZE < 6)
             {
                 WORLD_SIZE++;
                 SetScrollers();
+                wantToDraw = true;
                 Refresh();
             }
         }
@@ -632,6 +642,7 @@ namespace CyberBiology
             {
                 WORLD_SIZE--;
                 SetScrollers();
+                wantToDraw = true;
                 Refresh();
             }
         }
@@ -745,24 +756,35 @@ namespace CyberBiology
         private void ViewMode1(object sender, EventArgs e)
         {
             viewMode = 1;
+            wantToDraw = true;
             Refresh();
         }
 
         private void ViewMode2(object sender, EventArgs e)
         {
             viewMode = 2;
+            wantToDraw = true;
             Refresh();
         }
 
         private void ViewMode3(object sender, EventArgs e)
         {
             viewMode = 3;
+            wantToDraw = true;
+            Refresh();
+        }
+
+        private void viewMode4_Click(object sender, EventArgs e)
+        {
+            viewMode = 4;
+            wantToDraw = true;
             Refresh();
         }
 
         private void ChangeFPS(object sender, EventArgs e)
         {
-            timer1.Interval = FPS_Scroll.Value;
+            drawInterval = FPS_Scroll.Value;
+            textBox1.Text = $"Draw every {drawInterval} iteration";
         }
 
         private void WorldSizeChange(object sender, EventArgs e)
@@ -790,6 +812,7 @@ namespace CyberBiology
 
                 SetScrollers();
                 FirstCell();
+                wantToDraw = true;
                 Refresh();
             }
         }
@@ -832,14 +855,15 @@ namespace CyberBiology
 
             clock.Restart();
             clock.Stop();
+            wantToDraw = true;
             Refresh();
         }
 
         private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
         {
-            if (isDrawing)
+            if (isDrawing || !wantToDraw)
                 return;
-
+  
             isDrawing = true;
 
             drawWorld = (int[,])world.Clone();
@@ -888,7 +912,7 @@ namespace CyberBiology
                                     C = Color.FromArgb(255, 0, 240, 240);
                                 }
                             }
-                            else
+                            else if(viewMode == 3)
                             {
                                 int E = drawCells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
@@ -904,6 +928,23 @@ namespace CyberBiology
                                     C = Color.FromArgb(255, 150, 150, 150);
                                 }
                             }
+                            else
+                            {
+                                int cellAge = drawCells[celln, CELL_AGE];
+                                if (cellAge <= 1000 && cellAge >= 0)
+                                {
+                                    C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
+                                }
+                                else if (cellAge > 1000 && cellAge <= 10000)
+                                {
+                                    C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
+                                }
+                                else
+                                {
+                                    C = Color.FromArgb(255, 55, 20, 200);
+                                }
+                            }
+
                             BR.Color = C;
                             GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
                         }
@@ -947,7 +988,6 @@ namespace CyberBiology
                 GR.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 600, 10);
 
-
             WORLD_BOX.Image = bmp;
 
             if (tryToSave)
@@ -960,9 +1000,7 @@ namespace CyberBiology
                 saveBarrier.SignalAndWait();
             }
 
-            //if(GO)
-            //drawBarrier.SignalAndWait();
-
+            wantToDraw = true;
             isDrawing = false;
         }
 
@@ -989,11 +1027,13 @@ namespace CyberBiology
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             xDrawStartIndex = hScrollBar1.Value * 10;
+            wantToDraw = true;
         }
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             yDrawStartIndex = vScrollBar1.Value * 10;
+            wantToDraw = true;
         }
 
         private void lacationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1030,6 +1070,8 @@ namespace CyberBiology
             
             imageSaveParametresFrom.ShowDialog();
         }
+
+        
     }
     #endregion
 }

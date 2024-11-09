@@ -137,6 +137,7 @@ namespace CyberBiology
             cells[1, X_COORD] = WORLD_WIDTH / 2;
             cells[1, Y_COORD] = WORLD_HEIGHT / 3;
 
+            cells[1, CELL_AGE] = 0;
 
             for (int j = MIND_SIZE + 12; j < MIND_SIZE + 20; j++)
             {
@@ -169,6 +170,8 @@ namespace CyberBiology
             cells[1, DIRECT] = 5;
             cells[1, X_COORD] = WORLD_WIDTH / 2;
             cells[1, Y_COORD] = 1;
+
+            cells[1, CELL_AGE] = 0;
 
             for (int j = MIND_SIZE + 12; j < MIND_SIZE + 20; j++)
             {
