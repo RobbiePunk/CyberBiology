@@ -19,10 +19,9 @@ namespace CyberBiology
         public static int ETL = 3;
         public static int MuteChance = 10;
 
+        public static int currentSeason = 0;
+        public static int[] seasons = { 11, 10, 9, 10 };
         public static int season = 11;
-        public static int season_max = 10;
-        public static int season_time = 0;
-        public static int age_season = 0;
 
     }
 }

@@ -55,6 +55,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.viewMode4 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
@@ -161,7 +162,7 @@
             // 
             // FPS_Scroll
             // 
-            this.FPS_Scroll.Location = new System.Drawing.Point(1230, 261);
+            this.FPS_Scroll.Location = new System.Drawing.Point(1230, 611);
             this.FPS_Scroll.Maximum = 1000;
             this.FPS_Scroll.Minimum = 1;
             this.FPS_Scroll.Name = "FPS_Scroll";
@@ -184,7 +185,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(1230, 235);
+            this.textBox1.Location = new System.Drawing.Point(1230, 580);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(194, 20);
             this.textBox1.TabIndex = 11;
@@ -300,12 +301,23 @@
             this.viewMode4.UseVisualStyleBackColor = true;
             this.viewMode4.Click += new System.EventHandler(this.viewMode4_Click);
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(1231, 231);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(194, 60);
+            this.button10.TabIndex = 19;
+            this.button10.Text = "Turn Off Drawing";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1443, 777);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.viewMode4);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.vScrollBar1);
@@ -371,6 +383,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem saveImagesToolStripMenuItem1;
         private System.Windows.Forms.Button viewMode4;
+        private System.Windows.Forms.Button button10;
     }
 }
 

@@ -48,11 +48,11 @@ namespace CyberBiology
             world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
             cells[cells[num, PREV], NEXT] = cells[num, NEXT];
             cells[cells[num, NEXT], PREV] = cells[num, PREV];
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] != 0)
                 {
-                    for (int j = MIND_SIZE + 12; j < MIND_SIZE + 20; j++)
+                    for (int j = M1; j <= M8; j++)
                     {
                         if (cells[cells[num, i], j] == num)
                         {
@@ -139,7 +139,7 @@ namespace CyberBiology
 
             cells[1, CELL_AGE] = 0;
 
-            for (int j = MIND_SIZE + 12; j < MIND_SIZE + 20; j++)
+            for (int j = M1; j < M8 + 1; j++)
             {
                 cells[1, j] = 0;
             }
@@ -173,7 +173,7 @@ namespace CyberBiology
 
             cells[1, CELL_AGE] = 0;
 
-            for (int j = MIND_SIZE + 12; j < MIND_SIZE + 20; j++)
+            for (int j = M1; j < M8 + 1; j++)
             {
                 cells[1, j] = 0;
             }
@@ -182,17 +182,22 @@ namespace CyberBiology
             while (i < MIND_SIZE)
             {
                 if (i % 6 == 0)
+                    cells[1, i] = 48;
+                else if (i % 8 == 0)
                     cells[1, i] = 47;
                 else
                     cells[1, i] = 25;
                 i++;
             }
-            cells[1, MIND_SIZE - 1] = 40;
+            
             cells[1, 10] = 30;
             cells[1, 20] = 32;
             cells[1, 30] = 33;
+            //cells[1, 32] = 40;
             cells[1, 40] = 34;
             cells[1, 50] = 35;
+            cells[1, 63] = 40;
+
         }
 
         public static void go_GREEN(int num, int val)

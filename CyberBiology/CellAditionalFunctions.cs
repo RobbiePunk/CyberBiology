@@ -46,21 +46,16 @@ namespace CyberBiology
         public static int isMulti(int num)
         {
             int a = 0;
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
-            {
+            for (int i = M1; i <= M8; i++)
                 if (cells[num, i] != 0)
-                {
                     a++;
-                }
-            }
+
             return (a);
         }
 
         public static int get_param(int num)
         {
-            int adr = cells[num, ADR] + 1;
-            if (adr >= MIND_SIZE) { adr -= MIND_SIZE; }
-            return (cells[num, adr]);
+            return (cells[num, cells[num, ADR] + 1] % MIND_SIZE);
         }
         public static int what_is_there_r(int num, int dr)
         {
@@ -80,16 +75,10 @@ namespace CyberBiology
         {
             int y = cells[num, Y_COORD];
             if (n < 3)
-            {
                 y--;
-            }
-            else
-            {
-                if (n == 4 || n == 5 || n == 6)
-                {
-                    y++;
-                }
-            }
+            else if(n == 4 || n == 5 || n == 6)
+                y++;
+
             return (y);
         }
         public static int X_from_vector_a(int num, int n)
@@ -98,64 +87,51 @@ namespace CyberBiology
             if (n == 0 || n == 6 || n == 7)
             {
                 x--;
-                if (x < 0) { x = WORLD_WIDTH - 1; }
+                if (x < 0)
+                    x = WORLD_WIDTH - 1;
             }
-            else
+            else if (n == 2 || n == 3 || n == 4)
             {
-                if (n == 2 || n == 3 || n == 4)
-                {
-                    x++;
-                    if (x > WORLD_WIDTH - 1)
-                    {
-                        x = 0;
-                    }
-                }
+                x++;
+                if (x == WORLD_WIDTH)
+                    x = 0;
             }
             return (x);
         }
         public static int Y_from_vector_r(int num, int n)
         {
             int y = cells[num, Y_COORD];
-            n += cells[num, DIRECT];
-            if (n > 7) { n -= 8; }
-            if (n < 3) { y--; }
-            else
-            {
-                if (n == 4 || n == 5 || n == 6)
-                {
-                    y++;
-                }
-            }
+            n += cells[num, DIRECT] % 8;
+
+            if (n < 3)
+                y--;
+            else if(n == 4 || n == 5 || n == 6)      
+                y++;
+
             return (y);
         }
         public static int X_from_vector_r(int num, int n)
         {
             int x = cells[num, X_COORD];
-            n += cells[num, DIRECT];
-            if (n > 7) { n -= 8; }
+            n += cells[num, DIRECT] % 8;
+
             if (n == 0 || n == 6 || n == 7)
             {
                 x--;
-                if (x < 0) { x = WORLD_WIDTH - 1; }
+                if (x < 0)
+                    x = WORLD_WIDTH - 1;
             }
-            else
+            else if (n == 2 || n == 3 || n == 4)
             {
-                if (n == 2 || n == 3 || n == 4)
-                {
                     x++;
                     if (x > WORLD_WIDTH - 1)
-                    {
                         x = 0;
-                    }
-                }
             }
             return (x);
         }
         public static void inc_command_address(int num, int n)
         {
-            int adr = cells[num, ADR] + n;
-            if (adr >= MIND_SIZE) { adr -= MIND_SIZE; }
-            cells[num, ADR] = adr;
+            cells[num, ADR] = (cells[num, ADR] + n) % MIND_SIZE;
         }
         public static int find_empty_direction(int num)
         {
@@ -181,7 +157,7 @@ namespace CyberBiology
 
         public static int isColonyMove(int num, int x, int y)
         {
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] != 0)
                 {
@@ -212,13 +188,9 @@ namespace CyberBiology
         }
         public static int find_empty_multi(int num)
         {
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
-            {
+            for (int i = M1; i <= M8; i++)
                 if (cells[num, i] == 0)
-                {
                     return (i);
-                }
-            }
             return (0);
         }
         public static int full_around(int num)
@@ -233,11 +205,7 @@ namespace CyberBiology
         }
         public static void indirect_inc_cmd_address(int num, int a)
         {
-            int adr = cells[num, ADR];
-            adr += a;
-            if (adr >= MIND_SIZE) { adr -= MIND_SIZE; }
-            int bias = cells[num, adr];
-            inc_command_address(num, bias);
+            cells[num, ADR] = (cells[num, ADR] + cells[num, (cells[num, ADR] + a) % MIND_SIZE]) % MIND_SIZE;
         }
     }
 }

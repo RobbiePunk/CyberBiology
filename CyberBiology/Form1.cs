@@ -53,7 +53,7 @@ namespace CyberBiology
         public int[] imageSaveViewMode = { 1, 0, 0, 0};
 
         int viewMode = 1;
-        int WORLD_SIZE = 3;
+        int WORLD_SIZE = 6;
 
         int xDrawStartIndex = 0;
         int yDrawStartIndex = 0;
@@ -70,12 +70,16 @@ namespace CyberBiology
         int[,] drawWorld;
         int[,] drawCells;
 
+        //Cells step locals
+        int cyc;
+        int lv;
+
         public Form1()
         {
             InitializeComponent();
             WORLD_WIDTH = 180 * WorldSizeScroll.Value;
             WORLD_HEIGHT = 96 * WorldSizeScroll.Value;
-            MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH;
+            MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
 
             cells = new int[MAX_CELLS, CELL_SIZE];
             drawCells = new int[MAX_CELLS, CELL_SIZE];
@@ -101,6 +105,7 @@ namespace CyberBiology
 
         public void MainFunction()
         {
+            season = seasons[currentSeason];
             new_circle:
 
                 CELL = cells[0, NEXT];
@@ -121,46 +126,33 @@ namespace CyberBiology
                             saveBarrier.SignalAndWait();
                         }   
                     }
-                    if (!wantToDraw && (age % drawInterval == 0))
+                    /*if (!wantToDraw && (age % drawInterval == 0))
                     {
                         wantToDraw = true;
-                    }
-                    if(age % 1000 == 0)
+                    }*/
+                    if(age % 10000 == 0)
                     {
-                        season_time++;
-                        if(season_time == season_max)
-                        {
-                            season_time = 0;
-                            age_season++;
-                            int seasonTemp = age_season % 4;
-                            if(seasonTemp == 0) { season = 11; season_str = "Summer"; }
-                            else if(seasonTemp == 2)
-                            {
-                                season = 9;
-                                season_str = "Winter";
-                            }
-                            else
-                            {
-                                if(season == 9)
-                                {
-                                    season_str = "Spring";
-                                }
-                                else
-                                {
-                                    season_str = "Autumn";
-                                }
-                                season = 10;
-                            }
-                        }
+                        currentSeason = (seasons.Length + 1) % seasons.Length;
+
+                        if(currentSeason == 0) 
+                            season_str = "Summer";
+                        else if(currentSeason == 1)
+                            season_str = "Autumn";
+                        else if (currentSeason == 2)
+                            season_str = "Winter";
+                        else if (currentSeason == 3)
+                            season_str = "Spring";
+
+                        season = seasons[currentSeason];
                     }
-                    if(GO)
-                        goto new_circle;
                 }
+                if(GO)
+                    goto new_circle;
         }
 
         int cell_step(int num)
         {
-            int lv = cells[num, LIVING];
+            lv = cells[num, LIVING];
             if (lv == LV_DEAD)
             {
                 Fall(num);
@@ -204,7 +196,7 @@ namespace CyberBiology
             {
                 return (cells[num, NEXT]);
             }
-            int cyc = 0;
+            cyc = 0;
         ag:
             cyc++;
             if (cyc < 10)
@@ -214,14 +206,14 @@ namespace CyberBiology
                 {
                     cell_double(num);
                     inc_command_address(num, 1);
+                    goto Out;
                 }
                 else if (command == 23)//смена направления относительно
                 {
-                    int param = get_param(num) % 8;
-                    int newdrct = cells[num, DIRECT] + param;
-                    if (newdrct > 7) { newdrct -= 8; }
+                    int newdrct = (cells[num, DIRECT] + get_param(num)) % 8;
+
                     cells[num, DIRECT] = newdrct;
-                    inc_command_address(num, 2);
+                    inc_command_address(num, newdrct + 1);
                     goto ag;
                 }
                 else if (command == 24)//смена направления абсолютно
@@ -423,6 +415,12 @@ namespace CyberBiology
                     inc_command_address(num, 1);
                     goto Out;
                 }
+                else if (command == 48)//отобрать и поделить
+                {
+                    colonySharing(num);
+                    inc_command_address(num, 1);
+                    goto Out;
+                }
                 inc_command_address(num, command);
                 goto ag;
             }
@@ -433,7 +431,7 @@ namespace CyberBiology
 
                 if(a > 0)
                 {
-                    colonySharing(num);
+                    //colonySharing(num);
                 }
 
                 if(cells[num,ENERGY] > 999)
@@ -631,7 +629,7 @@ namespace CyberBiology
             {
                 WORLD_SIZE++;
                 SetScrollers();
-                wantToDraw = true;
+                //wantToDraw = true;
                 Refresh();
             }
         }
@@ -642,7 +640,7 @@ namespace CyberBiology
             {
                 WORLD_SIZE--;
                 SetScrollers();
-                wantToDraw = true;
+                //wantToDraw = true;
                 Refresh();
             }
         }
@@ -651,7 +649,11 @@ namespace CyberBiology
         {
 
             bool t = GO;
-            GO = false;
+            if(GO)
+            {
+                Stop_Play(sender, e);
+            }
+
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 SaveFileName = saveFileDialog1.FileName;
@@ -665,14 +667,15 @@ namespace CyberBiology
                 sw.WriteLine(MTE.ToString());
                 sw.WriteLine(ETL.ToString());
                 sw.WriteLine(season.ToString());
-                sw.WriteLine(season_max.ToString());
-                sw.WriteLine(season_time.ToString());
-                sw.WriteLine(age_season.ToString());
                 sw.WriteLine(age.ToString());
                 sw.WriteLine(cell_count.ToString());
                 sw.WriteLine(Print_cell_count.ToString());
                 sw.WriteLine(WORLD_HEIGHT.ToString());
                 sw.WriteLine(WORLD_WIDTH.ToString());
+
+                for (int i = 0; i < seasons.Length; i++)
+                    sw.WriteLine(seasons[i].ToString());
+
                 for (int x = 0; x < WORLD_WIDTH; x++)
                 {
                     for (int y = 0; y < WORLD_HEIGHT + 2; y++)
@@ -722,18 +725,23 @@ namespace CyberBiology
                 MTE = int.Parse(Str[4]);
                 ETL = int.Parse(Str[5]);
                 season = int.Parse(Str[6]);
-                season_max = int.Parse(Str[7]);
-                season_time = int.Parse(Str[8]);
-                age_season = int.Parse(Str[9]);
-                age = int.Parse(Str[10]);
-                cell_count = int.Parse(Str[11]);
-                Print_cell_count = int.Parse(Str[12]);
-                WORLD_HEIGHT = int.Parse(Str[13]);
-                WORLD_WIDTH = int.Parse(Str[14]);
-                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH;
+                age = int.Parse(Str[7]);
+                cell_count = int.Parse(Str[8]);
+                Print_cell_count = int.Parse(Str[9]);
+                WORLD_HEIGHT = int.Parse(Str[10]);
+                WORLD_WIDTH = int.Parse(Str[11]);
+
+                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
                 cells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-                int Count = 15;
+
+                int Count = 12;
+
+                for (int i = 0; i < seasons.Length; i++)
+                    seasons[i] = int.Parse(Str[Count+i]);
+
+                Count = 12 + seasons.Length;
+
                 for (int x = 0; x < WORLD_WIDTH; x++)
                 {
                     for (int y = 0; y < WORLD_HEIGHT + 2; y++)
@@ -756,29 +764,29 @@ namespace CyberBiology
         private void ViewMode1(object sender, EventArgs e)
         {
             viewMode = 1;
-            wantToDraw = true;
-            Refresh();
+            //wantToDraw = true;
+            //Refresh();
         }
 
         private void ViewMode2(object sender, EventArgs e)
         {
             viewMode = 2;
-            wantToDraw = true;
-            Refresh();
+           // wantToDraw = true;
+            //Refresh();
         }
 
         private void ViewMode3(object sender, EventArgs e)
         {
             viewMode = 3;
-            wantToDraw = true;
-            Refresh();
+            //wantToDraw = true;
+            //Refresh();
         }
 
         private void viewMode4_Click(object sender, EventArgs e)
         {
             viewMode = 4;
-            wantToDraw = true;
-            Refresh();
+            //wantToDraw = true;
+            //Refresh();
         }
 
         private void ChangeFPS(object sender, EventArgs e)
@@ -793,7 +801,7 @@ namespace CyberBiology
             {
                 WORLD_WIDTH = 180 * WorldSizeScroll.Value;
                 WORLD_HEIGHT = 96 * WorldSizeScroll.Value;
-                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH;
+                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
 
                 cells = new int[MAX_CELLS, CELL_SIZE];
                 drawCells = new int[MAX_CELLS, CELL_SIZE];
@@ -801,6 +809,7 @@ namespace CyberBiology
                 drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
                 imageSaveSize = 1920 / (WORLD_WIDTH);
+
 
                 int x = 0;
                 while (x < WORLD_WIDTH)
@@ -810,53 +819,43 @@ namespace CyberBiology
                     x++;
                 }
 
-                SetScrollers();
-                FirstCell();
-                wantToDraw = true;
+                if (!performanceTest)
+                {
+                    MuteChance = 10;
+
+                    seasons = new int[]{ 11, 10, 9, 10};
+                    MTE = 2;
+                    FirstCell();
+                }
+                else
+                {
+                    MuteChance = 0;
+                    seasons = new int[] { 33, 30, 27, 30 };
+                    MTE = 3;
+                    CreatePerformanceTestWorld();
+                }
+                currentSeason = 0;
+                SetScrollers(); 
+                //wantToDraw = true;
                 Refresh();
             }
         }
 
         private void NewSimulate(object sender, EventArgs e)
         {
-            GO = false;
-            age = 0;
-            WorldSizeChange(sender, e);
-
-            cells = new int[MAX_CELLS, CELL_SIZE];
-            drawCells = new int[MAX_CELLS, CELL_SIZE];
-            world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-            drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-
-            season = 11;
-            season_max = 10;
-            season_time = 0;
-            age_season = 0;
-            CELL = 0;
-            cell_count = 0;
-            Print_cell_count = 0;
-            int x = 0;
-            while (x < WORLD_WIDTH)
+            if (!GO)
             {
-                world[x, 0] = WC_WALL;
-                world[x, WORLD_HEIGHT + 1] = WC_WALL;
-                x++;
-            }
-            if (!performanceTest)
-            {
-                MuteChance = 10;
-                FirstCell();
-            }
-            else
-            {
-                MuteChance = 0;
-                CreatePerformanceTestWorld();
-            }
+                age = 0;
+                WorldSizeChange(sender, e);
 
-            clock.Restart();
-            clock.Stop();
-            wantToDraw = true;
-            Refresh();
+                CELL = 0;
+                cell_count = 0;
+                Print_cell_count = 0;
+
+                clock.Restart();
+                clock.Stop();
+                Refresh();
+            }
         }
 
         private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
@@ -1000,7 +999,6 @@ namespace CyberBiology
                 saveBarrier.SignalAndWait();
             }
 
-            wantToDraw = true;
             isDrawing = false;
         }
 
@@ -1054,6 +1052,8 @@ namespace CyberBiology
         {
             performanceTest = !performanceTest;
             toolStripMenuItem1.Checked = performanceTest;
+
+            NewSimulate(sender, e);
         }
 
         private void saveImagesToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1071,7 +1071,20 @@ namespace CyberBiology
             imageSaveParametresFrom.ShowDialog();
         }
 
-        
+        private void button10_Click(object sender, EventArgs e)
+        {
+            wantToDraw = !wantToDraw;
+
+            if(wantToDraw)
+            {
+                button10.Text = "Turn Off Drawing";
+                WORLD_BOX.Invalidate();
+            }
+            else
+            {
+                button10.Text = "Turn On Drawing";
+            }
+        }
     }
     #endregion
 }

@@ -12,7 +12,7 @@ namespace CyberBiology
             int C = 1;
             int En = cells[num, ENERGY];
             int Min = cells[num, MINERAL];
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] != 0)
                 {
@@ -27,7 +27,7 @@ namespace CyberBiology
             Min /= C;
             cells[num, ENERGY] = En + EnMode;
             cells[num, MINERAL] = Min + MinMode;
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] != 0)
                 {
@@ -44,7 +44,7 @@ namespace CyberBiology
                 cells[num, ENERGY] += 50 * MTE;
                 go_BLUE(num, 50);
             }
-            else
+            else if(cells[num, MINERAL] > 0)
             {
                 go_BLUE(num, cells[num, MINERAL]);
                 cells[num, ENERGY] += MTE * cells[num, MINERAL];
@@ -331,21 +331,28 @@ namespace CyberBiology
             {
                 return (4);
             }
+
             int enrg = cells[num, ENERGY] / 4;
             cells[num, ENERGY] -= enrg;
             cells[world[x, y], ENERGY] += enrg;
+
+            if (cells[world[x, y], ENERGY] > 999)
+            {
+                cells[world[x, y], ENERGY] = 999;
+            }
+
             if (cells[num, MINERAL] > 3)
             {
                 int min = cells[num, MINERAL] / 4;
                 cells[num, MINERAL] -= min;
                 cells[world[x, y], MINERAL] += min;
-                if (cells[world[x, y], MINERAL] > 999)
+                if (cells[world[x, y], MINERAL] > 499)
                 {
-                    cells[world[x, y], MINERAL] = 999;
+                    cells[world[x, y], MINERAL] = 499;
                 }
             }
-            return (5);
 
+            return (5);
         }
 
         public static void cell_double(int num)
@@ -400,7 +407,7 @@ namespace CyberBiology
 
             cells[num, CELL_AGE] = 0;
 
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 cells[num, i] = 0;
             }
@@ -461,11 +468,11 @@ namespace CyberBiology
 
             cells[num, CELL_AGE] = 0;
 
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 cells[newcell, i] = 0;
             }
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] == 0)
                 {
@@ -478,11 +485,11 @@ namespace CyberBiology
         public static void cell_die(int num)
         {
             cells[num, LIVING] = LV_DEAD;
-            for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
+            for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] != 0)
                 {
-                    for (int j = MIND_SIZE + 12; j < MIND_SIZE + 20; j++)
+                    for (int j = M1; j <= M8; j++)
                     {
                         if (cells[cells[num, i], j] == num)
                         {
