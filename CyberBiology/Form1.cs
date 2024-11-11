@@ -122,8 +122,13 @@ namespace CyberBiology
                     {
                         if (saveImage && !tryToSave)
                         {
-                            tryToSave = true;
-                            saveBarrier.SignalAndWait();
+                            //tryToSave = true;
+
+                            for (int i = 0; i < imageSaveViewMode.Length; i++)
+                                if (imageSaveViewMode[i] == 1)
+                                    SaveImagePng(i + 1, imageSaveSize);
+
+                        //saveBarrier.SignalAndWait();
                         }   
                     }
                     /*if (!wantToDraw && (age % drawInterval == 0))
@@ -492,7 +497,7 @@ namespace CyberBiology
             {
                 for (int y = 0; y < WORLD_HEIGHT + 2; y++)
                 {
-                    int celln = drawWorld[x, y];
+                    int celln = world[x, y];
                     if (celln == WC_EMPTY)
                     {
 
@@ -502,14 +507,14 @@ namespace CyberBiology
                         br.Color = Color.FromArgb(255, 40, 40, 40);
                         GR_save.FillRectangle(br, x * size + 40, y * size + 40, size, size);
                     }
-                    else if (drawCells[celln, LIVING] == LV_EARTH)
+                    else if (cells[celln, LIVING] == LV_EARTH)
                     {
                         br.Color = Color.FromArgb(255, 150, 100, 0);
                         GR_save.FillRectangle(br, x * size + 40, y * size + 40, size, size);
                     }
                     else
                     {
-                        if (drawCells[celln, LIVING] == LV_ALIVE)
+                        if (cells[celln, LIVING] == LV_ALIVE)
                         {
                             Color C;
                             if (mode == 1)
@@ -531,7 +536,7 @@ namespace CyberBiology
                             }
                             else if(mode == 3)
                             {
-                                int E = drawCells[celln, ENERGY];
+                                int E = cells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
                                 {
                                     C = Color.FromArgb(255, 255, 255 - E / 4, 0);
@@ -547,7 +552,7 @@ namespace CyberBiology
                             }
                             else
                             {
-                                int cellAge = drawCells[celln, CELL_AGE];
+                                int cellAge = cells[celln, CELL_AGE];
                                 if (cellAge <= 1000 && cellAge >= 0)
                                 {
                                     C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
@@ -613,9 +618,154 @@ namespace CyberBiology
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            bmpSave.Save($"{path}/{age.ToString()}.png");
+            bmpSave.Save($"{path}/{age}.png");
 
             tryToSave = false;
+        }
+
+        private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
+        {
+            if (isDrawing || !wantToDraw)
+                return;
+  
+            isDrawing = true;
+
+            drawWorld = (int[,])world.Clone();
+            drawCells = (int[,])cells.Clone();
+
+            BR = new SolidBrush(Color.White);
+            GR.Clear(Color.White);
+            for (int x = 0; x < WORLD_WIDTH - xDrawStartIndex; x++)
+            {
+                for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
+                {
+                    int celln = drawWorld[x + xDrawStartIndex, y + yDrawStartIndex];
+                    if (celln == WC_EMPTY)
+                    {
+
+                    }
+                    else if (celln == WC_WALL)
+                    {
+                        BR.Color = Color.FromArgb(255, 40, 40, 40);
+                        GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
+                    }
+                    else if (drawCells[celln, LIVING] == LV_EARTH)
+                    {
+                        BR.Color = Color.FromArgb(255, 150, 100, 0);
+                        GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
+                    }
+                    else
+                    {
+                        if (drawCells[celln, LIVING] == LV_ALIVE)
+                        {
+                            Color C;
+                            if (viewMode == 1)
+                            {
+                                C = Color.FromArgb(255, CheckColor(celln, 1), CheckColor(celln, 2), CheckColor(celln, 3));
+                            }
+                            else if (viewMode == 2)
+                            {
+                                int a = isMultiForDrawing(celln);
+                                if (a > 0)
+                                {
+
+                                    C = Color.FromArgb(255, 240 - 20 * a, 10 * a, 200 - 15 * a);
+                                }
+                                else
+                                {
+                                    C = Color.FromArgb(255, 0, 240, 240);
+                                }
+                            }
+                            else if (viewMode == 3)
+                            {
+                                int E = drawCells[celln, ENERGY];
+                                if (E <= 1000 && E >= 0)
+                                {
+                                    C = Color.FromArgb(255, 255, 255 - E / 4, 0);
+                                }
+                                else if (E > 1000)
+                                {
+                                    C = Color.FromArgb(255, 255, 0, 0);
+                                }
+                                else
+                                {
+                                    C = Color.FromArgb(255, 150, 150, 150);
+                                }
+                            }
+                            else
+                            {
+                                int cellAge = drawCells[celln, CELL_AGE];
+                                if (cellAge <= 1000 && cellAge >= 0)
+                                {
+                                    C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
+                                }
+                                else if (cellAge > 1000 && cellAge <= 10000)
+                                {
+                                    C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
+                                }
+                                else
+                                {
+                                    C = Color.FromArgb(255, 55, 20, 200);
+                                }
+                            }
+
+                            BR.Color = C;
+                            GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
+                        }
+                        else
+                        {
+                            BR.Color = Color.FromArgb(255, 100, 100, 100);
+                            GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
+                        }
+                    }
+                }
+            }
+
+            if (season_str == "Summer")
+                BR.Color = Color.FromArgb(255, 240, 240, 20);
+            else if (season_str == "Autumn")
+                BR.Color = Color.FromArgb(255, 240, 60, 0);
+            else if (season_str == "Winter")
+                BR.Color = Color.FromArgb(255, 30, 60, 240);
+            else
+                BR.Color = Color.FromArgb(255, 50, 240, 50);
+
+            GR.FillRectangle(BR, 300, 10, 70, 20);
+
+            BR.Color = Color.Black;
+            GR.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            BR, 40, 10);
+            GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            BR, 150, 10);
+
+
+            GR.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            BR, 300, 10);
+
+            string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
+            clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
+
+            GR.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            BR, 400, 10);
+
+            if (clock.ElapsedMilliseconds != 0)
+                GR.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 600, 10);
+
+            WORLD_BOX.Image = bmp;
+            
+
+            /*if (tryToSave)
+            {
+                for (int i = 0; i < imageSaveViewMode.Length; i++)
+                {
+                    if (imageSaveViewMode[i] == 1)
+                        SaveImagePng(i + 1, imageSaveSize);
+                }
+                saveBarrier.SignalAndWait();
+            }*/
+
+            isDrawing = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -858,149 +1008,6 @@ namespace CyberBiology
             }
         }
 
-        private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
-        {
-            if (isDrawing || !wantToDraw)
-                return;
-  
-            isDrawing = true;
-
-            drawWorld = (int[,])world.Clone();
-            drawCells = (int[,])cells.Clone();
-
-            BR = new SolidBrush(Color.White);
-            GR.Clear(Color.White);
-            for (int x = 0; x < WORLD_WIDTH - xDrawStartIndex; x++)
-            {
-                for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
-                {
-                    int celln = drawWorld[x + xDrawStartIndex, y + yDrawStartIndex];
-                    if (celln == WC_EMPTY)
-                    {
-
-                    }
-                    else if (celln == WC_WALL)
-                    {
-                        BR.Color = Color.FromArgb(255, 40, 40, 40);
-                        GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
-                    }
-                    else if (drawCells[celln, LIVING] == LV_EARTH)
-                    {
-                        BR.Color = Color.FromArgb(255, 150, 100, 0);
-                        GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
-                    }
-                    else
-                    {
-                        if (drawCells[celln, LIVING] == LV_ALIVE)
-                        {
-                            Color C;
-                            if (viewMode == 1)
-                            {
-                                C = Color.FromArgb(255, CheckColor(celln, 1), CheckColor(celln, 2), CheckColor(celln, 3));
-                            }
-                            else if (viewMode == 2)
-                            {
-                                int a = isMultiForDrawing(celln);
-                                if (a > 0)
-                                {
-
-                                    C = Color.FromArgb(255, 240 - 20 * a, 10 * a, 200 - 15 * a);
-                                }
-                                else
-                                {
-                                    C = Color.FromArgb(255, 0, 240, 240);
-                                }
-                            }
-                            else if(viewMode == 3)
-                            {
-                                int E = drawCells[celln, ENERGY];
-                                if (E <= 1000 && E >= 0)
-                                {
-                                    C = Color.FromArgb(255, 255, 255 - E / 4, 0);
-                                }
-                                else if (E > 1000)
-                                {
-                                    C = Color.FromArgb(255, 255, 0, 0);
-                                }
-                                else
-                                {
-                                    C = Color.FromArgb(255, 150, 150, 150);
-                                }
-                            }
-                            else
-                            {
-                                int cellAge = drawCells[celln, CELL_AGE];
-                                if (cellAge <= 1000 && cellAge >= 0)
-                                {
-                                    C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
-                                }
-                                else if (cellAge > 1000 && cellAge <= 10000)
-                                {
-                                    C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
-                                }
-                                else
-                                {
-                                    C = Color.FromArgb(255, 55, 20, 200);
-                                }
-                            }
-
-                            BR.Color = C;
-                            GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
-                        }
-                        else
-                        {
-                            BR.Color = Color.FromArgb(255, 100, 100, 100);
-                            GR.FillRectangle(BR, x * WORLD_SIZE + 40, y * WORLD_SIZE + 40, WORLD_SIZE, WORLD_SIZE);
-                        }
-                    }
-                }
-            }
-
-            if (season_str == "Summer")
-                BR.Color = Color.FromArgb(255, 240, 240, 20);
-            else if (season_str == "Autumn")
-                BR.Color = Color.FromArgb(255, 240, 60, 0);
-            else if (season_str == "Winter")
-                BR.Color = Color.FromArgb(255, 30, 60, 240);
-            else
-                BR.Color = Color.FromArgb(255, 50, 240, 50);
-
-            GR.FillRectangle(BR, 300, 10, 70, 20);
-
-            BR.Color = Color.Black;
-            GR.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 40, 10);
-            GR.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 150, 10);
-
-
-            GR.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 300, 10);
-
-            string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
-            clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
-
-            GR.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 400, 10);
-
-            if (clock.ElapsedMilliseconds != 0)
-                GR.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-                BR, 600, 10);
-
-            WORLD_BOX.Image = bmp;
-
-            if (tryToSave)
-            {
-                for (int i = 0; i < imageSaveViewMode.Length; i++)
-                {
-                    if (imageSaveViewMode[i] == 1)
-                        SaveImagePng(i + 1, imageSaveSize);
-                }
-                saveBarrier.SignalAndWait();
-            }
-
-            isDrawing = false;
-        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
