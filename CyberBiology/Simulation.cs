@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace CyberBiology
 {
     public static class Simulation
     {
+        public static Stopwatch clock = new Stopwatch();
         public static Random rand = new Random();
 
 
@@ -14,6 +16,9 @@ namespace CyberBiology
         public static int[,] cells;
         public static int[,] world;
 
+        public static int[,] drawWorld;
+        public static int[,] drawCells;
+
         public static int ETM = 5;
         public static int MTE = 2;
         public static int ETL = 3;
@@ -22,6 +27,12 @@ namespace CyberBiology
         public static int currentSeason = 0;
         public static int[] seasons = { 11, 10, 9, 10 };
         public static int season = 11;
+
+        public static int age = 0;
+        public static int CELL = 0;
+        public static int cell_count;
+        public static int Print_cell_count;
+
 
     }
 }
