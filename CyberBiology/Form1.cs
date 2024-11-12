@@ -102,43 +102,47 @@ namespace CyberBiology
             WORLD_BOX.Invalidate();
         }
 
+        public void OneStep()
+        {
+            season = seasons[currentSeason];
+
+            CELL = cells[0, NEXT];
+            cell_count = 0;
+            while (CELL != 0)
+            {
+                cell_count++;
+                CELL = cell_step(CELL);
+            }
+                
+            Print_cell_count = cell_count;
+            age++;
+
+            if (imageSaveStep != 0 && age % imageSaveStep == 0 && saveImage)
+                SaveImagePng();
+
+            if (age % 10000 == 0)
+            {
+                currentSeason = (currentSeason + 1) % seasons.Length;
+
+                if (currentSeason == 0)
+                    season_str = "Summer";
+                else if (currentSeason == 1)
+                    season_str = "Autumn";
+                else if (currentSeason == 2)
+                    season_str = "Winter";
+                else if (currentSeason == 3)
+                    season_str = "Spring";
+
+                season = seasons[currentSeason];
+            }
+                
+        }
+
         public void MainFunction()
         {
             season = seasons[currentSeason];
-            new_circle:
-
-                CELL = cells[0, NEXT];
-                cell_count = 0;
-            cs:
-                cell_count++;
-                CELL = cell_step(CELL);
-                if(CELL != 0) { goto cs; }
-                else
-                {
-                    Print_cell_count = cell_count;
-                    age++;
-
-                    if(imageSaveStep != 0 && age % imageSaveStep == 0 && saveImage)
-                            SaveImagePng();
-
-                    if(age % 10000 == 0)
-                    {
-                        currentSeason = (seasons.Length + 1) % seasons.Length;
-
-                        if(currentSeason == 0) 
-                            season_str = "Summer";
-                        else if(currentSeason == 1)
-                            season_str = "Autumn";
-                        else if (currentSeason == 2)
-                            season_str = "Winter";
-                        else if (currentSeason == 3)
-                            season_str = "Spring";
-
-                        season = seasons[currentSeason];
-                    }
-                }
-                if(GO)
-                    goto new_circle;
+            while(GO)
+                OneStep();
         }
 
         int cell_step(int num)
@@ -667,7 +671,6 @@ namespace CyberBiology
             }
         }
 
-
         private void ViewMode1(object sender, EventArgs e)
         {
             viewMode = 1;
@@ -857,6 +860,24 @@ namespace CyberBiology
             {
                 button10.Text = "Turn On Drawing";
             }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            if (GO)
+            {
+                Stop_Play(sender, e);
+                t.Join();
+            }
+            
+            OneStep();
+            ScreenUpdate();
+        }
+
+        private void textBox2_Click(object sender, EventArgs e)
+        {
+            //Кастомный размер поля
+            //button11_Click(sender, e);
         }
     }
     #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using static CyberBiology.Constants;
 using static CyberBiology.Simulation;
+using static CyberBiology.ServiceFunctions;
 
 namespace CyberBiology
 {
@@ -38,7 +39,7 @@ namespace CyberBiology
             if (cells[num, MINERAL] < 100) { t = 0; }
             else if (cells[num, MINERAL] < 400) { t = 1; }
             else { t = 2; }
-            int nrg = season - ((cells[num, Y_COORD] / (WORLD_HEIGHT / 96) - 1) / 8) + t;
+            int nrg = GetLightForHeight(cells[num, Y_COORD], season) + t;
             if (nrg >= 3) { return (1); }
             else { return (2); }
 

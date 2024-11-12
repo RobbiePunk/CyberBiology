@@ -12,6 +12,12 @@ namespace CyberBiology
         public static String SaveImageDirectory;
         public static String season_str = "Summer";
 
+        public static int GetLightForHeight(int y, int s)
+        {
+            int light = s - ((y / (WORLD_HEIGHT / 96) - 1) / 8);
+            return light > 0 ? light : 0;
+        }
+
         public static void EarthBlockCreate(int num)
         {
             for (int i = 0; i < 8; i++)
@@ -342,17 +348,26 @@ namespace CyberBiology
             SolidBrush BR = new SolidBrush(Color.White);
             graphics.Clear(Color.White);
 
+            int s = season;
+            int maxLight = GetLightForHeight(0, s);
+
             for (int x = 0; x < WORLD_WIDTH - xDrawStartIndex; x++)
             {
                 for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
                 {
+                    int light = GetLightForHeight(y + yDrawStartIndex, s);
+
+                    BR.Color = Color.FromArgb(255, 255 * light / maxLight, 255 * light / maxLight, 0);
+                    graphics.FillRectangle(BR, 10 - xDrawStartIndex * size, y * size + 40, 10, size);
+
+
                     int celln = drawWorld[x + xDrawStartIndex, y + yDrawStartIndex];
                     if (celln == WC_EMPTY)
                     {
 
                     }
                     else if (celln == WC_WALL)
-                    {
+                    { 
                         BR.Color = Color.FromArgb(255, 40, 40, 40);
                         graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
                     }

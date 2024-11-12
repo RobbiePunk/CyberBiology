@@ -26,7 +26,7 @@ namespace CyberBiology
         public static int MuteChance = 10;
 
         public static int currentSeason = 0;
-        public static int[] seasons = { 11, 10, 9, 10 };
+        public static int[] seasons = { 11, 10, 9, 10};
         public static int season = 11;
 
         public static int age = 0;

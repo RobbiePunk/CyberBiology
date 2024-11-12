@@ -57,7 +57,7 @@ namespace CyberBiology
             if (cells[num, MINERAL] < 100) { t = 0; }
             else if (cells[num, MINERAL] < 400) { t = 1; }
             else { t = 2; }
-            int hlt = season - ((cells[num, Y_COORD] / (WORLD_HEIGHT / 96) - 1) / 8) + t;
+            int hlt = GetLightForHeight(cells[num, Y_COORD], season) + t;
             if (hlt > 0)
             {
                 cells[num, ENERGY] += hlt;
