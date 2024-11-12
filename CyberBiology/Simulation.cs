@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using MathNet.Numerics.Random;
 
 namespace CyberBiology
 {
@@ -14,6 +13,7 @@ namespace CyberBiology
 
         public StateRandom(int Seed, UInt64 forward = 0) : base(Seed)
         {
+            _numberOfInvokes = 0;
             for (UInt64 i = 0; i < forward; ++i)
                 Next();
         }

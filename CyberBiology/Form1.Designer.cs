@@ -49,6 +49,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.saveImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImagesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveWorldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lacationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveParametresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,7 @@
             this.viewMode4 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
-            this.saveWorldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
@@ -66,8 +67,9 @@
             // 
             // WORLD_BOX
             // 
+            this.WORLD_BOX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.WORLD_BOX.InitialImage = null;
-            this.WORLD_BOX.Location = new System.Drawing.Point(38, 32);
+            this.WORLD_BOX.Location = new System.Drawing.Point(45, 32);
             this.WORLD_BOX.Margin = new System.Windows.Forms.Padding(4);
             this.WORLD_BOX.Name = "WORLD_BOX";
             this.WORLD_BOX.Size = new System.Drawing.Size(1590, 864);
@@ -221,7 +223,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(1740, 900);
+            this.button9.Location = new System.Drawing.Point(1708, 853);
             this.button9.Margin = new System.Windows.Forms.Padding(4);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(125, 43);
@@ -259,7 +261,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1924, 30);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -277,21 +279,28 @@
             // saveImagesToolStripMenuItem1
             // 
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(200, 26);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.saveImagesToolStripMenuItem1_Click);
+            // 
+            // saveWorldsToolStripMenuItem
+            // 
+            this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
+            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
+            this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.saveWorldsToolStripMenuItem_Click);
             // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
-            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.lacationToolStripMenuItem.Text = "Lacation";
             this.lacationToolStripMenuItem.Click += new System.EventHandler(this.lacationToolStripMenuItem_Click);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
-            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
             this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.saveParametresToolStripMenuItem_Click);
             // 
@@ -343,12 +352,14 @@
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
-            // saveWorldsToolStripMenuItem
+            // label1
             // 
-            this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
-            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
-            this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.saveWorldsToolStripMenuItem_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1638, 693);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 16);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "#####";
             // 
             // Form1
             // 
@@ -356,6 +367,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1924, 956);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.viewMode4);
@@ -427,6 +439,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.ToolStripMenuItem saveWorldsToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
     }
 }
 

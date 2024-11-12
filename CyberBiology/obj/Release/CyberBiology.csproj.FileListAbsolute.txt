@@ -51,6 +51,3 @@ D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.exe
 D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.pdb
 D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.Form1.resources
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.Form1.resources
-C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\bin\Release\MathNet.Numerics.dll
-C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\bin\Release\System.ValueTuple.dll
-C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.csproj.CopyComplete

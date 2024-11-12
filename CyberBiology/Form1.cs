@@ -17,7 +17,6 @@ using static CyberBiology.Simulation;
 using static CyberBiology.CellFunctions;
 using static CyberBiology.CellAditionalFunctions;
 using static CyberBiology.ServiceFunctions;
-using MathNet.Numerics.Random;
 using System.Runtime.Serialization.Formatters.Binary;
 using static System.Windows.Forms.AxHost;
 
@@ -69,7 +68,7 @@ namespace CyberBiology
         int cyc;
         int lv;
 
-        public unsafe Form1()
+        public Form1()
         {
             InitializeComponent();
             WORLD_WIDTH = 180 * WorldSizeScroll.Value;
@@ -517,6 +516,7 @@ namespace CyberBiology
             if (isDrawing || !wantToDraw || !GO)
                 return;
 
+            //label1.Text = saveTime;
             ScreenUpdate();
         }
 
@@ -561,7 +561,7 @@ namespace CyberBiology
                 SaveFileName = saveFileDialog1.FileName;
 
                 SaveWorldFile(SaveFileName);
-
+                //label1.Text = saveTime;
             }
             GO = t;
         }
@@ -579,53 +579,45 @@ namespace CyberBiology
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 SaveFileName = openFileDialog1.FileName;
-                String[] Str = File.ReadAllLines(SaveFileName);
-                seed = int.Parse(Str[0]);
-
-                UInt64 state = UInt64.Parse(Str[1]);
-                rand = new StateRandom(seed, state);
-
-                season_str = Str[2];
-                viewMode = int.Parse(Str[3]);
-                WORLD_SIZE = int.Parse(Str[4]);
-                ETM = int.Parse(Str[5]);
-                MTE = int.Parse(Str[6]);
-                ETL = int.Parse(Str[7]);
-                season = int.Parse(Str[8]);
-                age = int.Parse(Str[9]);
-                cell_count = int.Parse(Str[10]);
-                Print_cell_count = int.Parse(Str[11]);
-                WORLD_HEIGHT = int.Parse(Str[12]);
-                WORLD_WIDTH = int.Parse(Str[13]);
-
-                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
-                cells = new int[MAX_CELLS, CELL_SIZE];
-                world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-
-                int Count = 14;
-
-                for (int i = 0; i < seasons.Length; i++)
-                    seasons[i] = int.Parse(Str[Count+i]);
-
-                Count = 14 + seasons.Length;
-
-                for (int x = 0; x < WORLD_WIDTH; x++)
+                using (FileStream fs = new FileStream(SaveFileName, FileMode.Open, FileAccess.Read))
+                using (BinaryReader reader = new BinaryReader(fs, Encoding.UTF8))
                 {
-                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
-                    {
-                        world[x, y] = int.Parse(Str[Count]);
-                            Count++;
-                    }
-                }
-                for (int i = 0; i < MAX_CELLS; i++)
-                {
-                    for (int j = 0; j < CELL_SIZE; j++)
-                    {
-                        cells[i,j] = int.Parse(Str[Count]);
-                            Count++;
-                    }
+                    seed = reader.ReadInt32();
+
+                    UInt64 state = reader.ReadUInt64();
+                    rand = new StateRandom(seed, state);
+
+                    season_str = reader.ReadString();
+                    viewMode = reader.ReadInt32();
+                    WORLD_SIZE = reader.ReadInt32();
+                    ETM = reader.ReadInt32();
+                    MTE = reader.ReadInt32();
+                    ETL = reader.ReadInt32();
+                    currentSeason = reader.ReadInt32();
+                    age = reader.ReadInt32();
+                    cell_count = reader.ReadInt32();
+                    Print_cell_count = reader.ReadInt32();
+                    WORLD_HEIGHT = reader.ReadInt32();
+                    WORLD_WIDTH = reader.ReadInt32();
+
+                    MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
+                    cells = new int[MAX_CELLS, CELL_SIZE];
+                    world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
+                    for (int i = 0; i < seasons.Length; i++)
+                        seasons[i] = reader.ReadInt32();
+
+                    for (int x = 0; x < WORLD_WIDTH; x++)
+                        for (int y = 0; y < WORLD_HEIGHT + 2; y++)
+                            world[x, y] = reader.ReadInt32();
+
+                    for (int i = 0; i < MAX_CELLS; i++)
+                        for (int j = 0; j < CELL_SIZE; j++)
+                            cells[i, j] = reader.ReadInt32();
                 }
             }
+            clock.Reset();
+            //label1.Text = saveTime;
             ScreenUpdate();
         }
         
@@ -747,8 +739,7 @@ namespace CyberBiology
                 cell_count = 0;
                 Print_cell_count = 0;
 
-                clock.Restart();
-                clock.Stop();
+                clock.Reset();
                 Refresh();
             }
         }

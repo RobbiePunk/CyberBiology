@@ -8,16 +8,17 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections;
 using System.Text;
+using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace CyberBiology
 {
 
     public static class ServiceFunctions
     {
-
         public static String SaveDirectory;
         public static String season_str = "Summer";
-
+        public static string saveTime;
         
         public static void FirstCell()
         {
@@ -139,6 +140,10 @@ namespace CyberBiology
 
         public static void SaveWorldFile(string path = "")
         {
+
+            Stopwatch time = new Stopwatch();
+            time.Start();
+
             if (path == "")
             {
                 string catalogName = @"Worlds\";
@@ -152,41 +157,42 @@ namespace CyberBiology
                 path = $"{path}/{age}";
             }
 
-            StreamWriter sw = new StreamWriter(path);
-            sw.WriteLine(seed.ToString());
-            sw.WriteLine(rand.NumberOfInvokes.ToString());
+            //StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.UTF8, 8192*2048);
 
-            sw.WriteLine(season_str);
-            sw.WriteLine(viewMode.ToString());
-            sw.WriteLine(WORLD_SIZE.ToString());
-            sw.WriteLine(ETM.ToString());
-            sw.WriteLine(MTE.ToString());
-            sw.WriteLine(ETL.ToString());
-            sw.WriteLine(season.ToString());
-            sw.WriteLine(age.ToString());
-            sw.WriteLine(cell_count.ToString());
-            sw.WriteLine(Print_cell_count.ToString());
-            sw.WriteLine(WORLD_HEIGHT.ToString());
-            sw.WriteLine(WORLD_WIDTH.ToString());
-
-            for (int i = 0; i < seasons.Length; i++)
-                sw.WriteLine(seasons[i].ToString());
-
-            for (int x = 0; x < WORLD_WIDTH; x++)
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (BinaryWriter sw = new BinaryWriter(fs, Encoding.UTF8))
             {
-                for (int y = 0; y < WORLD_HEIGHT + 2; y++)
-                {
-                    sw.WriteLine(world[x, y].ToString());
-                }
+                sw.Write(seed);
+                sw.Write(rand.NumberOfInvokes);
+
+                sw.Write(season_str);
+                sw.Write(viewMode);
+                sw.Write(WORLD_SIZE);
+                sw.Write(ETM);
+                sw.Write(MTE);
+                sw.Write(ETL);
+                sw.Write(currentSeason);
+                sw.Write(age);
+                sw.Write(cell_count);
+                sw.Write(Print_cell_count);
+                sw.Write(WORLD_HEIGHT);
+                sw.Write(WORLD_WIDTH);
+
+                for (int i = 0; i < seasons.Length; i++)
+                    sw.Write(seasons[i]);
+
+                for (int x = 0; x < WORLD_WIDTH; x++)
+                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
+                        sw.Write(world[x, y]);
+
+                for (int i = 0; i < MAX_CELLS; i++)
+                    for (int j = 0; j < CELL_SIZE; j++)
+                        sw.Write(cells[i, j]);
             }
-            for (int i = 0; i < MAX_CELLS; i++)
-            {
-                for (int j = 0; j < CELL_SIZE; j++)
-                {
-                    sw.WriteLine(cells[i, j].ToString());
-                }
-            }
-            sw.Dispose();
+            //sw.Dispose();
+
+            time.Stop();
+            saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
         }
 
         public static void DrawWorld(Graphics graphics, int mode, int size, int xDrawStartIndex, int yDrawStartIndex)

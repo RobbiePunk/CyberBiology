@@ -32,14 +32,7 @@
         }
       },
       "frameworks": {
-        "net472": {
-          "dependencies": {
-            "MathNet.Numerics": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            }
-          }
-        }
+        "net472": {}
       },
       "runtimes": {
         "win": {
