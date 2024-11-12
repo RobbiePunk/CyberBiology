@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "mk6yBHFmS/4zMgJ9dnR4P81kIelVKC1vy9rQJ0rzVipBX92JdTblqYTKiog40v7BSxiaAo51TOCJzBZ864/XiQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\RobbiePunk\\Projects\\CyberBiology\\CyberBiology\\CyberBiology.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\RobbiePunk\\.nuget\\packages\\mathnet.numerics\\5.0.0\\mathnet.numerics.5.0.0.nupkg.sha512",
+    "C:\\Users\\RobbiePunk\\.nuget\\packages\\system.valuetuple\\4.4.0\\system.valuetuple.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

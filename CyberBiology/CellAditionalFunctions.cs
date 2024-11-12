@@ -7,6 +7,125 @@ namespace CyberBiology
 {
     public static class CellAditionalFunctions
     {
+        public static int GetLightForHeight(int y, int s)
+        {
+            int light = s - ((y / (WORLD_HEIGHT / 96) - 1) / 8);
+            return light > 0 ? light : 0;
+        }
+
+        public static void EarthBlockCreate(int num)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                int x = X_from_vector_a(num, i);
+                int y = Y_from_vector_a(num, i);
+                if (world[x, y] > 0)
+                {
+                    if (cells[world[x, y], LIVING] == LV_EARTH || cells[world[x, y], LIVING] == LV_FALLING_EARTH)
+                    {
+                        if (cells[num, MIND_SIZE + i] == world[x, y])
+                        {
+                            cells[num, MIND_SIZE - i]++;
+                            if (cells[num, MIND_SIZE - i] > 500)
+                            {
+                                cells[num, MIND_SIZE - i] = 500;
+                            }
+                        }
+                        else
+                        {
+                            cells[num, MIND_SIZE + i] = world[x, y];
+                            cells[num, MIND_SIZE - i] = 0;
+                        }
+                    }
+                    else
+                    {
+                        cells[num, MIND_SIZE + i] = 0;
+                        cells[num, MIND_SIZE - i] = 0;
+                    }
+                }
+                else
+                {
+                    cells[num, MIND_SIZE + i] = 0;
+                    cells[num, MIND_SIZE - i] = 0;
+                }
+            }
+        }
+        public static void delete_cell(int num)
+        {
+            world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
+            cells[cells[num, PREV], NEXT] = cells[num, NEXT];
+            cells[cells[num, NEXT], PREV] = cells[num, PREV];
+            for (int i = M1; i <= M8; i++)
+            {
+                if (cells[num, i] != 0)
+                {
+                    for (int j = M1; j <= M8; j++)
+                    {
+                        if (cells[cells[num, i], j] == num)
+                        {
+                            cells[cells[num, i], j] = 0;
+                            break;
+                        }
+                    }
+                    cells[num, i] = 0;
+                }
+            }
+            cells[num, LIVING] = LV_FREE;
+        }
+        public static void move_cell(int num, int x, int y)
+        {
+            world[x, y] = num;
+            world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
+            cells[num, X_COORD] = x;
+            cells[num, Y_COORD] = y;
+        }
+        public static void Fall(int num)
+        {
+            int x = cells[num, X_COORD];
+            int y = cells[num, Y_COORD] + 1;
+
+            if (world[x, y] == WC_EMPTY)
+            {
+                world[x, y - 1] = WC_EMPTY;
+                world[x, y] = num;
+                cells[num, Y_COORD] = y;
+            }
+        }
+
+        public static void Pressure(int num)
+        {
+            cells[num, PUSH] = 0;
+            int x = cells[num, X_COORD];
+            int cy = cells[num, Y_COORD];
+            if (world[x, cy + 1] == WC_WALL || cells[world[x, cy + 1], LIVING] >= LV_EARTH)
+            {
+                for (int y = cy - 1; y > 1; y--)
+                {
+                    if (world[x, y] > 0)
+                    {
+                        int S = cells[world[x, y], LIVING];
+                        if (S == LV_DEAD)
+                        {
+                            cells[num, PUSH]++;
+                        }
+                        else if (S == LV_FALLING_EARTH)
+                        {
+                            cells[num, PUSH] += 2;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                }
+            }
+        }
+
         public static int isEarthBlock(int num)
         {
             int n = 0;
@@ -208,5 +327,100 @@ namespace CyberBiology
         {
             cells[num, ADR] = (cells[num, ADR] + cells[num, (cells[num, ADR] + a) % MIND_SIZE]) % MIND_SIZE;
         }
+
+        public static void go_GREEN(int num, int val)
+        {
+            if (cells[num, C_GREEN] + val > 255)
+            {
+                cells[num, C_GREEN] = 255;
+            }
+            else
+            {
+                cells[num, C_GREEN] += val;
+            }
+
+            int vl = val / 2;
+
+            if (cells[num, C_RED] - vl < 0)
+            {
+                cells[num, C_RED] = 0;
+            }
+            else
+            {
+                cells[num, C_RED] -= vl;
+            }
+
+            if (cells[num, C_BLUE] - vl < 0)
+            {
+                cells[num, C_BLUE] = 0;
+            }
+            else
+            {
+                cells[num, C_BLUE] -= vl;
+            }
+        }
+        public static void go_RED(int num, int val)
+        {
+            if (cells[num, C_RED] + val > 255)
+            {
+                cells[num, C_RED] = 255;
+            }
+            else
+            {
+                cells[num, C_RED] += val;
+            }
+
+            int vl = val / 2;
+
+            if (cells[num, C_GREEN] - vl < 0)
+            {
+                cells[num, C_GREEN] = 0;
+            }
+            else
+            {
+                cells[num, C_GREEN] -= vl;
+            }
+
+            if (cells[num, C_BLUE] - vl < 0)
+            {
+                cells[num, C_BLUE] = 0;
+            }
+            else
+            {
+                cells[num, C_BLUE] -= vl;
+            }
+        }
+        public static void go_BLUE(int num, int val)
+        {
+            if (cells[num, C_BLUE] + val > 255)
+            {
+                cells[num, C_BLUE] = 255;
+            }
+            else
+            {
+                cells[num, C_BLUE] += val;
+            }
+
+            int vl = val / 2;
+
+            if (cells[num, C_GREEN] - vl < 0)
+            {
+                cells[num, C_GREEN] = 0;
+            }
+            else
+            {
+                cells[num, C_GREEN] -= vl;
+            }
+
+            if (cells[num, C_RED] - vl < 0)
+            {
+                cells[num, C_RED] = 0;
+            }
+            else
+            {
+                cells[num, C_RED] -= vl;
+            }
+        }
+
     }
 }

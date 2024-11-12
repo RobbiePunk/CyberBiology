@@ -1,13 +1,41 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using MathNet.Numerics.Random;
 
 namespace CyberBiology
 {
+    public class StateRandom : System.Random
+    {
+        UInt64 _numberOfInvokes;
+
+        public UInt64 NumberOfInvokes { get { return _numberOfInvokes; } }
+
+        public StateRandom(int Seed, UInt64 forward = 0) : base(Seed)
+        {
+            for (UInt64 i = 0; i < forward; ++i)
+                Next();
+        }
+
+        public override Int32 Next(Int32 maxValue)
+        {
+            _numberOfInvokes += 1;
+            return base.Next(maxValue);
+        }
+
+        public override Int32 Next()
+        {
+            _numberOfInvokes += 1;
+            return base.Next();
+        }
+    }
+
     public static class Simulation
     {
         public static int seed = 1;
         public static Stopwatch clock = new Stopwatch();
-        public static Random rand = new Random(seed);
+        public static StateRandom rand = new StateRandom(1);//new MathNet.Numerics.Random.Random(seed);
 
 
         public static int WORLD_WIDTH = 360;
@@ -34,6 +62,8 @@ namespace CyberBiology
         public static int cell_count;
         public static int Print_cell_count;
 
+        public static int viewMode = 1;
+        public static int WORLD_SIZE = 6;
 
     }
 }

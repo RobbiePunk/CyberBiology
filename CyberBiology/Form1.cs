@@ -17,6 +17,9 @@ using static CyberBiology.Simulation;
 using static CyberBiology.CellFunctions;
 using static CyberBiology.CellAditionalFunctions;
 using static CyberBiology.ServiceFunctions;
+using MathNet.Numerics.Random;
+using System.Runtime.Serialization.Formatters.Binary;
+using static System.Windows.Forms.AxHost;
 
 namespace CyberBiology
 {
@@ -45,14 +48,13 @@ namespace CyberBiology
         bool wantToDraw = true;
         int drawInterval = 100;
 
+        bool saveWorld = false;
         bool saveImage = false;
         bool tryToSave = false;
+        public int worldSaveStep = 1000;
         public int imageSaveStep = 100;
         public int imageSaveSize = 10;
         public int[] imageSaveViewMode = { 1, 0, 0, 0};
-
-        int viewMode = 1;
-        int WORLD_SIZE = 6;
 
         int xDrawStartIndex = 0;
         int yDrawStartIndex = 0;
@@ -94,7 +96,7 @@ namespace CyberBiology
             }
 
             seed = new Random().Next();
-            rand = new Random(seed);
+            rand = new StateRandom(seed);
 
             drawWorld = (int[,])world.Clone();
             FirstCell();
@@ -119,6 +121,9 @@ namespace CyberBiology
 
             if (imageSaveStep != 0 && age % imageSaveStep == 0 && saveImage)
                 SaveImagePng();
+
+            if (worldSaveStep != 0 && age % worldSaveStep == 0 && saveWorld)
+                SaveWorldFile();
 
             if (age % 10000 == 0)
             {
@@ -477,12 +482,12 @@ namespace CyberBiology
                     int mode = i + 1;
                     DrawWorld(GR_save, i + 1, imageSaveSize, xDrawStartIndex, yDrawStartIndex);
 
-                    string catalogName = @"Image\" + mode.ToString();
+                    string catalogName = @"Images\" + mode.ToString();
                     string path;
-                    if (SaveImageDirectory == null)
+                    if (SaveDirectory == null)
                         path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
                     else
-                        path = $"{SaveImageDirectory}/{catalogName}";
+                        path = $"{SaveDirectory}/{catalogName}";
 
                     if (!Directory.Exists(path))
                         Directory.CreateDirectory(path);
@@ -554,41 +559,8 @@ namespace CyberBiology
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 SaveFileName = saveFileDialog1.FileName;
-                //File.WriteAllText(SaveFileName, File.ReadAllText("Save1.txt"));
 
-                StreamWriter sw = new StreamWriter(SaveFileName);
-                sw.WriteLine(seed.ToString());
-                sw.WriteLine(season_str);
-                sw.WriteLine(viewMode.ToString());
-                sw.WriteLine(WORLD_SIZE.ToString());
-                sw.WriteLine(ETM.ToString());
-                sw.WriteLine(MTE.ToString());
-                sw.WriteLine(ETL.ToString());
-                sw.WriteLine(season.ToString());
-                sw.WriteLine(age.ToString());
-                sw.WriteLine(cell_count.ToString());
-                sw.WriteLine(Print_cell_count.ToString());
-                sw.WriteLine(WORLD_HEIGHT.ToString());
-                sw.WriteLine(WORLD_WIDTH.ToString());
-
-                for (int i = 0; i < seasons.Length; i++)
-                    sw.WriteLine(seasons[i].ToString());
-
-                for (int x = 0; x < WORLD_WIDTH; x++)
-                {
-                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
-                    {
-                        sw.WriteLine(world[x, y].ToString());
-                    }
-                }
-                for (int i = 0; i < MAX_CELLS; i++)
-                {
-                    for (int j = 0; j < CELL_SIZE; j++)
-                    {
-                        sw.WriteLine(cells[i, j].ToString());
-                    }
-                }
-                sw.Dispose();
+                SaveWorldFile(SaveFileName);
 
             }
             GO = t;
@@ -609,31 +581,33 @@ namespace CyberBiology
                 SaveFileName = openFileDialog1.FileName;
                 String[] Str = File.ReadAllLines(SaveFileName);
                 seed = int.Parse(Str[0]);
-                rand = new Random(seed);
 
-                season_str = Str[1];
-                viewMode = int.Parse(Str[2]);
-                WORLD_SIZE = int.Parse(Str[3]);
-                ETM = int.Parse(Str[4]);
-                MTE = int.Parse(Str[5]);
-                ETL = int.Parse(Str[6]);
-                season = int.Parse(Str[7]);
-                age = int.Parse(Str[8]);
-                cell_count = int.Parse(Str[9]);
-                Print_cell_count = int.Parse(Str[10]);
-                WORLD_HEIGHT = int.Parse(Str[11]);
-                WORLD_WIDTH = int.Parse(Str[12]);
+                UInt64 state = UInt64.Parse(Str[1]);
+                rand = new StateRandom(seed, state);
+
+                season_str = Str[2];
+                viewMode = int.Parse(Str[3]);
+                WORLD_SIZE = int.Parse(Str[4]);
+                ETM = int.Parse(Str[5]);
+                MTE = int.Parse(Str[6]);
+                ETL = int.Parse(Str[7]);
+                season = int.Parse(Str[8]);
+                age = int.Parse(Str[9]);
+                cell_count = int.Parse(Str[10]);
+                Print_cell_count = int.Parse(Str[11]);
+                WORLD_HEIGHT = int.Parse(Str[12]);
+                WORLD_WIDTH = int.Parse(Str[13]);
 
                 MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
                 cells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
-                int Count = 13;
+                int Count = 14;
 
                 for (int i = 0; i < seasons.Length; i++)
                     seasons[i] = int.Parse(Str[Count+i]);
 
-                Count = 13 + seasons.Length;
+                Count = 14 + seasons.Length;
 
                 for (int x = 0; x < WORLD_WIDTH; x++)
                 {
@@ -733,7 +707,7 @@ namespace CyberBiology
                     MTE = 2;
 
                     seed = new Random().Next();
-                    rand = new Random(seed);
+                    rand = new StateRandom(seed);
 
                     FirstCell();
                 }
@@ -743,7 +717,8 @@ namespace CyberBiology
                     seasons = new int[] { 33, 30, 27, 30 };
                     MTE = 3;
 
-                    rand = new Random(1);
+                    seed = 1;
+                    rand = new StateRandom(1);
 
                     CreatePerformanceTestWorld();
                 }
@@ -814,7 +789,7 @@ namespace CyberBiology
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                SaveImageDirectory = folderBrowserDialog1.SelectedPath;
+                SaveDirectory = folderBrowserDialog1.SelectedPath;
             }
         }
 
@@ -878,6 +853,12 @@ namespace CyberBiology
         {
             //Кастомный размер поля
             //button11_Click(sender, e);
+        }
+
+        private void saveWorldsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveWorld = !saveWorld;
+            saveWorldsToolStripMenuItem.Checked = saveWorld;
         }
     }
     #endregion

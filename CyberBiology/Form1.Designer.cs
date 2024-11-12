@@ -57,6 +57,7 @@
             this.viewMode4 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.saveWorldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
@@ -266,30 +267,31 @@
             // 
             this.saveImagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveImagesToolStripMenuItem1,
+            this.saveWorldsToolStripMenuItem,
             this.lacationToolStripMenuItem,
             this.saveParametresToolStripMenuItem});
             this.saveImagesToolStripMenuItem.Name = "saveImagesToolStripMenuItem";
-            this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
-            this.saveImagesToolStripMenuItem.Text = "Save Images";
+            this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
+            this.saveImagesToolStripMenuItem.Text = "Saves";
             // 
             // saveImagesToolStripMenuItem1
             // 
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(200, 26);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.saveImagesToolStripMenuItem1_Click);
             // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
-            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.lacationToolStripMenuItem.Text = "Lacation";
             this.lacationToolStripMenuItem.Click += new System.EventHandler(this.lacationToolStripMenuItem_Click);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
-            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
             this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.saveParametresToolStripMenuItem_Click);
             // 
@@ -340,6 +342,13 @@
             this.button11.Text = ">";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // saveWorldsToolStripMenuItem
+            // 
+            this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
+            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
+            this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.saveWorldsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -417,6 +426,7 @@
         private System.Windows.Forms.Button viewMode4;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.ToolStripMenuItem saveWorldsToolStripMenuItem;
     }
 }
 
