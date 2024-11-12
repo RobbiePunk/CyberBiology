@@ -93,6 +93,9 @@ namespace CyberBiology
                 x++;
             }
 
+            seed = new Random().Next();
+            rand = new Random(seed);
+
             drawWorld = (int[,])world.Clone();
             FirstCell();
             ScreenUpdate();
@@ -550,6 +553,7 @@ namespace CyberBiology
                 //File.WriteAllText(SaveFileName, File.ReadAllText("Save1.txt"));
 
                 StreamWriter sw = new StreamWriter(SaveFileName);
+                sw.WriteLine(seed.ToString());
                 sw.WriteLine(season_str);
                 sw.WriteLine(viewMode.ToString());
                 sw.WriteLine(WORLD_SIZE.ToString());
@@ -586,52 +590,46 @@ namespace CyberBiology
             GO = t;
         }
 
-        private void Stop_Play(object sender, EventArgs e)
-        {
-            GO = !GO;
-            if (GO)
-            {
-                t = new System.Threading.Thread(MainFunction);
-                t.Start();
-                clock.Start();
-                WORLD_BOX.Invalidate();
-            }
-            else
-            {
-                clock.Stop();
-            }
-        }
-
         private void Load_file(object sender, EventArgs e)
         {
-            GO = false;
-            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (GO)
+                Stop_Play(sender, e);
+
+            if (age > 0)
+                if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    return;
+
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 SaveFileName = openFileDialog1.FileName;
                 String[] Str = File.ReadAllLines(SaveFileName);
-                season_str = Str[0];
-                viewMode = int.Parse(Str[1]);
-                WORLD_SIZE = int.Parse(Str[2]);
-                ETM = int.Parse(Str[3]);
-                MTE = int.Parse(Str[4]);
-                ETL = int.Parse(Str[5]);
-                season = int.Parse(Str[6]);
-                age = int.Parse(Str[7]);
-                cell_count = int.Parse(Str[8]);
-                Print_cell_count = int.Parse(Str[9]);
-                WORLD_HEIGHT = int.Parse(Str[10]);
-                WORLD_WIDTH = int.Parse(Str[11]);
+                seed = int.Parse(Str[0]);
+                rand = new Random(seed);
+
+                season_str = Str[1];
+                viewMode = int.Parse(Str[2]);
+                WORLD_SIZE = int.Parse(Str[3]);
+                ETM = int.Parse(Str[4]);
+                MTE = int.Parse(Str[5]);
+                ETL = int.Parse(Str[6]);
+                season = int.Parse(Str[7]);
+                age = int.Parse(Str[8]);
+                cell_count = int.Parse(Str[9]);
+                Print_cell_count = int.Parse(Str[10]);
+                WORLD_HEIGHT = int.Parse(Str[11]);
+                WORLD_WIDTH = int.Parse(Str[12]);
 
                 MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
                 cells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
-                int Count = 12;
+                int Count = 13;
 
                 for (int i = 0; i < seasons.Length; i++)
                     seasons[i] = int.Parse(Str[Count+i]);
 
-                Count = 12 + seasons.Length;
+                Count = 13 + seasons.Length;
 
                 for (int x = 0; x < WORLD_WIDTH; x++)
                 {
@@ -650,7 +648,25 @@ namespace CyberBiology
                     }
                 }
             }
+            ScreenUpdate();
         }
+        
+        private void Stop_Play(object sender, EventArgs e)
+        {
+            GO = !GO;
+            if (GO)
+            {
+                t = new System.Threading.Thread(MainFunction);
+                t.Start();
+                clock.Start();
+                WORLD_BOX.Invalidate();
+            }
+            else
+            {
+                clock.Stop();
+            }
+        }
+
 
         private void ViewMode1(object sender, EventArgs e)
         {
@@ -713,7 +729,8 @@ namespace CyberBiology
                     seasons = new int[]{ 11, 10, 9, 10};
                     MTE = 2;
 
-                    rand = new Random();
+                    seed = new Random().Next();
+                    rand = new Random(seed);
 
                     FirstCell();
                 }

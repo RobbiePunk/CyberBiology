@@ -5,8 +5,9 @@ namespace CyberBiology
 {
     public static class Simulation
     {
+        public static int seed = 1;
         public static Stopwatch clock = new Stopwatch();
-        public static Random rand = new Random();
+        public static Random rand = new Random(seed);
 
 
         public static int WORLD_WIDTH = 360;
