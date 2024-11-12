@@ -19,6 +19,9 @@ namespace CyberBiology
         public static String SaveDirectory;
         public static String season_str = "Summer";
         public static string saveTime;
+
+        public static long prev_milliseconds = 0;
+        public static int prev_age = 0;
         
         public static void FirstCell()
         {
@@ -140,7 +143,6 @@ namespace CyberBiology
 
         public static void SaveWorldFile(string path = "")
         {
-
             Stopwatch time = new Stopwatch();
             time.Start();
 
@@ -322,9 +324,12 @@ namespace CyberBiology
             graphics.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             BR, 400, 10);
 
-            if (clock.ElapsedMilliseconds != 0)
-                graphics.DrawString("IPS: " + (age * 1000f / clock.ElapsedMilliseconds).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            if (clock.ElapsedMilliseconds != 0 && clock.IsRunning)
+                graphics.DrawString("IPS: " + ((age - prev_age) * 1000f / (clock.ElapsedMilliseconds - prev_milliseconds)).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 600, 10);
+
+            prev_milliseconds = clock.ElapsedMilliseconds;
+            prev_age = age;
         }
     }
 }

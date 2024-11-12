@@ -19,6 +19,7 @@ using static CyberBiology.CellAditionalFunctions;
 using static CyberBiology.ServiceFunctions;
 using System.Runtime.Serialization.Formatters.Binary;
 using static System.Windows.Forms.AxHost;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace CyberBiology
 {
@@ -472,6 +473,9 @@ namespace CyberBiology
 
         private void SaveImagePng()
         {
+            Stopwatch time = new Stopwatch();
+            time.Start();
+
             drawWorld = (int[,])world.Clone();
             drawCells = (int[,])cells.Clone();
 
@@ -490,10 +494,10 @@ namespace CyberBiology
 
                     if (!Directory.Exists(path))
                         Directory.CreateDirectory(path);
-
                     bmpSave.Save($"{path}/{age}.png");
                 }
 
+            saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
             tryToSave = false;
         }
 
@@ -561,7 +565,7 @@ namespace CyberBiology
                 SaveFileName = saveFileDialog1.FileName;
 
                 SaveWorldFile(SaveFileName);
-                //label1.Text = saveTime;
+                label1.Text = saveTime;
             }
             GO = t;
         }
@@ -617,7 +621,12 @@ namespace CyberBiology
                 }
             }
             clock.Reset();
-            //label1.Text = saveTime;
+
+            imageSaveSize = 1920 / (WORLD_WIDTH);
+            prev_milliseconds = 0;
+            prev_age = age;
+
+            label1.Text = saveTime;
             ScreenUpdate();
         }
         
@@ -740,6 +749,7 @@ namespace CyberBiology
                 Print_cell_count = 0;
 
                 clock.Reset();
+                prev_milliseconds = 0;
                 Refresh();
             }
         }
