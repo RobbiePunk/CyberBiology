@@ -141,6 +141,138 @@ namespace CyberBiology
             return (a);
         }
 
+        public static void TestSaveWorldFile(string path = "")
+        {
+            Stopwatch time = new Stopwatch();
+            time.Start();
+
+            if (path == "")
+            {
+                string catalogName = @"Worlds\";
+                if (SaveDirectory == null)
+                    path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
+                else
+                    path = $"{SaveDirectory}/{catalogName}";
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+                path = $"{path}/{age}";
+            }
+
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (BinaryWriter sw = new BinaryWriter(fs, Encoding.UTF8))
+            {
+                sw.Write(seed);
+                sw.Write(rand.NumberOfInvokes);
+
+                sw.Write(season_str);
+                sw.Write(viewMode);
+                sw.Write(WORLD_SIZE);
+                sw.Write(ETM);
+                sw.Write(MTE);
+                sw.Write(ETL);
+                sw.Write(currentSeason);
+                sw.Write(age);
+                sw.Write(cell_count);
+                sw.Write(Print_cell_count);
+                sw.Write(WORLD_HEIGHT);
+                sw.Write(WORLD_WIDTH);
+
+                for (int i = 0; i < seasons.Length; i++)
+                    sw.Write(seasons[i]);
+
+                for (int x = 0; x < WORLD_WIDTH; x++)
+                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
+                        sw.Write(world[x, y]);
+
+                sw.Write(cells[0, NEXT]);
+
+                for (int i = 1; i < MAX_CELLS; i++)
+                {
+                    int cellState = cells[i, LIVING];
+                    if (cellState == LV_ALIVE)
+                        for (int j = 0; j < CELL_SIZE; j++)
+                            sw.Write(cells[i, j]);
+                    else
+                    {
+                        sw.Write((Int32)(-1));
+                        sw.Write(cells[i, LIVING]);
+                        if(cellState != LV_FREE)
+                        {
+                            sw.Write(cells[i, X_COORD]);
+                            sw.Write(cells[i, Y_COORD]);
+                            sw.Write(cells[i, NEXT]);
+                            sw.Write(cells[i, PREV]);
+                        }
+                    }
+                }
+            }
+
+            time.Stop();
+            saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
+        }
+
+        public static void TestLoadWorldFile(string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (BinaryReader reader = new BinaryReader(fs, Encoding.UTF8))
+            {
+                seed = reader.ReadInt32();
+
+                UInt64 state = reader.ReadUInt64();
+                rand = new StateRandom(seed, state);
+
+                season_str = reader.ReadString();
+                viewMode = reader.ReadInt32();
+                WORLD_SIZE = reader.ReadInt32();
+                ETM = reader.ReadInt32();
+                MTE = reader.ReadInt32();
+                ETL = reader.ReadInt32();
+                currentSeason = reader.ReadInt32();
+                age = reader.ReadInt32();
+                cell_count = reader.ReadInt32();
+                Print_cell_count = reader.ReadInt32();
+                WORLD_HEIGHT = reader.ReadInt32();
+                WORLD_WIDTH = reader.ReadInt32();
+
+                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
+                cells = new int[MAX_CELLS, CELL_SIZE];
+                world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
+                for (int i = 0; i < seasons.Length; i++)
+                    seasons[i] = reader.ReadInt32();
+
+                for (int x = 0; x < WORLD_WIDTH; x++)
+                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
+                        world[x, y] = reader.ReadInt32();
+
+                cells[0, NEXT] = reader.ReadInt32();
+                for (int i = 1; i < MAX_CELLS; i++)
+                {
+                    int cellState = reader.ReadInt32();
+
+                    if (cellState > 0)
+                    {
+                        cells[i, 0] = cellState;
+                        for (int j = 1; j < CELL_SIZE; j++)
+                            cells[i, j] = reader.ReadInt32();
+                    }
+                    else
+                    {
+                        cells[i, LIVING] = reader.ReadInt32();
+                        if (cells[i, LIVING] != LV_FREE)
+                        {
+                            cells[i, X_COORD] = reader.ReadInt32();
+                            cells[i, Y_COORD] = reader.ReadInt32();
+                            cells[i, NEXT] = reader.ReadInt32();
+                            cells[i, PREV] = reader.ReadInt32();
+                        }
+                    }
+                }
+            }
+
+        }
+
         public static void SaveWorldFile(string path = "")
         {
             Stopwatch time = new Stopwatch();

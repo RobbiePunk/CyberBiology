@@ -123,7 +123,7 @@ namespace CyberBiology
                 SaveImagePng();
 
             if (worldSaveStep != 0 && age % worldSaveStep == 0 && saveWorld)
-                SaveWorldFile();
+                TestSaveWorldFile();
 
             if (age % 10000 == 0)
             {
@@ -583,50 +583,16 @@ namespace CyberBiology
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 SaveFileName = openFileDialog1.FileName;
-                using (FileStream fs = new FileStream(SaveFileName, FileMode.Open, FileAccess.Read))
-                using (BinaryReader reader = new BinaryReader(fs, Encoding.UTF8))
-                {
-                    seed = reader.ReadInt32();
+                TestLoadWorldFile(SaveFileName);
+            
+                clock.Reset();
 
-                    UInt64 state = reader.ReadUInt64();
-                    rand = new StateRandom(seed, state);
+                imageSaveSize = 1920 / (WORLD_WIDTH);
+                prev_milliseconds = 0;
+                prev_age = age;
 
-                    season_str = reader.ReadString();
-                    viewMode = reader.ReadInt32();
-                    WORLD_SIZE = reader.ReadInt32();
-                    ETM = reader.ReadInt32();
-                    MTE = reader.ReadInt32();
-                    ETL = reader.ReadInt32();
-                    currentSeason = reader.ReadInt32();
-                    age = reader.ReadInt32();
-                    cell_count = reader.ReadInt32();
-                    Print_cell_count = reader.ReadInt32();
-                    WORLD_HEIGHT = reader.ReadInt32();
-                    WORLD_WIDTH = reader.ReadInt32();
-
-                    MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
-                    cells = new int[MAX_CELLS, CELL_SIZE];
-                    world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-
-                    for (int i = 0; i < seasons.Length; i++)
-                        seasons[i] = reader.ReadInt32();
-
-                    for (int x = 0; x < WORLD_WIDTH; x++)
-                        for (int y = 0; y < WORLD_HEIGHT + 2; y++)
-                            world[x, y] = reader.ReadInt32();
-
-                    for (int i = 0; i < MAX_CELLS; i++)
-                        for (int j = 0; j < CELL_SIZE; j++)
-                            cells[i, j] = reader.ReadInt32();
-                }
+                label1.Text = saveTime;
             }
-            clock.Reset();
-
-            imageSaveSize = 1920 / (WORLD_WIDTH);
-            prev_milliseconds = 0;
-            prev_age = age;
-
-            label1.Text = saveTime;
             ScreenUpdate();
         }
         
