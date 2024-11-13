@@ -20,6 +20,9 @@ namespace CyberBiology
         public static String season_str = "Summer";
         public static string saveTime;
 
+        public static float IPS = 0;
+        public static bool isDrawing = true;
+
         public static long prev_milliseconds = 0;
         public static int prev_age = 0;
         
@@ -273,7 +276,7 @@ namespace CyberBiology
 
         }
 
-        public static void DrawWorld(Graphics graphics, int mode, int size, int xDrawStartIndex, int yDrawStartIndex)
+        public static void DrawWorld(Graphics graphics, int mode, int size, int xDrawStartIndex, int yDrawStartIndex, float ips = -1)
         {
             SolidBrush BR = new SolidBrush(Color.White);
             graphics.Clear(Color.White);
@@ -400,8 +403,12 @@ namespace CyberBiology
             graphics.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
             BR, 400, 10);
 
-            if (clock.ElapsedMilliseconds != 0 && clock.IsRunning)
-                graphics.DrawString("IPS: " + ((age - prev_age) * 1000f / (clock.ElapsedMilliseconds - prev_milliseconds)).ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+            if (ips > 0)
+                IPS = ips;
+            else if (clock.ElapsedMilliseconds != 0 && clock.IsRunning)
+                IPS = (age - prev_age) * 1000f / (clock.ElapsedMilliseconds - prev_milliseconds);
+            
+            graphics.DrawString($"IPS: {IPS}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 600, 10);
 
             prev_milliseconds = clock.ElapsedMilliseconds;

@@ -44,7 +44,6 @@ namespace CyberBiology
         bool GO = false;
         bool performanceTest = false;
 
-        bool isDrawing = false;
         bool wantToDraw = true;
         int drawInterval = 100;
 
@@ -60,14 +59,6 @@ namespace CyberBiology
         int yDrawStartIndex = 0;
         int xScreenSize = 1100;
         int yScreenSize = 600;
-
-        int SPF = 1;
-
-        
-
-        //Cells step locals
-        int cyc;
-        int lv;
 
         public Form1()
         {
@@ -100,10 +91,6 @@ namespace CyberBiology
 
             SetWorldSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-            //drawWorld = (int[,])world.Clone();
-            //FirstCell();
-            //ScreenUpdate();
-            //WORLD_BOX.Invalidate();
         }
 
         public void OneStep()
@@ -154,11 +141,11 @@ namespace CyberBiology
 
         int cell_step(int num)
         {
-            lv = cells[num, LIVING];
+            int lv = cells[num, LIVING];
             if (lv == LV_DEAD)
             {
                 Fall(num);
-                Pressure(num);
+                //Pressure(num);
                 if(cells[num,PUSH] > 31)
                 {
                     int x = cells[num, X_COORD];
@@ -198,7 +185,7 @@ namespace CyberBiology
             {
                 return (cells[num, NEXT]);
             }
-            cyc = 0;
+            int cyc = 0;
         ag:
             cyc++;
             if (cyc < 10)
@@ -475,17 +462,20 @@ namespace CyberBiology
 
         private void SaveImagePng()
         {
-            Stopwatch time = new Stopwatch();
-            time.Start();
-
+            tryToSave = true;
+            //Stopwatch time = new Stopwatch();
+            //time.Start();
+            
             drawWorld = (int[,])world.Clone();
             drawCells = (int[,])cells.Clone();
+
+            float ips = IPS;
 
             for (int i = 0; i < imageSaveViewMode.Length; i++)
                 if (imageSaveViewMode[i] == 1)
                 {
                     int mode = i + 1;
-                    DrawWorld(GR_save, i + 1, imageSaveSize, xDrawStartIndex, yDrawStartIndex);
+                    DrawWorld(GR_save, i + 1, imageSaveSize, xDrawStartIndex, yDrawStartIndex, ips);
 
                     string catalogName = @"Images\" + mode.ToString();
                     string path;
@@ -499,8 +489,9 @@ namespace CyberBiology
                     bmpSave.Save($"{path}/{age}.png");
                 }
 
-            saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
+            //saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
             tryToSave = false;
+            WORLD_BOX.Invalidate();
         }
 
         private void ScreenUpdate()
@@ -519,10 +510,9 @@ namespace CyberBiology
 
         private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
         {
-            if (isDrawing || !wantToDraw || !GO)
+            if (isDrawing || !wantToDraw || !GO || tryToSave)
                 return;
 
-            //label1.Text = saveTime;
             ScreenUpdate();
         }
 
@@ -821,6 +811,7 @@ namespace CyberBiology
             if(wantToDraw)
             {
                 button10.Text = "Turn Off Drawing";
+                ScreenUpdate();
                 WORLD_BOX.Invalidate();
             }
             else
