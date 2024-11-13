@@ -27,6 +27,7 @@ namespace CyberBiology
         {
             xSizeTB.Text = WORLD_WIDTH.ToString();
             ySizeTB.Text = WORLD_HEIGHT.ToString();
+            checkBox1.Checked = isPressure;
         }
 
         private void ApplyBT_Click(object sender, EventArgs e)
@@ -40,6 +41,11 @@ namespace CyberBiology
                     mainForm.SetWorldSize(newWidth, newHeight);
                 }
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            isPressure = checkBox1.Checked;
         }
     }
 }

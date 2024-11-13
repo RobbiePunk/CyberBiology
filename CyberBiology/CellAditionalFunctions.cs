@@ -1,6 +1,7 @@
 ﻿using System;
 using static CyberBiology.Constants;
 using static CyberBiology.Simulation;
+using static CyberBiology.CellFunctions;
 using static CyberBiology.ServiceFunctions;
 
 namespace CyberBiology
@@ -9,9 +10,8 @@ namespace CyberBiology
     {
         public static int GetLightForHeight(int y, int s)
         {
-            //int light = s - ((y / ((WORLD_HEIGHT / 96)) - 1) / 8);
-            int light = s - ((96 * y / WORLD_HEIGHT - 1) / 8);
-            return light > 0 ? light : 0;
+            int light = s - ((96 * y  / WORLD_HEIGHT - 1) / 8);
+            return (light > 0) ? light : 0;
         }
 
         public static void EarthBlockCreate(int num)
@@ -80,6 +80,10 @@ namespace CyberBiology
             world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
             cells[num, X_COORD] = x;
             cells[num, Y_COORD] = y;
+        }
+        public static int push_cell(int num, int dr)
+        {
+            return cell_move(num, dr, 1);
         }
         public static void Fall(int num)
         {

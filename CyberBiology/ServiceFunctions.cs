@@ -38,12 +38,12 @@ namespace CyberBiology
             cells[1, C_GREEN] = 170;
             cells[1, C_BLUE] = 170;
 
-            cells[1, ENERGY] = 990;
+            cells[1, ENERGY] = 900;
             cells[1, MINERAL] = 0;
             cells[1, LIVING] = LV_ALIVE;
             cells[1, DIRECT] = 5;
             cells[1, X_COORD] = WORLD_WIDTH / 2;
-            cells[1, Y_COORD] = WORLD_HEIGHT / 3;
+            cells[1, Y_COORD] = WORLD_HEIGHT / 4 + 1;
 
             cells[1, CELL_AGE] = 0;
 
@@ -51,7 +51,7 @@ namespace CyberBiology
             {
                 cells[1, j] = 0;
             }
-            world[WORLD_WIDTH / 2, WORLD_HEIGHT / 3] = 1;
+            world[cells[1, X_COORD], cells[1, Y_COORD]] = 1;
             int i = 0;
             while (i < MIND_SIZE)
             {
@@ -304,9 +304,14 @@ namespace CyberBiology
                         BR.Color = Color.FromArgb(255, 40, 40, 40);
                         graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
                     }
-                    else if (drawCells[celln, LIVING] == LV_EARTH)
+                    else if (drawCells[celln, LIVING] == LV_EARTH || drawCells[celln, LIVING] == LV_FALLING_EARTH)
                     {
                         BR.Color = Color.FromArgb(255, 150, 100, 0);
+                        graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
+                    }
+                    else if (drawCells[celln, LIVING] == LV_STONE || drawCells[celln, LIVING] == LV_FALLING_STONE)
+                    {
+                        BR.Color = Color.FromArgb(255, 150, 150, 200);
                         graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
                     }
                     else

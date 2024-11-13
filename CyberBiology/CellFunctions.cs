@@ -89,9 +89,13 @@ namespace CyberBiology
             {
                 return (3);
             }
-            if (cells[world[x, y], LIVING] == LV_EARTH)
+            if (cells[world[x, y], LIVING] == LV_EARTH || (cells[world[x, y], LIVING] == LV_FALLING_EARTH))
             {
                 return (7);
+            }
+            if (cells[world[x, y], LIVING] == LV_STONE || (cells[world[x, y], LIVING] == LV_FALLING_STONE))
+            {
+                return (8);
             }
             if (cells[world[x, y], LIVING] == LV_DEAD)
             {

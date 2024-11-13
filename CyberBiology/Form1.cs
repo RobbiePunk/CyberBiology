@@ -135,7 +135,8 @@ namespace CyberBiology
         public void MainFunction()
         {
             season = seasons[currentSeason];
-            while(GO)
+
+            while (GO)
                 OneStep();
         }
 
@@ -145,7 +146,8 @@ namespace CyberBiology
             if (lv == LV_DEAD)
             {
                 Fall(num);
-                //Pressure(num);
+                if(isPressure)
+                    Pressure(num);
                 if(cells[num,PUSH] > 31)
                 {
                     int x = cells[num, X_COORD];
@@ -154,7 +156,7 @@ namespace CyberBiology
                     {
                         delete_cell(world[x, y - 1]);
                     }
-                    cells[num, LIVING] = LV_EARTH;
+                    cells[num, LIVING] = LV_FALLING_EARTH;
                 }
                 return (cells[num, NEXT]);
             }
@@ -177,13 +179,17 @@ namespace CyberBiology
                     {
                         delete_cell(world[x, y - 1]);
                     }
-                    cells[num, LIVING] = LV_STONE;
+                    cells[num, LIVING] = LV_FALLING_STONE;
                 }
                 return (cells[num, NEXT]);
             }
             if(lv == LV_STONE)
             {
                 return (cells[num, NEXT]);
+            }
+            if (lv == LV_FALLING_STONE)
+            {
+                Fall(num);
             }
             int cyc = 0;
         ag:
@@ -662,7 +668,17 @@ namespace CyberBiology
 
                 CreatePerformanceTestWorld();
             }
+            Print_cell_count = 1;
             currentSeason = 0;
+
+            if (currentSeason == 0)
+                season_str = "Summer";
+            else if (currentSeason == 1)
+                season_str = "Autumn";
+            else if (currentSeason == 2)
+                season_str = "Winter";
+            else if (currentSeason == 3)
+                season_str = "Spring";
 
             ScreenUpdate();
             Refresh();

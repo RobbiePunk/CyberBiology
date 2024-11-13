@@ -65,5 +65,7 @@ namespace CyberBiology
         public static int viewMode = 1;
         public static int WORLD_SIZE = 6;
 
+        public static bool isPressure = false;
+
     }
 }
