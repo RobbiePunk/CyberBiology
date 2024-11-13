@@ -193,7 +193,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ImageSaveParametresFrom";
-            this.Text = "ImageSaveParametresFrom";
+            this.Text = "Image Save Parametres";
             this.Load += new System.EventHandler(this.ImageSaveParametresFrom_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericSaveStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();

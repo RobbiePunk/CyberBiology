@@ -59,6 +59,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.worldSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
@@ -261,7 +262,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1924, 28);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -307,7 +308,8 @@
             // тестыToolStripMenuItem
             // 
             this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.worldSettingsToolStripMenuItem});
             this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
             this.тестыToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
             this.тестыToolStripMenuItem.Text = "Simulation";
@@ -315,7 +317,7 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.toolStripMenuItem1.Text = "Performans Test";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -361,6 +363,13 @@
             this.label1.TabIndex = 21;
             this.label1.Text = "#####";
             // 
+            // worldSettingsToolStripMenuItem
+            // 
+            this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.worldSettingsToolStripMenuItem.Text = "World Settings";
+            this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.worldSettingsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -392,7 +401,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Cyeber Biology";
+            this.Text = "Cyber Biology";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -440,6 +449,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.ToolStripMenuItem saveWorldsToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem worldSettingsToolStripMenuItem;
     }
 }
 

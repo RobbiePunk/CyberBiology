@@ -9,3 +9,4 @@ C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Debug\CyberBiology.cs
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Debug\CyberBiology.csproj.CoreCompileInputs.cache
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Debug\CyberBiology.exe
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Debug\CyberBiology.pdb
+C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Debug\CyberBiology.WorldSettingsForm.resources

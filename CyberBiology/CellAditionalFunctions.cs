@@ -9,7 +9,8 @@ namespace CyberBiology
     {
         public static int GetLightForHeight(int y, int s)
         {
-            int light = s - ((y / (WORLD_HEIGHT / 96) - 1) / 8);
+            //int light = s - ((y / ((WORLD_HEIGHT / 96)) - 1) / 8);
+            int light = s - ((96 * y / WORLD_HEIGHT - 1) / 8);
             return light > 0 ? light : 0;
         }
 
@@ -70,6 +71,7 @@ namespace CyberBiology
                     cells[num, i] = 0;
                 }
             }
+
             cells[num, LIVING] = LV_FREE;
         }
         public static void move_cell(int num, int x, int y)

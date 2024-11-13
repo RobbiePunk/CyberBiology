@@ -58,8 +58,8 @@ namespace CyberBiology
 
         int xDrawStartIndex = 0;
         int yDrawStartIndex = 0;
-        int xScreenSize = 1200;
-        int yScreenSize = 650;
+        int xScreenSize = 1100;
+        int yScreenSize = 600;
 
         int SPF = 1;
 
@@ -98,10 +98,12 @@ namespace CyberBiology
             seed = new Random().Next();
             rand = new StateRandom(seed);
 
-            drawWorld = (int[,])world.Clone();
-            FirstCell();
-            ScreenUpdate();
-            WORLD_BOX.Invalidate();
+            SetWorldSize(WORLD_WIDTH, WORLD_HEIGHT);
+
+            //drawWorld = (int[,])world.Clone();
+            //FirstCell();
+            //ScreenUpdate();
+            //WORLD_BOX.Invalidate();
         }
 
         public void OneStep()
@@ -531,7 +533,7 @@ namespace CyberBiology
 
         private void Size_plus(object sender, EventArgs e)
         {
-            if(WORLD_SIZE < 6)
+            if(WORLD_SIZE < 10)
             {
                 WORLD_SIZE++;
                 SetScrollers();
@@ -605,10 +607,13 @@ namespace CyberBiology
                 t.Start();
                 clock.Start();
                 WORLD_BOX.Invalidate();
+                WorldSizeScroll.Enabled = false;
             }
             else
             {
                 clock.Stop();
+                if(age == 0)
+                    WorldSizeScroll.Enabled = true;
             }
         }
 
@@ -642,12 +647,44 @@ namespace CyberBiology
             textBox1.Text = $"Draw every {drawInterval} iteration";
         }
 
-        private void WorldSizeChange(object sender, EventArgs e)
+        public void SetWorldSettings()
+        {
+            if (!performanceTest)
+            {
+                MuteChance = 10;
+
+                seasons = new int[] { 11, 10, 9, 10 };
+                MTE = 2;
+
+                seed = new Random().Next();
+                rand = new StateRandom(seed);
+
+                FirstCell();
+            }
+            else
+            {
+                MuteChance = 0;
+                seasons = new int[] { 33, 30, 27, 30 };
+                MTE = 3;
+
+                seed = 1;
+                rand = new StateRandom(1);
+
+                CreatePerformanceTestWorld();
+            }
+            currentSeason = 0;
+
+            ScreenUpdate();
+            Refresh();
+        }
+
+        public void SetWorldSize(int w, int h)
         {
             if (!GO && age == 0)
             {
-                WORLD_WIDTH = 180 * WorldSizeScroll.Value;
-                WORLD_HEIGHT = 96 * WorldSizeScroll.Value;
+                WORLD_WIDTH = w;
+                WORLD_HEIGHT = h;
+
                 MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
 
                 cells = new int[MAX_CELLS, CELL_SIZE];
@@ -655,8 +692,12 @@ namespace CyberBiology
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
                 drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
-                imageSaveSize = 1920 / (WORLD_WIDTH);
+                imageSaveSize = 1000 / (WORLD_WIDTH);
+                if (imageSaveSize <= 0)
+                    imageSaveSize = 1;
 
+                bmpSave = new Bitmap(imageSaveSize * WORLD_WIDTH + 80, imageSaveSize * WORLD_HEIGHT + 80);
+                GR_save = Graphics.FromImage(bmpSave);
 
                 int x = 0;
                 while (x < WORLD_WIDTH)
@@ -666,37 +707,20 @@ namespace CyberBiology
                     x++;
                 }
 
-                if (!performanceTest)
-                {
-                    MuteChance = 10;
+                SetWorldSettings();
 
-                    seasons = new int[]{ 11, 10, 9, 10};
-                    MTE = 2;
-
-                    seed = new Random().Next();
-                    rand = new StateRandom(seed);
-
-                    FirstCell();
-                }
-                else
-                {
-                    MuteChance = 0;
-                    seasons = new int[] { 33, 30, 27, 30 };
-                    MTE = 3;
-
-                    seed = 1;
-                    rand = new StateRandom(1);
-
-                    CreatePerformanceTestWorld();
-                }
-                currentSeason = 0;
                 SetScrollers();
                 ScreenUpdate();
                 Refresh();
             }
         }
 
-        private void NewSimulate(object sender, EventArgs e)
+        public void WorldSizeChange(object sender, EventArgs e)
+        {
+            SetWorldSize(WorldSizeScroll.Value * 180, WorldSizeScroll.Value * 96);
+        }
+
+        public void NewSimulate(object sender, EventArgs e)
         {
             if (GO)
                 Stop_Play(sender, e);
@@ -708,7 +732,7 @@ namespace CyberBiology
                         return;
 
                 age = 0;
-                WorldSizeChange(sender, e);
+                SetWorldSize(WORLD_WIDTH, WORLD_HEIGHT);
 
                 CELL = 0;
                 cell_count = 0;
@@ -716,6 +740,7 @@ namespace CyberBiology
 
                 clock.Reset();
                 prev_milliseconds = 0;
+                WorldSizeScroll.Enabled = true;
                 Refresh();
             }
         }
@@ -826,6 +851,15 @@ namespace CyberBiology
         {
             saveWorld = !saveWorld;
             saveWorldsToolStripMenuItem.Checked = saveWorld;
+        }
+
+        private void worldSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WorldSettingsForm worldSettingsForm = new WorldSettingsForm();
+
+            worldSettingsForm.mainForm = this;
+
+            worldSettingsForm.ShowDialog();
         }
     }
     #endregion
