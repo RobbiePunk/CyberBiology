@@ -141,7 +141,7 @@ namespace CyberBiology
             return (a);
         }
 
-        public static void TestSaveWorldFile(string path = "")
+        public static void SaveWorldFile(string path = "")
         {
             Stopwatch time = new Stopwatch();
             time.Start();
@@ -212,7 +212,7 @@ namespace CyberBiology
             saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
         }
 
-        public static void TestLoadWorldFile(string path)
+        public static void LoadWorldFile(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             using (BinaryReader reader = new BinaryReader(fs, Encoding.UTF8))
@@ -271,62 +271,6 @@ namespace CyberBiology
                 }
             }
 
-        }
-
-        public static void SaveWorldFile(string path = "")
-        {
-            Stopwatch time = new Stopwatch();
-            time.Start();
-
-            if (path == "")
-            {
-                string catalogName = @"Worlds\";
-                if (SaveDirectory == null)
-                    path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
-                else
-                    path = $"{SaveDirectory}/{catalogName}";
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-                path = $"{path}/{age}";
-            }
-
-            //StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.UTF8, 8192*2048);
-
-            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
-            using (BinaryWriter sw = new BinaryWriter(fs, Encoding.UTF8))
-            {
-                sw.Write(seed);
-                sw.Write(rand.NumberOfInvokes);
-
-                sw.Write(season_str);
-                sw.Write(viewMode);
-                sw.Write(WORLD_SIZE);
-                sw.Write(ETM);
-                sw.Write(MTE);
-                sw.Write(ETL);
-                sw.Write(currentSeason);
-                sw.Write(age);
-                sw.Write(cell_count);
-                sw.Write(Print_cell_count);
-                sw.Write(WORLD_HEIGHT);
-                sw.Write(WORLD_WIDTH);
-
-                for (int i = 0; i < seasons.Length; i++)
-                    sw.Write(seasons[i]);
-
-                for (int x = 0; x < WORLD_WIDTH; x++)
-                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
-                        sw.Write(world[x, y]);
-
-                for (int i = 0; i < MAX_CELLS; i++)
-                    for (int j = 0; j < CELL_SIZE; j++)
-                        sw.Write(cells[i, j]);
-            }
-            //sw.Dispose();
-
-            time.Stop();
-            saveTime = string.Format("{0:00}:{1:00}", time.Elapsed.Seconds, time.Elapsed.Milliseconds);
         }
 
         public static void DrawWorld(Graphics graphics, int mode, int size, int xDrawStartIndex, int yDrawStartIndex)

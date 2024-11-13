@@ -123,7 +123,7 @@ namespace CyberBiology
                 SaveImagePng();
 
             if (worldSaveStep != 0 && age % worldSaveStep == 0 && saveWorld)
-                TestSaveWorldFile();
+                SaveWorldFile();
 
             if (age % 10000 == 0)
             {
@@ -583,7 +583,7 @@ namespace CyberBiology
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 SaveFileName = openFileDialog1.FileName;
-                TestLoadWorldFile(SaveFileName);
+                LoadWorldFile(SaveFileName);
             
                 clock.Reset();
 
