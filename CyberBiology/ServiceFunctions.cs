@@ -22,6 +22,7 @@ namespace CyberBiology
 
         public static float IPS = 0;
         public static bool isDrawing = true;
+        public static bool drawInfo = true;
 
         public static long prev_milliseconds = 0;
         public static int prev_age = 0;
@@ -284,15 +285,25 @@ namespace CyberBiology
             int s = season;
             int maxLight = GetLightForHeight(0, s);
 
+            int xBias = 40;
+            int yBias = 40;
+            if (ips != -1)
+            {
+                xBias = drawInfo ? 40 : 0;
+                yBias = drawInfo ? 40 : 0;
+            }
+
             for (int x = 0; x < WORLD_WIDTH - xDrawStartIndex; x++)
             {
                 for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
                 {
                     int light = GetLightForHeight(y + yDrawStartIndex, s);
 
-                    BR.Color = Color.FromArgb(255, 255 * light / maxLight, 255 * light / maxLight, 0);
-                    graphics.FillRectangle(BR, 10 - xDrawStartIndex * size, y * size + 40, 10, size);
-
+                    if (drawInfo || ips == -1)
+                    {
+                        BR.Color = Color.FromArgb(255, 255 * light / maxLight, 255 * light / maxLight, 0);
+                        graphics.FillRectangle(BR, 10 - xDrawStartIndex * size, y * size + yBias, 10, size);
+                    }
 
                     int celln = drawWorld[x + xDrawStartIndex, y + yDrawStartIndex];
                     if (celln == WC_EMPTY)
@@ -302,17 +313,17 @@ namespace CyberBiology
                     else if (celln == WC_WALL)
                     { 
                         BR.Color = Color.FromArgb(255, 40, 40, 40);
-                        graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
+                        graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
                     else if (drawCells[celln, LIVING] == LV_EARTH || drawCells[celln, LIVING] == LV_FALLING_EARTH)
                     {
                         BR.Color = Color.FromArgb(255, 150, 100, 0);
-                        graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
+                        graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
                     else if (drawCells[celln, LIVING] == LV_STONE || drawCells[celln, LIVING] == LV_FALLING_STONE)
                     {
                         BR.Color = Color.FromArgb(255, 150, 150, 200);
-                        graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
+                        graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
                     else
                     {
@@ -375,47 +386,50 @@ namespace CyberBiology
                         else
                         {
                             BR.Color = Color.FromArgb(255, 100, 100, 100);
-                            graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
+                            graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                         }
                     }
                 }
             }
 
-            if (season_str == "Summer")
-                BR.Color = Color.FromArgb(255, 240, 240, 20);
-            else if (season_str == "Autumn")
-                BR.Color = Color.FromArgb(255, 240, 60, 0);
-            else if (season_str == "Winter")
-                BR.Color = Color.FromArgb(255, 30, 60, 240);
-            else
-                BR.Color = Color.FromArgb(255, 50, 240, 50);
+            if (drawInfo || ips == -1)
+            {
+                if (season_str == "Summer")
+                    BR.Color = Color.FromArgb(255, 240, 240, 20);
+                else if (season_str == "Autumn")
+                    BR.Color = Color.FromArgb(255, 240, 60, 0);
+                else if (season_str == "Winter")
+                    BR.Color = Color.FromArgb(255, 30, 60, 240);
+                else
+                    BR.Color = Color.FromArgb(255, 50, 240, 50);
 
-            graphics.FillRectangle(BR, 300, 10, 70, 20);
+                graphics.FillRectangle(BR, 300, 10, 70, 20);
 
-            BR.Color = Color.Black;
-            graphics.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 40, 10);
-            graphics.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 150, 10);
+                BR.Color = Color.Black;
+                graphics.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 40, 10);
+                graphics.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 150, 10);
 
 
-            graphics.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 300, 10);
+                graphics.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 300, 10);
 
-            string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
-            clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
+                string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
+                clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
 
-            graphics.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-            BR, 400, 10);
+                graphics.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 400, 10);
 
-            if (ips > 0)
-                IPS = ips;
-            else if (clock.ElapsedMilliseconds != 0 && clock.IsRunning)
-                IPS = (age - prev_age) * 1000f / (clock.ElapsedMilliseconds - prev_milliseconds);
-            
-            graphics.DrawString($"IPS: {IPS}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-                BR, 600, 10);
+                if (ips > 0)
+                    IPS = ips;
+                else if (clock.ElapsedMilliseconds != 0 && clock.IsRunning)
+                    IPS = (age - prev_age) * 1000f / (clock.ElapsedMilliseconds - prev_milliseconds);
 
+                graphics.DrawString($"IPS: {IPS}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                    BR, 600, 10);
+
+            }
             prev_milliseconds = clock.ElapsedMilliseconds;
             prev_age = age;
         }

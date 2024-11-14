@@ -41,11 +41,13 @@ namespace CyberBiology
                     mainForm.SetWorldSize(newWidth, newHeight);
                 }
             }
+            isPressure = checkBox1.Checked;
+            Close();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            isPressure = checkBox1.Checked;
+            //isPressure = checkBox1.Checked;
         }
     }
 }

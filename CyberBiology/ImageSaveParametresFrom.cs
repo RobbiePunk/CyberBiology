@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using static CyberBiology.ServiceFunctions;
 
 namespace CyberBiology
 {
@@ -53,11 +53,18 @@ namespace CyberBiology
             checkBox2.Checked = mainForm.imageSaveViewMode[1] == 1;
             checkBox3.Checked = mainForm.imageSaveViewMode[2] == 1;
             checkBox4.Checked = mainForm.imageSaveViewMode[3] == 1;
+            checkBox5.Checked = drawInfo;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             mainForm.worldSaveStep = (int)numericUpDown1.Value;
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            drawInfo = checkBox5.Checked;
+            mainForm.ChangeSaveBitmap();
         }
     }
 }

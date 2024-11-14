@@ -73,10 +73,9 @@ namespace CyberBiology
             drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
             bmp = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
-            bmpSave = new Bitmap(1920, 1080);
-
             GR = Graphics.FromImage(bmp);
-            GR_save = Graphics.FromImage(bmpSave);
+
+            ChangeSaveBitmap();
 
             int x = 0;
             while(x < WORLD_WIDTH)
@@ -455,6 +454,20 @@ namespace CyberBiology
 
         #region Events
 
+        public void ChangeSaveBitmap()
+        {
+            if (drawInfo)
+            {
+                bmpSave = new Bitmap(imageSaveSize * WORLD_WIDTH + 80, imageSaveSize * WORLD_HEIGHT + 80);
+                GR_save = Graphics.FromImage(bmpSave);
+            }
+            else
+            {
+                bmpSave = new Bitmap(imageSaveSize * WORLD_WIDTH, imageSaveSize * WORLD_HEIGHT);
+                GR_save = Graphics.FromImage(bmpSave);
+            }
+        }
+
         void SetScrollers()
         {
             hScrollBar1.Maximum = WORLD_WIDTH < (xScreenSize / WORLD_SIZE) ? 0 : WORLD_WIDTH - (xScreenSize / WORLD_SIZE);
@@ -702,8 +715,7 @@ namespace CyberBiology
                 if (imageSaveSize <= 0)
                     imageSaveSize = 1;
 
-                bmpSave = new Bitmap(imageSaveSize * WORLD_WIDTH + 80, imageSaveSize * WORLD_HEIGHT + 80);
-                GR_save = Graphics.FromImage(bmpSave);
+                ChangeSaveBitmap();
 
                 int x = 0;
                 while (x < WORLD_WIDTH)
