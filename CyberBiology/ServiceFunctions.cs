@@ -10,6 +10,7 @@ using System.Collections;
 using System.Text;
 using System.Diagnostics;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using System.Windows.Forms;
 
 namespace CyberBiology
 {
@@ -169,6 +170,7 @@ namespace CyberBiology
                 sw.Write(seed);
                 sw.Write(rand.NumberOfInvokes);
 
+                sw.Write(MuteChance);
                 sw.Write(season_str);
                 sw.Write(viewMode);
                 sw.Write(WORLD_SIZE);
@@ -226,6 +228,7 @@ namespace CyberBiology
                 UInt64 state = reader.ReadUInt64();
                 rand = new StateRandom(seed, state);
 
+                MuteChance = reader.ReadInt32();
                 season_str = reader.ReadString();
                 viewMode = reader.ReadInt32();
                 WORLD_SIZE = reader.ReadInt32();
@@ -275,6 +278,97 @@ namespace CyberBiology
                 }
             }
 
+        }
+
+        public static void SaveWorldTextFile(string path)
+        {
+            StreamWriter sw = new StreamWriter(path);
+            sw.WriteLine(seed.ToString());
+            sw.WriteLine(rand.NumberOfInvokes.ToString());
+
+            sw.WriteLine(MuteChance);
+            sw.WriteLine(season_str);
+            sw.WriteLine(viewMode.ToString());
+            sw.WriteLine(WORLD_SIZE.ToString());
+            sw.WriteLine(ETM.ToString());
+            sw.WriteLine(MTE.ToString());
+            sw.WriteLine(ETL.ToString());
+            sw.WriteLine(currentSeason.ToString());
+            sw.WriteLine(age.ToString());
+            sw.WriteLine(cell_count.ToString());
+            sw.WriteLine(Print_cell_count.ToString());
+            sw.WriteLine(WORLD_HEIGHT.ToString());
+            sw.WriteLine(WORLD_WIDTH.ToString());
+
+            for (int i = 0; i < seasons.Length; i++)
+                sw.WriteLine(seasons[i].ToString());
+
+            for (int x = 0; x < WORLD_WIDTH; x++)
+            {
+                for (int y = 0; y < WORLD_HEIGHT + 2; y++)
+                {
+                    sw.WriteLine(world[x, y].ToString());
+                }
+            }
+            for (int i = 0; i < MAX_CELLS; i++)
+            {
+                for (int j = 0; j < CELL_SIZE; j++)
+                {
+                    sw.WriteLine(cells[i, j].ToString());
+                }
+            }
+            sw.Dispose();
+        }
+
+        public static void LoadWorldTextFile(string path)
+        {
+                String[] Str = File.ReadAllLines(path);
+                seed = int.Parse(Str[0]);
+
+                UInt64 state = UInt64.Parse(Str[1]);
+                rand = new StateRandom(seed, state);
+
+                MuteChance = int.Parse(Str[2]); ;
+                season_str = Str[3];
+                viewMode = int.Parse(Str[4]);
+                WORLD_SIZE = int.Parse(Str[5]);
+                ETM = int.Parse(Str[6]);
+                MTE = int.Parse(Str[7]);
+                ETL = int.Parse(Str[8]);
+                currentSeason = int.Parse(Str[9]);
+                age = int.Parse(Str[10]);
+                cell_count = int.Parse(Str[11]);
+                Print_cell_count = int.Parse(Str[12]);
+                WORLD_HEIGHT = int.Parse(Str[13]);
+                WORLD_WIDTH = int.Parse(Str[14]);
+
+                MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
+                cells = new int[MAX_CELLS, CELL_SIZE];
+                world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
+
+                int Count = 15;
+
+                for (int i = 0; i < seasons.Length; i++)
+                    seasons[i] = int.Parse(Str[Count + i]);
+
+                Count = 15 + seasons.Length;
+
+                for (int x = 0; x < WORLD_WIDTH; x++)
+                {
+                    for (int y = 0; y < WORLD_HEIGHT + 2; y++)
+                    {
+                        world[x, y] = int.Parse(Str[Count]);
+                        Count++;
+                    }
+                }
+                for (int i = 0; i < MAX_CELLS; i++)
+                {
+                    for (int j = 0; j < CELL_SIZE; j++)
+                    {
+                        cells[i, j] = int.Parse(Str[Count]);
+                        Count++;
+                    }
+                }
         }
 
         public static void DrawWorld(Graphics graphics, int mode, int size, int xDrawStartIndex, int yDrawStartIndex, float ips = -1)

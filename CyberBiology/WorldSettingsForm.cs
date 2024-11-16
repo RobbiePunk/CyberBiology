@@ -28,6 +28,7 @@ namespace CyberBiology
             xSizeTB.Text = WORLD_WIDTH.ToString();
             ySizeTB.Text = WORLD_HEIGHT.ToString();
             checkBox1.Checked = isPressure;
+            numericUpDown1.Value = mainForm.customMuteChance;
         }
 
         private void ApplyBT_Click(object sender, EventArgs e)
@@ -42,12 +43,41 @@ namespace CyberBiology
                 }
             }
             isPressure = checkBox1.Checked;
+            mainForm.customMuteChance = (int)numericUpDown1.Value;
+            if (textBox1.Text == "")
+                mainForm.SetWorldSettings();
+            else
+            {
+                try
+                {
+                    mainForm.SetWorldSettings(int.Parse(textBox1.Text));
+                }
+                catch
+                {
+                    int s = 0;
+                    string str = textBox1.Text;
+                    for (int i = 0; i < str.Length; i++)
+                        s += str[i];
+                    mainForm.SetWorldSettings(s);
+                }
+            }
+
             Close();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             //isPressure = checkBox1.Checked;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
     }
 }

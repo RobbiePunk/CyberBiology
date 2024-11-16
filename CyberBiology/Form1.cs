@@ -60,6 +60,8 @@ namespace CyberBiology
         int xScreenSize = 1100;
         int yScreenSize = 600;
 
+        public int customMuteChance = 10;
+
         public Form1()
         {
             InitializeComponent();
@@ -452,7 +454,7 @@ namespace CyberBiology
             return (cells[num, NEXT]);
         }
 
-        #region Events
+        #region Service
 
         public void ChangeSaveBitmap()
         {
@@ -484,7 +486,7 @@ namespace CyberBiology
             tryToSave = true;
             //Stopwatch time = new Stopwatch();
             //time.Start();
-            
+
             drawWorld = (int[,])world.Clone();
             drawCells = (int[,])cells.Clone();
 
@@ -527,145 +529,20 @@ namespace CyberBiology
             isDrawing = false;
         }
 
-        private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
-        {
-            if (isDrawing || !wantToDraw || !GO || tryToSave)
-                return;
-
-            ScreenUpdate();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void Size_plus(object sender, EventArgs e)
-        {
-            if(WORLD_SIZE < 10)
-            {
-                WORLD_SIZE++;
-                SetScrollers();
-                ScreenUpdate();
-                Refresh();
-            }
-        }
-
-        private void size_minus(object sender, EventArgs e)
-        {
-            if (WORLD_SIZE > 1)
-            {
-                WORLD_SIZE--;
-                SetScrollers();
-                ScreenUpdate();
-                Refresh();
-            }
-        }
-
-        private void Save(object sender, EventArgs e)
-        {
-
-            bool t = GO;
-            if(GO)
-            {
-                Stop_Play(sender, e);
-            }
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                SaveFileName = saveFileDialog1.FileName;
-
-                SaveWorldFile(SaveFileName);
-                label1.Text = saveTime;
-            }
-            GO = t;
-        }
-
-        private void Load_file(object sender, EventArgs e)
-        {
-            if (GO)
-                Stop_Play(sender, e);
-
-            if (age > 0)
-                if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                    return;
-
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                SaveFileName = openFileDialog1.FileName;
-                LoadWorldFile(SaveFileName);
-            
-                clock.Reset();
-
-                imageSaveSize = 1920 / (WORLD_WIDTH);
-                prev_milliseconds = 0;
-                prev_age = age;
-
-                label1.Text = saveTime;
-            }
-            ScreenUpdate();
-        }
-        
-        private void Stop_Play(object sender, EventArgs e)
-        {
-            GO = !GO;
-            if (GO)
-            {
-                t = new System.Threading.Thread(MainFunction);
-                t.Start();
-                clock.Start();
-                WORLD_BOX.Invalidate();
-                WorldSizeScroll.Enabled = false;
-            }
-            else
-            {
-                clock.Stop();
-                if(age == 0)
-                    WorldSizeScroll.Enabled = true;
-            }
-        }
-
-        private void ViewMode1(object sender, EventArgs e)
-        {
-            viewMode = 1;
-            ScreenUpdate();
-        }
-
-        private void ViewMode2(object sender, EventArgs e)
-        {
-            viewMode = 2;
-            ScreenUpdate();
-        }
-
-        private void ViewMode3(object sender, EventArgs e)
-        {
-            viewMode = 3;
-            ScreenUpdate();
-        }
-
-        private void viewMode4_Click(object sender, EventArgs e)
-        {
-            viewMode = 4;
-            ScreenUpdate();
-        }
-
-        private void ChangeFPS(object sender, EventArgs e)
-        {
-            drawInterval = FPS_Scroll.Value;
-            textBox1.Text = $"Draw every {drawInterval} iteration";
-        }
-
-        public void SetWorldSettings()
+        public void SetWorldSettings(int s = 0)
         {
             if (!performanceTest)
             {
-                MuteChance = 10;
+                MuteChance = customMuteChance;
 
                 seasons = new int[] { 11, 10, 9, 10 };
                 MTE = 2;
 
-                seed = new Random().Next();
+                if(s == 0)
+                    seed = new Random().Next();
+                else
+                    seed = s;
+
                 rand = new StateRandom(seed);
 
                 FirstCell();
@@ -733,6 +610,140 @@ namespace CyberBiology
             }
         }
 
+        #endregion
+
+        #region Events
+
+        private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
+        {
+            if (isDrawing || !wantToDraw || !GO || tryToSave)
+                return;
+
+            ScreenUpdate();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Size_plus(object sender, EventArgs e)
+        {
+            if(WORLD_SIZE < 10)
+            {
+                WORLD_SIZE++;
+                SetScrollers();
+                ScreenUpdate();
+                Refresh();
+            }
+        }
+
+        private void size_minus(object sender, EventArgs e)
+        {
+            if (WORLD_SIZE > 1)
+            {
+                WORLD_SIZE--;
+                SetScrollers();
+                ScreenUpdate();
+                Refresh();
+            }
+        }
+
+        private void Save(object sender, EventArgs e)
+        {
+            bool t = GO;
+            if(GO)
+            {
+                Stop_Play(sender, e);
+            }
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                SaveFileName = saveFileDialog1.FileName;
+
+                SaveWorldFile(SaveFileName);
+                label1.Text = saveTime;
+            }
+            GO = t;
+        }
+
+        private void Load_file(object sender, EventArgs e)
+        {
+            if (GO)
+                Stop_Play(sender, e);
+
+            if (age > 0)
+                if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    return;
+
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                SaveFileName = openFileDialog1.FileName;
+                LoadWorldFile(SaveFileName);
+            
+                clock.Reset();
+
+                imageSaveSize = 1920 / (WORLD_WIDTH);
+                prev_milliseconds = 0;
+                prev_age = age;
+
+                label1.Text = saveTime;
+            }
+            ScreenUpdate();
+        }
+        
+        private void Stop_Play(object sender, EventArgs e)
+        {
+            GO = !GO;
+            if (GO)
+            {
+                t = new System.Threading.Thread(MainFunction);
+                t.Start();
+                clock.Start();
+                WORLD_BOX.Invalidate();
+                WorldSizeScroll.Enabled = false;
+
+                worldSettingsToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                clock.Stop();
+                if(age == 0)
+                    WorldSizeScroll.Enabled = true;
+            }
+        }
+
+        private void ViewMode1(object sender, EventArgs e)
+        {
+            viewMode = 1;
+            ScreenUpdate();
+        }
+
+        private void ViewMode2(object sender, EventArgs e)
+        {
+            viewMode = 2;
+            ScreenUpdate();
+        }
+
+        private void ViewMode3(object sender, EventArgs e)
+        {
+            viewMode = 3;
+            ScreenUpdate();
+        }
+
+        private void viewMode4_Click(object sender, EventArgs e)
+        {
+            viewMode = 4;
+            ScreenUpdate();
+        }
+
+        private void ChangeFPS(object sender, EventArgs e)
+        {
+            drawInterval = FPS_Scroll.Value;
+            textBox1.Text = $"Draw every {drawInterval} iteration";
+        }
+
         public void WorldSizeChange(object sender, EventArgs e)
         {
             SetWorldSize(WorldSizeScroll.Value * 180, WorldSizeScroll.Value * 96);
@@ -759,6 +770,8 @@ namespace CyberBiology
                 clock.Reset();
                 prev_milliseconds = 0;
                 WorldSizeScroll.Enabled = true;
+
+                worldSettingsToolStripMenuItem.Enabled = true;
                 Refresh();
             }
         }
@@ -879,6 +892,50 @@ namespace CyberBiology
             worldSettingsForm.mainForm = this;
 
             worldSettingsForm.ShowDialog();
+        }
+
+        private void saveToTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool t = GO;
+            if (GO)
+            {
+                Stop_Play(sender, e);
+            }
+
+            if (saveFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                SaveFileName = saveFileDialog2.FileName;
+
+                SaveWorldTextFile(SaveFileName);
+                label1.Text = saveTime;
+            }
+            GO = t;
+        }
+
+        private void loadFromTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (GO)
+                Stop_Play(sender, e);
+
+            if (age > 0)
+                if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    return;
+
+
+            if (openFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                SaveFileName = openFileDialog2.FileName;
+                LoadWorldTextFile(SaveFileName);
+
+                clock.Reset();
+
+                imageSaveSize = 1920 / (WORLD_WIDTH);
+                prev_milliseconds = 0;
+                prev_age = age;
+
+                label1.Text = saveTime;
+            }
+            ScreenUpdate();
         }
     }
     #endregion
