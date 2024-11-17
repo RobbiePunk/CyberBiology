@@ -39,13 +39,25 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.MTE_Num = new System.Windows.Forms.NumericUpDown();
+            this.ETM_Num = new System.Windows.Forms.NumericUpDown();
+            this.ETL_Num = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.setDefBT = new System.Windows.Forms.Button();
+            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MTE_Num)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ETM_Num)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ETL_Num)).BeginInit();
             this.SuspendLayout();
             // 
             // xSizeTB
             // 
             this.xSizeTB.Location = new System.Drawing.Point(20, 26);
-            this.xSizeTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xSizeTB.Margin = new System.Windows.Forms.Padding(2);
             this.xSizeTB.Mask = "00000";
             this.xSizeTB.Name = "xSizeTB";
             this.xSizeTB.PromptChar = ' ';
@@ -56,7 +68,7 @@
             // ySizeTB
             // 
             this.ySizeTB.Location = new System.Drawing.Point(21, 59);
-            this.ySizeTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ySizeTB.Margin = new System.Windows.Forms.Padding(2);
             this.ySizeTB.Mask = "00000";
             this.ySizeTB.Name = "ySizeTB";
             this.ySizeTB.PromptChar = ' ';
@@ -97,7 +109,7 @@
             // ApplyBT
             // 
             this.ApplyBT.Location = new System.Drawing.Point(329, 228);
-            this.ApplyBT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ApplyBT.Margin = new System.Windows.Forms.Padding(2);
             this.ApplyBT.Name = "ApplyBT";
             this.ApplyBT.Size = new System.Drawing.Size(64, 28);
             this.ApplyBT.TabIndex = 5;
@@ -109,7 +121,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(326, 29);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(67, 17);
             this.checkBox1.TabIndex = 6;
@@ -157,11 +169,104 @@
             this.textBox1.Size = new System.Drawing.Size(120, 20);
             this.textBox1.TabIndex = 11;
             // 
+            // MTE_Num
+            // 
+            this.MTE_Num.Location = new System.Drawing.Point(138, 154);
+            this.MTE_Num.Name = "MTE_Num";
+            this.MTE_Num.Size = new System.Drawing.Size(120, 20);
+            this.MTE_Num.TabIndex = 12;
+            // 
+            // ETM_Num
+            // 
+            this.ETM_Num.Location = new System.Drawing.Point(138, 111);
+            this.ETM_Num.Name = "ETM_Num";
+            this.ETM_Num.Size = new System.Drawing.Size(120, 20);
+            this.ETM_Num.TabIndex = 13;
+            this.ETM_Num.ValueChanged += new System.EventHandler(this.ETM_Num_ValueChanged);
+            // 
+            // ETL_Num
+            // 
+            this.ETL_Num.Location = new System.Drawing.Point(138, 194);
+            this.ETL_Num.Name = "ETL_Num";
+            this.ETL_Num.Size = new System.Drawing.Size(120, 20);
+            this.ETL_Num.TabIndex = 14;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(135, 95);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(86, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Energy To Move";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(137, 138);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(93, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Mineral To Energy";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(137, 178);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Energy To Live";
+            // 
+            // setDefBT
+            // 
+            this.setDefBT.Location = new System.Drawing.Point(11, 228);
+            this.setDefBT.Margin = new System.Windows.Forms.Padding(2);
+            this.setDefBT.Name = "setDefBT";
+            this.setDefBT.Size = new System.Drawing.Size(64, 28);
+            this.setDefBT.TabIndex = 18;
+            this.setDefBT.Text = "Default";
+            this.setDefBT.UseVisualStyleBackColor = true;
+            this.setDefBT.Click += new System.EventHandler(this.setDefBT_Click);
+            // 
+            // maskedTextBox1
+            // 
+            this.maskedTextBox1.Location = new System.Drawing.Point(20, 111);
+            this.maskedTextBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.maskedTextBox1.Mask = "0000000";
+            this.maskedTextBox1.Name = "maskedTextBox1";
+            this.maskedTextBox1.PromptChar = ' ';
+            this.maskedTextBox1.Size = new System.Drawing.Size(76, 20);
+            this.maskedTextBox1.TabIndex = 19;
+            this.maskedTextBox1.ValidatingType = typeof(int);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(18, 95);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(69, 13);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Season Time";
+            // 
             // WorldSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(410, 265);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.maskedTextBox1);
+            this.Controls.Add(this.setDefBT);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.ETL_Num);
+            this.Controls.Add(this.ETM_Num);
+            this.Controls.Add(this.MTE_Num);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -173,11 +278,14 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ySizeTB);
             this.Controls.Add(this.xSizeTB);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "WorldSettingsForm";
             this.Text = "World Settings";
             this.Load += new System.EventHandler(this.WorldSettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MTE_Num)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ETM_Num)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ETL_Num)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +304,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.NumericUpDown MTE_Num;
+        private System.Windows.Forms.NumericUpDown ETM_Num;
+        private System.Windows.Forms.NumericUpDown ETL_Num;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button setDefBT;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -115,7 +115,7 @@ namespace CyberBiology
             if (worldSaveStep != 0 && age % worldSaveStep == 0 && saveWorld)
                 SaveWorldFile();
 
-            if (age % 10000 == 0)
+            if (age % seasonTime == 0)
             {
                 currentSeason = (currentSeason + 1) % seasons.Length;
 
@@ -536,7 +536,6 @@ namespace CyberBiology
                 MuteChance = customMuteChance;
 
                 seasons = new int[] { 11, 10, 9, 10 };
-                MTE = 2;
 
                 if(s == 0)
                     seed = new Random().Next();
@@ -551,7 +550,6 @@ namespace CyberBiology
             {
                 MuteChance = 0;
                 seasons = new int[] { 33, 30, 27, 30 };
-                MTE = 3;
 
                 seed = 1;
                 rand = new StateRandom(1);
@@ -702,8 +700,9 @@ namespace CyberBiology
                 t.Start();
                 clock.Start();
                 WORLD_BOX.Invalidate();
-                WorldSizeScroll.Enabled = false;
 
+                WorldSizeScroll.Enabled = false;
+                toolStripMenuItem1.Enabled = false;
                 worldSettingsToolStripMenuItem.Enabled = false;
             }
             else
@@ -769,9 +768,11 @@ namespace CyberBiology
 
                 clock.Reset();
                 prev_milliseconds = 0;
-                WorldSizeScroll.Enabled = true;
 
+                WorldSizeScroll.Enabled = true;
+                toolStripMenuItem1.Enabled = true;
                 worldSettingsToolStripMenuItem.Enabled = true;
+
                 Refresh();
             }
         }

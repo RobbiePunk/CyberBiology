@@ -29,6 +29,12 @@ namespace CyberBiology
             ySizeTB.Text = WORLD_HEIGHT.ToString();
             checkBox1.Checked = isPressure;
             numericUpDown1.Value = mainForm.customMuteChance;
+
+            ETL_Num.Value = ETL;
+            MTE_Num.Value = MTE;
+            ETM_Num.Value = ETM;
+
+            maskedTextBox1.Text = seasonTime.ToString();
         }
 
         private void ApplyBT_Click(object sender, EventArgs e)
@@ -62,6 +68,13 @@ namespace CyberBiology
                 }
             }
 
+            ETL = (int)ETL_Num.Value;
+            MTE = (int)MTE_Num.Value;
+            ETM = (int)ETM_Num.Value;
+
+            if(int.Parse(maskedTextBox1.Text) > 0)
+                seasonTime = int.Parse(maskedTextBox1.Text);
+
             Close();
         }
 
@@ -78,6 +91,28 @@ namespace CyberBiology
         private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
+        }
+
+        private void ETM_Num_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void setDefBT_Click(object sender, EventArgs e)
+        {
+            mainForm.SetWorldSize(180, 96);
+
+            isPressure = false;
+            mainForm.customMuteChance = 10;
+            mainForm.SetWorldSettings();
+
+            ETL = 3;
+            MTE = 2;
+            ETM = 5;
+
+            seasonTime = 10000;
+
+            WorldSettingsForm_Load(sender, e);
         }
     }
 }
