@@ -89,11 +89,11 @@ namespace CyberBiology
             {
                 return (3);
             }
-            if (cells[world[x, y], LIVING] == LV_EARTH || (cells[world[x, y], LIVING] == LV_FALLING_EARTH))
+            if (cells[world[x, y], LIVING] == LV_EARTH)
             {
                 return (7);
             }
-            if (cells[world[x, y], LIVING] == LV_STONE || (cells[world[x, y], LIVING] == LV_FALLING_STONE))
+            if (cells[world[x, y], LIVING] == LV_STONE)
             {
                 return (8);
             }
@@ -108,7 +108,6 @@ namespace CyberBiology
 
             return (5);
         }
-
         public static int cell_multi_move(int num, int dr, int ra)
         {
             cells[num, ENERGY] -= ETM;
@@ -181,6 +180,10 @@ namespace CyberBiology
             {
                 return (6);
             }
+            if (cells[world[x, y], LIVING] == LV_STONE)
+            {
+                return (1);
+            }
             if (cells[world[x, y], LIVING] == LV_DEAD)
             {
                 delete_cell(world[x, y]);
@@ -192,6 +195,12 @@ namespace CyberBiology
             int min1 = cells[world[x, y], MINERAL];
             int hl = cells[world[x, y], ENERGY];
 
+            delete_cell(world[x, y]);
+            int cl = 100 + (hl / 2);
+            cells[num, ENERGY] += 100 + (hl / 2);
+            go_RED(num, cl);
+            return (5);
+            /*
             if (min0 > min1)
             {
                 cells[num, MINERAL] = min0 - min1;
@@ -215,7 +224,46 @@ namespace CyberBiology
 
             cells[world[x, y], MINERAL] = min1 - (cells[num, ENERGY] / 2);
             cells[num, ENERGY] = -10;
-            return (5);
+            return (5);*/
+        }
+        public static int acid_split(int num, int dr, int ra)
+        {
+            int x;
+            int y;
+            cells[num, ENERGY] -= ETAS;
+            if (ra == 0)
+            {
+                x = X_from_vector_r(num, dr);
+                y = Y_from_vector_r(num, dr);
+            }
+            else
+            {
+                x = X_from_vector_a(num, dr);
+                y = Y_from_vector_a(num, dr);
+            }
+            if (world[x, y] == WC_EMPTY)
+            {
+                return (2);
+            }
+            if (world[x, y] == WC_WALL)
+            {
+                return (3);
+            }
+            if (cells[world[x, y], LIVING] == LV_EARTH)
+            {
+                cells[world[x, y], LIVING] = LV_DEAD;
+                return (6);
+            }
+            if (cells[world[x, y], LIVING] == LV_STONE)
+            {
+                cells[world[x, y], LIVING] = LV_EARTH;
+                return (1);
+            }
+            if (cells[world[x, y], LIVING] == LV_DEAD)
+            {
+                return (4);
+            }
+            return (2);
         }
 
         public static int cell_look(int num, int dr, int ra)
@@ -304,7 +352,6 @@ namespace CyberBiology
             }
             return (5);
         }
-
         public static int cell_give(int num, int dr, int ra)
         {
             int x;
@@ -416,7 +463,6 @@ namespace CyberBiology
                 cells[num, i] = 0;
             }
         }
-
         public static void cell_multi(int num)
         {
             int C = isMulti(num);
@@ -486,6 +532,7 @@ namespace CyberBiology
                 }
             }
         }
+        
         public static void cell_die(int num)
         {
             cells[num, LIVING] = LV_DEAD;

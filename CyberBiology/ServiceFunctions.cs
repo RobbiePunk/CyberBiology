@@ -24,6 +24,7 @@ namespace CyberBiology
         public static float IPS = 0;
         public static bool isDrawing = true;
         public static bool drawInfo = true;
+        public static int saveSize = 0;
 
         public static long prev_milliseconds = 0;
         public static int prev_age = 0;
@@ -409,12 +410,12 @@ namespace CyberBiology
                         BR.Color = Color.FromArgb(255, 40, 40, 40);
                         graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
-                    else if (drawCells[celln, LIVING] == LV_EARTH || drawCells[celln, LIVING] == LV_FALLING_EARTH)
+                    else if (drawCells[celln, LIVING] == LV_EARTH)
                     {
                         BR.Color = Color.FromArgb(255, 150, 100, 0);
                         graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
-                    else if (drawCells[celln, LIVING] == LV_STONE || drawCells[celln, LIVING] == LV_FALLING_STONE)
+                    else if (drawCells[celln, LIVING] == LV_STONE)
                     {
                         BR.Color = Color.FromArgb(255, 150, 150, 200);
                         graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);

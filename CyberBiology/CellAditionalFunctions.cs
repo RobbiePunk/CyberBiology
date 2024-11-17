@@ -22,7 +22,7 @@ namespace CyberBiology
                 int y = Y_from_vector_a(num, i);
                 if (world[x, y] > 0)
                 {
-                    if (cells[world[x, y], LIVING] == LV_EARTH || cells[world[x, y], LIVING] == LV_FALLING_EARTH)
+                    if (cells[world[x, y], LIVING] == LV_EARTH)
                     {
                         if (cells[num, MIND_SIZE + i] == world[x, y])
                         {
@@ -51,6 +51,14 @@ namespace CyberBiology
                 }
             }
         }
+        public static bool SolidBelow(int num)
+        {
+            int x = cells[num, X_COORD];
+            int y = cells[num, Y_COORD] + 1;
+
+            return (world[x, y] == -5 || cells[world[x, y], LIVING] > cells[num, LIVING]);  
+        }
+
         public static void delete_cell(int num)
         {
             world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
@@ -114,9 +122,13 @@ namespace CyberBiology
                         {
                             cells[num, PUSH]++;
                         }
-                        else if (S == LV_FALLING_EARTH)
+                        else if (S == LV_EARTH)
                         {
                             cells[num, PUSH] += 2;
+                        }
+                        else if (S == LV_STONE)
+                        {
+                            cells[num, PUSH] += 3;
                         }
                         else
                         {

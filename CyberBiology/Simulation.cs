@@ -51,6 +51,7 @@ namespace CyberBiology
         public static int ETM = 5;
         public static int MTE = 2;
         public static int ETL = 3;
+        public static int ETAS = 10;
         public static int MuteChance = 10;
 
         public static int currentSeason = 0;

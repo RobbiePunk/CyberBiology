@@ -32,11 +32,9 @@
         public const int WC_WALL = -5;
 
         public const int LV_FREE = 0;
-        public const int LV_DEAD = 1;
-        public const int LV_ALIVE = 2;
+        public const int LV_ALIVE = 1;
+        public const int LV_DEAD = 2;
         public const int LV_EARTH = 3;
         public const int LV_STONE = 4;
-        public const int LV_FALLING_EARTH = 5;
-        public const int LV_FALLING_STONE = 6;
     }
 }

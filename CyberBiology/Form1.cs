@@ -147,50 +147,46 @@ namespace CyberBiology
             if (lv == LV_DEAD)
             {
                 Fall(num);
-                if(isPressure)
-                    Pressure(num);
-                if(cells[num,PUSH] > 31)
+                if (SolidBelow(num))
                 {
-                    int x = cells[num, X_COORD];
-                    int y = cells[num, Y_COORD];
-                    if(cells[world[x,y - 1],LIVING] == LV_DEAD)
+                    if (isPressure)
+                        Pressure(num);
+                    if (cells[num, PUSH] > 31)
                     {
-                        delete_cell(world[x, y - 1]);
+                        int x = cells[num, X_COORD];
+                        int y = cells[num, Y_COORD];
+                        if (cells[world[x, y - 1], LIVING] == LV_DEAD)
+                        {
+                            delete_cell(world[x, y - 1]);
+                        }
+                        cells[num, LIVING] = LV_EARTH;
                     }
-                    cells[num, LIVING] = LV_FALLING_EARTH;
                 }
                 return (cells[num, NEXT]);
             }
-            if(lv == LV_EARTH  || lv == LV_FALLING_EARTH)
+            if(lv == LV_EARTH)
             {
-                if(lv == LV_EARTH)
+                Fall(num);
+                if (SolidBelow(num))
                 {
-                    
-                }
-                else if (lv == LV_FALLING_EARTH)
-                {
-                    Fall(num);
-                }
-                Pressure(num);
-                if(cells[num,PUSH] >= 63)
-                {
-                    int x = cells[num, X_COORD];
-                    int y = cells[num, Y_COORD];
-                    if (cells[world[x, y - 1], LIVING] == LV_DEAD)
+                    Pressure(num);
+                    if (cells[num, PUSH] >= 63)
                     {
-                        delete_cell(world[x, y - 1]);
+                        int x = cells[num, X_COORD];
+                        int y = cells[num, Y_COORD];
+                        if (cells[world[x, y - 1], LIVING] == LV_DEAD)
+                        {
+                            delete_cell(world[x, y - 1]);
+                        }
+                        cells[num, LIVING] = LV_STONE;
                     }
-                    cells[num, LIVING] = LV_FALLING_STONE;
                 }
                 return (cells[num, NEXT]);
             }
             if(lv == LV_STONE)
             {
-                return (cells[num, NEXT]);
-            }
-            if (lv == LV_FALLING_STONE)
-            {
                 Fall(num);
+                return (cells[num, NEXT]);
             }
             int cyc = 0;
         ag:
@@ -198,7 +194,19 @@ namespace CyberBiology
             if (cyc < 10)
             {
                 int command = cells[num, cells[num, ADR]];
-                if(command == 22)//Деление с абсолютной сменой команды
+                if (command == 20)//растворить в относителном направлении
+                {
+                    int drct = get_param(num) % 8;
+                    indirect_inc_cmd_address(num, acid_split(num, drct, 0));
+                    goto Out;
+                }
+                else if (command == 21)//растворить в абсолютном направлении
+                {
+                    int drct = get_param(num) % 8;
+                    indirect_inc_cmd_address(num, acid_split(num, drct, 1));
+                    goto Out;
+                }
+                else if (command == 22)//Деление с абсолютной сменой команды
                 {
                     cell_double(num);
                     inc_command_address(num, 1);
@@ -586,9 +594,16 @@ namespace CyberBiology
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
                 drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
-                imageSaveSize = 1000 / (WORLD_WIDTH);
-                if (imageSaveSize <= 0)
-                    imageSaveSize = 1;
+                if (saveSize == 0)
+                {
+                    imageSaveSize = 1000 / (WORLD_WIDTH);
+                    if (imageSaveSize <= 0)
+                        imageSaveSize = 1;
+                }
+                else
+                {
+                    imageSaveSize = saveSize;
+                }
 
                 ChangeSaveBitmap();
 
