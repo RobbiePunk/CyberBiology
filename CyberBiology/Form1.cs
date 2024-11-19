@@ -20,6 +20,7 @@ using static CyberBiology.ServiceFunctions;
 using System.Runtime.Serialization.Formatters.Binary;
 using static System.Windows.Forms.AxHost;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using System.Security;
 
 namespace CyberBiology
 {
@@ -119,14 +120,7 @@ namespace CyberBiology
             {
                 currentSeason = (currentSeason + 1) % seasons.Length;
 
-                if (currentSeason == 0)
-                    season_str = "Summer";
-                else if (currentSeason == 1)
-                    season_str = "Autumn";
-                else if (currentSeason == 2)
-                    season_str = "Winter";
-                else if (currentSeason == 3)
-                    season_str = "Spring";
+                season_str = seasonsString[currentSeason];
 
                 season = seasons[currentSeason];
             }
@@ -561,7 +555,7 @@ namespace CyberBiology
             {
                 MuteChance = customMuteChance;
 
-                seasons = new int[] { 11, 10, 9, 10 };
+                //seasons = new int[] { 11, 10, 9, 10 };
 
                 if(s == 0)
                     seed = new Random().Next();
@@ -575,7 +569,7 @@ namespace CyberBiology
             else
             {
                 MuteChance = 0;
-                seasons = new int[] { 33, 30, 27, 30 };
+                //seasons = new int[] { 33, 30, 27, 30 };
 
                 seed = 1;
                 rand = new StateRandom(1);
@@ -585,14 +579,8 @@ namespace CyberBiology
             Print_cell_count = 1;
             currentSeason = 0;
 
-            if (currentSeason == 0)
-                season_str = "Summer";
-            else if (currentSeason == 1)
-                season_str = "Autumn";
-            else if (currentSeason == 2)
-                season_str = "Winter";
-            else if (currentSeason == 3)
-                season_str = "Spring";
+            season_str = seasonsString[currentSeason];
+
 
             ScreenUpdate();
             Refresh();

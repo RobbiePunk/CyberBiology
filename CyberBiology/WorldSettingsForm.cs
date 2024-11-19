@@ -17,6 +17,7 @@ namespace CyberBiology
     {
 
         public Form1 mainForm;
+        int[] seasonsBuf = { 0, 0, 0, 0};
 
         public WorldSettingsForm()
         {
@@ -35,6 +36,10 @@ namespace CyberBiology
             ETM_Num.Value = ETM;
 
             maskedTextBox1.Text = seasonTime.ToString();
+
+            seasons.CopyTo(seasonsBuf, 0);
+
+            SeasonsUD_SelectedItemChanged(sender, e);
         }
 
         private void ApplyBT_Click(object sender, EventArgs e)
@@ -75,6 +80,8 @@ namespace CyberBiology
             if(int.Parse(maskedTextBox1.Text) > 0)
                 seasonTime = int.Parse(maskedTextBox1.Text);
 
+            seasonsBuf.CopyTo(seasons, 0);
+
             Close();
         }
 
@@ -112,7 +119,35 @@ namespace CyberBiology
 
             seasonTime = 10000;
 
+            seasonsBuf = new int[]{ 11, 10, 9, 10};
+
             WorldSettingsForm_Load(sender, e);
+        }
+
+        private void SeasonsUD_SelectedItemChanged(object sender, EventArgs e)
+        {
+            int n = Array.IndexOf(seasonsString, SeasonsUD.Text);
+            if (n == -1)
+            {
+
+            }
+            else
+            {
+                SeasonsNum.Value = seasonsBuf[n];
+            }
+        }
+
+        private void SeasonsNum_ValueChanged(object sender, EventArgs e)
+        {
+            int n = Array.IndexOf(seasonsString, SeasonsUD.Text);
+            if (n == -1)
+            {
+
+            }
+            else
+            {
+                seasonsBuf[n] = (int)SeasonsNum.Value;
+            }
         }
     }
 }

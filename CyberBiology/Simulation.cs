@@ -56,6 +56,7 @@ namespace CyberBiology
 
         public static int currentSeason = 0;
         public static int[] seasons = { 11, 10, 9, 10};
+        public static string[] seasonsString = { "Summer", "Autumn", "Winter", "Spring"};
         public static int season = 11;
         public static int seasonTime = 10000;
 
