@@ -188,13 +188,31 @@ namespace CyberBiology
                 Fall(num);
                 return (cells[num, NEXT]);
             }
+            if(cells[num, CELL_SLEEP] > 0)
+            {
+                cells[num, CELL_SLEEP]--;
+                cells[num, ENERGY] -= ETL/2;
+                if (cells[num, ENERGY] < 1)
+                {
+                    cell_die(num);
+                    return (cells[num, NEXT]);
+                }
+                cells[num, CELL_AGE]++;
+                return (cells[num, NEXT]);
+            }
             int cyc = 0;
         ag:
             cyc++;
             if (cyc < 10)
             {
                 int command = cells[num, cells[num, ADR]];
-                if (command == 20)//растворить в относителном направлении
+                if (command == 19)//сон
+                {
+                    cells[num, CELL_SLEEP] = get_param(num);
+                    indirect_inc_cmd_address(num, cells[num, CELL_SLEEP]);
+                    goto Out;
+                }
+                else if (command == 20)//растворить в относителном направлении
                 {
                     int drct = get_param(num) % 8;
                     indirect_inc_cmd_address(num, acid_split(num, drct, 0));
@@ -449,11 +467,11 @@ namespace CyberBiology
                     cell_die(num);
                     return (cells[num, NEXT]);
                 }
-                if(cells[num,Y_COORD] > WORLD_HEIGHT / 96 * 52)
+                if(cells[num,Y_COORD] > 56 * WORLD_HEIGHT / 96)
                 {
                     cells[num, MINERAL]++;
-                    if(cells[num,Y_COORD] > WORLD_HEIGHT / 96 * 70 ) { cells[num, MINERAL]++; }
-                    if (cells[num, Y_COORD] > WORLD_HEIGHT / 96 * 90) { cells[num, MINERAL]++; }
+                    if(cells[num,Y_COORD] > 72 * WORLD_HEIGHT / 96) { cells[num, MINERAL]++; }
+                    if (cells[num, Y_COORD] > 90 * WORLD_HEIGHT / 96) { cells[num, MINERAL]++; }
                     if(cells[num,MINERAL] > 499) { cells[num, MINERAL] = 499; }
                 }
 

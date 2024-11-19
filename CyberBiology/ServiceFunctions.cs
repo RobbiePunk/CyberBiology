@@ -108,7 +108,6 @@ namespace CyberBiology
             cells[1, 40] = 34;
             cells[1, 50] = 35;
             cells[1, 63] = 40;
-
         }
 
         public static int CheckColor(int num, int type)

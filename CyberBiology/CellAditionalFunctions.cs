@@ -64,6 +64,7 @@ namespace CyberBiology
             world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
             cells[cells[num, PREV], NEXT] = cells[num, NEXT];
             cells[cells[num, NEXT], PREV] = cells[num, PREV];
+
             for (int i = M1; i <= M8; i++)
             {
                 if (cells[num, i] != 0)
