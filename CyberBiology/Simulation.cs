@@ -69,6 +69,7 @@ namespace CyberBiology
         public static int WORLD_SIZE = 6;
 
         public static bool isPressure = false;
-
+        public static bool isAutoDivide = true;
+        public static bool isRandom = false;
     }
 }

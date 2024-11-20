@@ -46,6 +46,7 @@ namespace CyberBiology
         bool performanceTest = false;
         bool addWorld = false;
         bool saveDraw = true;
+        bool keepWalls = false;
         int addType = WC_WALL;
 
         bool wantToDraw = true;
@@ -232,13 +233,13 @@ namespace CyberBiology
                     int newdrct = (cells[num, DIRECT] + get_param(num)) % 8;
 
                     cells[num, DIRECT] = newdrct;
-                    inc_command_address(num, newdrct + 1);
+                    inc_command_address(num, 1);
                     goto ag;
                 }
                 else if (command == 24)//смена направления абсолютно
                 {
                     cells[num, DIRECT] = get_param(num) % 8;
-                    inc_command_address(num, 2);
+                    inc_command_address(num, 1);
                     goto ag;
                 }
                 else if (command == 25)//фотосинтез
@@ -453,7 +454,7 @@ namespace CyberBiology
                     //colonySharing(num);
                 }
 
-                if(cells[num,ENERGY] > 999)
+                if(cells[num,ENERGY] > 999 && isAutoDivide)
                 {
                     if(a > 0) { cell_multi(num); }
                     else { cell_double(num); }
@@ -473,6 +474,16 @@ namespace CyberBiology
                 }
 
                 cells[num, CELL_AGE]++;
+                if(!performanceTest && cells[num, CELL_AGE] % 10000 == 0)
+                {
+                    int vi = rand.Next();
+                    if (MuteChance != 0 && vi % MuteChance == 0)
+                    {
+                        int ma = rand.Next() % MIND_SIZE;
+                        int mc = rand.Next() % MIND_SIZE;
+                        cells[num, ma] = mc;
+                    }
+                }
             }
             return (cells[num, NEXT]);
         }
@@ -788,6 +799,7 @@ namespace CyberBiology
                         return;
 
                 age = 0;
+
                 SetWorldSize(WORLD_WIDTH, WORLD_HEIGHT);
 
                 CELL = 0;
@@ -975,10 +987,6 @@ namespace CyberBiology
         private void WORLD_BOX_MouseDown(object sender, MouseEventArgs e)
         {
             addWorld = true;
-            if(e.Button == MouseButtons.Left)
-                addType = WC_WALL;
-            else if (e.Button == MouseButtons.Right)
-                addType = WC_EMPTY;
 
             WORLD_BOX_MouseMove(sender, e);
 
@@ -1010,7 +1018,12 @@ namespace CyberBiology
                             {
                                 if (world[mouseX, mouseY] > 0)
                                     delete_cell(world[mouseX, mouseY]);
-                                world[mouseX, mouseY] = addType;
+
+                                if (addType <= 0)
+                                    world[mouseX, mouseY] = addType;
+                                else
+                                    addCell(mouseX, mouseY);
+
                                 ScreenUpdate();
                             }
                         }
@@ -1034,6 +1047,26 @@ namespace CyberBiology
                     if (world[x, y] == WC_WALL)
                         world[x, y] = WC_EMPTY;
             ScreenUpdate();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            isRandom = checkBox1.Checked;
+        }
+
+        private void addCellBT_Click(object sender, EventArgs e)
+        {
+            addType = 1;
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            addType = WC_WALL;
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            addType = WC_EMPTY;
         }
     }
     #endregion

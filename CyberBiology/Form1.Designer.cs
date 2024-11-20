@@ -57,6 +57,8 @@
             this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.worldSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveDrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearAllWallsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.viewMode4 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -64,8 +66,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.saveDrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearAllWallsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.addCellBT = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
@@ -76,7 +80,7 @@
             // 
             this.WORLD_BOX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.WORLD_BOX.InitialImage = null;
-            this.WORLD_BOX.Location = new System.Drawing.Point(45, 32);
+            this.WORLD_BOX.Location = new System.Drawing.Point(40, 32);
             this.WORLD_BOX.Margin = new System.Windows.Forms.Padding(4);
             this.WORLD_BOX.Name = "WORLD_BOX";
             this.WORLD_BOX.Size = new System.Drawing.Size(1590, 864);
@@ -346,16 +350,33 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 26);
             this.toolStripMenuItem1.Text = "Performans Test";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // worldSettingsToolStripMenuItem
             // 
             this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
-            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.worldSettingsToolStripMenuItem.Text = "World Settings";
             this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.worldSettingsToolStripMenuItem_Click);
+            // 
+            // saveDrawToolStripMenuItem
+            // 
+            this.saveDrawToolStripMenuItem.Checked = true;
+            this.saveDrawToolStripMenuItem.CheckOnClick = true;
+            this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
+            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.saveDrawToolStripMenuItem.Text = "Save Draw";
+            this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.saveDrawToolStripMenuItem_Click);
+            // 
+            // clearAllWallsToolStripMenuItem
+            // 
+            this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
+            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
+            this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.clearAllWallsToolStripMenuItem_Click);
             // 
             // viewMode4
             // 
@@ -408,22 +429,50 @@
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // saveDrawToolStripMenuItem
+            // checkBox1
             // 
-            this.saveDrawToolStripMenuItem.Checked = true;
-            this.saveDrawToolStripMenuItem.CheckOnClick = true;
-            this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
-            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.saveDrawToolStripMenuItem.Text = "Save Draw";
-            this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.saveDrawToolStripMenuItem_Click);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(1708, 903);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(128, 20);
+            this.checkBox1.TabIndex = 22;
+            this.checkBox1.Text = "random genome";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // clearAllWallsToolStripMenuItem
+            // addCellBT
             // 
-            this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
-            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
-            this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.clearAllWallsToolStripMenuItem_Click);
+            this.addCellBT.Location = new System.Drawing.Point(1641, 188);
+            this.addCellBT.Margin = new System.Windows.Forms.Padding(4);
+            this.addCellBT.Name = "addCellBT";
+            this.addCellBT.Size = new System.Drawing.Size(57, 39);
+            this.addCellBT.TabIndex = 23;
+            this.addCellBT.Text = "o";
+            this.addCellBT.UseVisualStyleBackColor = true;
+            this.addCellBT.Click += new System.EventHandler(this.addCellBT_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(1708, 187);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(57, 39);
+            this.button12.TabIndex = 24;
+            this.button12.Text = "||";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(1776, 188);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(57, 39);
+            this.button13.TabIndex = 25;
+            this.button13.Text = "X";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // Form1
             // 
@@ -431,6 +480,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1924, 956);
+            this.Controls.Add(this.button13);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.addCellBT);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
@@ -511,6 +564,10 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.ToolStripMenuItem saveDrawToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearAllWallsToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button addCellBT;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button13;
     }
 }
 

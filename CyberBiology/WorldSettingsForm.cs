@@ -29,6 +29,7 @@ namespace CyberBiology
             xSizeTB.Text = WORLD_WIDTH.ToString();
             ySizeTB.Text = WORLD_HEIGHT.ToString();
             checkBox1.Checked = isPressure;
+            checkBox2.Checked = isAutoDivide;
             numericUpDown1.Value = mainForm.customMuteChance;
 
             ETL_Num.Value = ETL;
@@ -53,8 +54,12 @@ namespace CyberBiology
                     mainForm.SetWorldSize(newWidth, newHeight);
                 }
             }
+
             isPressure = checkBox1.Checked;
+            isAutoDivide = checkBox2.Checked;
+
             mainForm.customMuteChance = (int)numericUpDown1.Value;
+
             if (textBox1.Text == "")
                 mainForm.SetWorldSettings();
             else
@@ -110,6 +115,7 @@ namespace CyberBiology
             mainForm.SetWorldSize(180, 96);
 
             isPressure = false;
+            isAutoDivide = true;
             mainForm.customMuteChance = 10;
             mainForm.SetWorldSettings();
 
@@ -148,6 +154,11 @@ namespace CyberBiology
             {
                 seasonsBuf[n] = (int)SeasonsNum.Value;
             }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            isAutoDivide = checkBox2.Checked;
         }
     }
 }

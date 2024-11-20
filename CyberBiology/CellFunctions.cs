@@ -427,8 +427,8 @@ namespace CyberBiology
             int vi = rand.Next();
             if (MuteChance != 0 && vi % MuteChance == 0)
             {
-                int ma = rand.Next() % 64;
-                int mc = rand.Next() % 64;
+                int ma = rand.Next() % MIND_SIZE;
+                int mc = rand.Next() % MIND_SIZE;
                 cells[newcell, ma] = mc;
             }
 

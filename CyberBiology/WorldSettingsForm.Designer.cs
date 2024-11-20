@@ -51,6 +51,7 @@
             this.SeasonsUD = new System.Windows.Forms.DomainUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.SeasonsNum = new System.Windows.Forms.NumericUpDown();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MTE_Num)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ETM_Num)).BeginInit();
@@ -284,11 +285,26 @@
             this.SeasonsNum.TabIndex = 23;
             this.SeasonsNum.ValueChanged += new System.EventHandler(this.SeasonsNum_ValueChanged);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(435, 73);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(98, 20);
+            this.checkBox2.TabIndex = 24;
+            this.checkBox2.Text = "Auto Divide";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
             // WorldSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(547, 334);
+            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.SeasonsNum);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.SeasonsUD);
@@ -352,5 +368,6 @@
         private System.Windows.Forms.DomainUpDown SeasonsUD;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown SeasonsNum;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }

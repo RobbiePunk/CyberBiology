@@ -58,10 +58,17 @@ namespace CyberBiology
             int i = 0;
             while (i < MIND_SIZE)
             {
-                cells[1, i] = 25;
+                if (isRandom)
+                    cells[1, i] = rand.Next() % MIND_SIZE;
+                else
+                    cells[1, i] = 25;
                 i++;
             }
-            //cells[1, MIND_SIZE - 1] = 22; //Деление
+            if (!isAutoDivide)
+            {
+                cells[1, rand.Next() % MIND_SIZE] = 23; //поворот
+                cells[1, rand.Next() % MIND_SIZE] = 22; //Деление
+            }
         }
         public static void CreatePerformanceTestWorld()
         {
@@ -108,6 +115,49 @@ namespace CyberBiology
             cells[1, 40] = 34;
             cells[1, 50] = 35;
             cells[1, 63] = 40;
+        }
+
+        public static void addCell(int x, int y)
+        {
+            int num = find_empty();
+
+            cells[num, NEXT] = cells[0, NEXT];
+            cells[cells[num, NEXT], PREV] = num;
+            cells[num, PREV] = 0;
+            cells[0, NEXT] = num;
+
+            cells[num, C_RED] = 170;
+            cells[num, C_GREEN] = 170;
+            cells[num, C_BLUE] = 170;
+
+            cells[num, ENERGY] = 900;
+            cells[num, MINERAL] = 0;
+            cells[num, LIVING] = LV_ALIVE;
+            cells[num, DIRECT] = 5;
+            cells[num, X_COORD] = x;
+            cells[num, Y_COORD] = y;
+
+            cells[num, CELL_AGE] = 0;
+
+            for (int j = M1; j < M8 + 1; j++)
+            {
+                cells[num, j] = 0;
+            }
+            world[x, y] = num;
+            int i = 0;
+            while (i < MIND_SIZE)
+            {
+                if (isRandom)
+                    cells[num, i] = rand.Next() % MIND_SIZE;
+                else
+                    cells[num, i] = 25;
+                i++;
+            }
+            if (!isAutoDivide)
+            {
+                cells[num, rand.Next() % MIND_SIZE] = 23; //поворот
+                cells[num, rand.Next() % MIND_SIZE] = 22; //Деление
+            }
         }
 
         public static void addWall(int x, int y)
