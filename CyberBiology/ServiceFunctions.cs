@@ -110,6 +110,11 @@ namespace CyberBiology
             cells[1, 63] = 40;
         }
 
+        public static void addWall(int x, int y)
+        {
+            world[x, y] = WC_WALL;
+        }
+
         public static int CheckColor(int num, int type)
         {
             if (type == 1)

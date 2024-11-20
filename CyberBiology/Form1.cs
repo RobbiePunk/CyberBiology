@@ -44,6 +44,9 @@ namespace CyberBiology
         
         bool GO = false;
         bool performanceTest = false;
+        bool addWorld = false;
+        bool saveDraw = true;
+        int addType = WC_WALL;
 
         bool wantToDraw = true;
         int drawInterval = 100;
@@ -58,8 +61,8 @@ namespace CyberBiology
 
         int xDrawStartIndex = 0;
         int yDrawStartIndex = 0;
-        int xScreenSize = 1100;
-        int yScreenSize = 600;
+        int xScreenSize = 1060;
+        int yScreenSize = 560;
 
         public int customMuteChance = 10;
 
@@ -496,7 +499,7 @@ namespace CyberBiology
             hScrollBar1.Maximum /= 10;
             xDrawStartIndex = hScrollBar1.Value * 10;
 
-            vScrollBar1.Maximum = WORLD_HEIGHT < (yScreenSize / WORLD_SIZE) ? 0 : WORLD_HEIGHT - (yScreenSize / WORLD_SIZE);
+            vScrollBar1.Maximum = (WORLD_HEIGHT + 2) < (yScreenSize / WORLD_SIZE) ? 0 : (WORLD_HEIGHT + 2) - (yScreenSize / WORLD_SIZE);
             vScrollBar1.Maximum /= 10;
             yDrawStartIndex = vScrollBar1.Value * 10;
         }
@@ -728,9 +731,13 @@ namespace CyberBiology
             }
             else
             {
+                t.Join();
                 clock.Stop();
                 if(age == 0)
                     WorldSizeScroll.Enabled = true;
+
+                ScreenUpdate();
+                WORLD_BOX.Invalidate();
             }
         }
 
@@ -957,6 +964,75 @@ namespace CyberBiology
 
                 label1.Text = saveTime;
             }
+            ScreenUpdate();
+        }
+
+        private void WORLD_BOX_MouseClick(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void WORLD_BOX_MouseDown(object sender, MouseEventArgs e)
+        {
+            addWorld = true;
+            if(e.Button == MouseButtons.Left)
+                addType = WC_WALL;
+            else if (e.Button == MouseButtons.Right)
+                addType = WC_EMPTY;
+
+            WORLD_BOX_MouseMove(sender, e);
+
+        }
+
+        private void WORLD_BOX_MouseUp(object sender, MouseEventArgs e)
+        {
+            addWorld = false;
+        }
+
+        private void WORLD_BOX_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!GO && (age == 0 || !saveDraw))
+            {
+                int mouseX = e.X;
+                int mouseY = e.Y;
+
+                if (mouseX > WORLD_BOX.Location.X && mouseX < WORLD_BOX.Location.X + WORLD_BOX.Size.Width
+                    && mouseY > WORLD_BOX.Location.Y && mouseY < WORLD_BOX.Location.Y + WORLD_BOX.Size.Height)
+                {
+                    mouseX = (mouseX - 40) / WORLD_SIZE + xDrawStartIndex;
+                    mouseY = (mouseY - 40) / WORLD_SIZE + yDrawStartIndex;
+
+                    if (mouseX < WORLD_WIDTH && mouseY > 0 && mouseY < (WORLD_HEIGHT + 1) && addWorld)
+                    {
+                        if (world[mouseX, mouseY] != addType)
+                        {
+                            if (!saveDraw || world[mouseX, mouseY] <= 0)
+                            {
+                                if (world[mouseX, mouseY] > 0)
+                                    delete_cell(world[mouseX, mouseY]);
+                                world[mouseX, mouseY] = addType;
+                                ScreenUpdate();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void saveDrawToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveDraw = saveDrawToolStripMenuItem.Checked;
+        }
+
+        private void clearAllWallsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.No == MessageBox.Show("ALL DRAWN WALLS WILL BE DELETED!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                return;
+
+            for (int y = 1; y < WORLD_HEIGHT + 1; y++)
+                for (int x = 0; x < WORLD_WIDTH; x++)
+                    if (world[x, y] == WC_WALL)
+                        world[x, y] = WC_EMPTY;
             ScreenUpdate();
         }
     }
