@@ -52,7 +52,7 @@ namespace CyberBiology
         public static int MTE = 2;
         public static int ETL = 3;
         public static int ETAS = 10;
-        public static int MuteChance = 10;
+        public static int muteChance = 10;
 
         public static int currentSeason = 0;
         public static int[] seasons = { 11, 10, 9, 10};
@@ -63,7 +63,7 @@ namespace CyberBiology
         public static int age = 0;
         public static int CELL = 0;
         public static int cell_count;
-        public static int Print_cell_count;
+        public static int print_cell_count;
 
         public static int viewMode = 1;
         public static int WORLD_SIZE = 6;

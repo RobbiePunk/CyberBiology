@@ -18,8 +18,8 @@ namespace CyberBiology
         {
             for (int i = 0; i < 8; i++)
             {
-                int x = X_from_vector_a(num, i);
-                int y = Y_from_vector_a(num, i);
+                int x = XFromVectorA(num, i);
+                int y = YFromVectorA(num, i);
                 if (world[x, y] > 0)
                 {
                     if (cells[world[x, y], LIVING] == LV_EARTH)
@@ -51,7 +51,7 @@ namespace CyberBiology
                 }
             }
         }
-        public static bool SolidBelow(int num)
+        public static bool IsSolidBelow(int num)
         {
             int x = cells[num, X_COORD];
             int y = cells[num, Y_COORD] + 1;
@@ -59,7 +59,7 @@ namespace CyberBiology
             return (world[x, y] == -5 || cells[world[x, y], LIVING] > cells[num, LIVING]);  
         }
 
-        public static void delete_cell(int num)
+        public static void DeleteCell(int num)
         {
             world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
             cells[cells[num, PREV], NEXT] = cells[num, NEXT];
@@ -83,16 +83,16 @@ namespace CyberBiology
 
             cells[num, LIVING] = LV_FREE;
         }
-        public static void move_cell(int num, int x, int y)
+        public static void MoveCell(int num, int x, int y)
         {
             world[x, y] = num;
             world[cells[num, X_COORD], cells[num, Y_COORD]] = WC_EMPTY;
             cells[num, X_COORD] = x;
             cells[num, Y_COORD] = y;
         }
-        public static int push_cell(int num, int dr)
+        public static int PushCell(int num, int dr)
         {
-            return cell_move(num, dr, 1);
+            return CellMove(num, dr, 1);
         }
         public static void Fall(int num)
         {
@@ -145,7 +145,7 @@ namespace CyberBiology
             }
         }
 
-        public static int isEarthBlock(int num)
+        public static int IsEarthBlock(int num)
         {
             int n = 0;
             for (int i = 0; i < 8; i++)
@@ -157,7 +157,7 @@ namespace CyberBiology
             }
             return (n);
         }
-        public static int is_relative(int num0, int num1)
+        public static int IsRelative(int num0, int num1)
         {
             if (cells[num1, LIVING] < LV_ALIVE) { return (0); }
             int dif = 0;
@@ -171,7 +171,7 @@ namespace CyberBiology
             }
             return (1);
         }
-        public static int is_energy_grow(int num)
+        public static int IsEnergyGrow(int num)
         {
             int t;
             if (cells[num, MINERAL] < 100) { t = 0; }
@@ -182,7 +182,7 @@ namespace CyberBiology
             else { return (2); }
 
         }
-        public static int isMulti(int num)
+        public static int IsMulti(int num)
         {
             int a = 0;
             for (int i = M1; i <= M8; i++)
@@ -192,25 +192,25 @@ namespace CyberBiology
             return (a);
         }
 
-        public static int get_param(int num)
+        public static int GetParam(int num)
         {
             return (cells[num, cells[num, ADR] + 1] % MIND_SIZE);
         }
-        public static int what_is_there_r(int num, int dr)
+        public static int WhatIsThereR(int num, int dr)
         {
-            int x = X_from_vector_r(num, dr);
-            int y = Y_from_vector_r(num, dr);
+            int x = XFromVectorR(num, dr);
+            int y = YFromVectorR(num, dr);
             int result = world[x, y];
             return (result);
         }
-        public static int what_is_there_a(int num, int dr)
+        public static int WhatIsThereA(int num, int dr)
         {
-            int x = X_from_vector_a(num, dr);
-            int y = Y_from_vector_a(num, dr);
+            int x = XFromVectorA(num, dr);
+            int y = YFromVectorA(num, dr);
             int result = world[x, y];
             return (result);
         }
-        public static int Y_from_vector_a(int num, int n)
+        public static int YFromVectorA(int num, int n)
         {
             int y = cells[num, Y_COORD];
             if (n < 3)
@@ -220,7 +220,7 @@ namespace CyberBiology
 
             return (y);
         }
-        public static int X_from_vector_a(int num, int n)
+        public static int XFromVectorA(int num, int n)
         {
             int x = cells[num, X_COORD];
             if (n == 0 || n == 6 || n == 7)
@@ -237,7 +237,7 @@ namespace CyberBiology
             }
             return (x);
         }
-        public static int Y_from_vector_r(int num, int n)
+        public static int YFromVectorR(int num, int n)
         {
             int y = cells[num, Y_COORD];
             n += cells[num, DIRECT] % 8;
@@ -249,7 +249,7 @@ namespace CyberBiology
 
             return (y);
         }
-        public static int X_from_vector_r(int num, int n)
+        public static int XFromVectorR(int num, int n)
         {
             int x = cells[num, X_COORD];
             n += cells[num, DIRECT] % 8;
@@ -268,21 +268,21 @@ namespace CyberBiology
             }
             return (x);
         }
-        public static void inc_command_address(int num, int n)
+        public static void IncCommandAddress(int num, int n)
         {
             cells[num, ADR] = (cells[num, ADR] + n) % MIND_SIZE;
         }
-        public static int find_empty_direction(int num)
+        public static int FindEmptyDirection(int num)
         {
             for (int i = 0; i < 8; i++)
             {
-                int x = X_from_vector_r(num, i);
-                int y = Y_from_vector_r(num, i);
+                int x = XFromVectorR(num, i);
+                int y = YFromVectorR(num, i);
                 if (world[x, y] == WC_EMPTY) { return (i); }
             }
             return (8);
         }
-        public static int find_empty()
+        public static int FindEmptyCell()
         {
             for (int i = 1; i < MAX_CELLS; i++)
             {
@@ -294,7 +294,7 @@ namespace CyberBiology
             return (0);
         }
 
-        public static int isColonyMove(int num, int x, int y)
+        public static int IsColonyMove(int num, int x, int y)
         {
             for (int i = M1; i <= M8; i++)
             {
@@ -325,29 +325,29 @@ namespace CyberBiology
             }
             return (1);
         }
-        public static int find_empty_multi(int num)
+        public static int FindEmptyMulti(int num)
         {
             for (int i = M1; i <= M8; i++)
                 if (cells[num, i] == 0)
                     return (i);
             return (0);
         }
-        public static int full_around(int num)
+        public static int IsFullAround(int num)
         {
             for (int i = 0; i < 8; i++)
             {
-                int x = X_from_vector_r(num, i);
-                int y = Y_from_vector_r(num, i);
+                int x = XFromVectorR(num, i);
+                int y = YFromVectorR(num, i);
                 if (world[x, y] == WC_EMPTY) { return (2); }
             }
             return (1);
         }
-        public static void indirect_inc_cmd_address(int num, int a)
+        public static void IndirectIncCmdAddress(int num, int a)
         {
             cells[num, ADR] = (cells[num, ADR] + cells[num, (cells[num, ADR] + a) % MIND_SIZE]) % MIND_SIZE;
         }
 
-        public static void go_GREEN(int num, int val)
+        public static void GoGreen(int num, int val)
         {
             if (cells[num, C_GREEN] + val > 255)
             {
@@ -378,7 +378,7 @@ namespace CyberBiology
                 cells[num, C_BLUE] -= vl;
             }
         }
-        public static void go_RED(int num, int val)
+        public static void GoRed(int num, int val)
         {
             if (cells[num, C_RED] + val > 255)
             {
@@ -409,7 +409,7 @@ namespace CyberBiology
                 cells[num, C_BLUE] -= vl;
             }
         }
-        public static void go_BLUE(int num, int val)
+        public static void GoBlue(int num, int val)
         {
             if (cells[num, C_BLUE] + val > 255)
             {

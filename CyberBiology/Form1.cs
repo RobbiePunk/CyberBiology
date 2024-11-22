@@ -26,27 +26,21 @@ namespace CyberBiology
 {
     public partial class Form1 : Form
     {
-        
-
-        Barrier saveBarrier = new Barrier(2, (bar) =>
-        {
-
-        });
 
         Bitmap bmp;
         Bitmap bmpSave;
         
-        Thread t;
+        Thread simulationThread;
         Graphics GR;
         Graphics GR_save;
-        SolidBrush BR = new SolidBrush(Color.White);
+        //SolidBrush BR = new SolidBrush(Color.White);
         String SaveFileName;
         
         bool GO = false;
         bool performanceTest = false;
         bool addWorld = false;
-        bool saveDraw = true;
-        bool keepWalls = false;
+        bool saveDrawing = true;
+        //bool keepWalls = false;
         int addType = WC_WALL;
 
         bool wantToDraw = true;
@@ -70,33 +64,13 @@ namespace CyberBiology
         public Form1()
         {
             InitializeComponent();
-            WORLD_WIDTH = 180 * WorldSizeScroll.Value;
-            WORLD_HEIGHT = 96 * WorldSizeScroll.Value;
-            MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
-
-            cells = new int[MAX_CELLS, CELL_SIZE];
-            drawCells = new int[MAX_CELLS, CELL_SIZE];
-            world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-            drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
             bmp = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
             GR = Graphics.FromImage(bmp);
 
-            ChangeSaveBitmap();
+            SetWorldSize(180, 96);
 
-            int x = 0;
-            while(x < WORLD_WIDTH)
-            {
-                world[x, 0] = WC_WALL;
-                world[x, WORLD_HEIGHT + 1] = WC_WALL;
-                x++;
-            }
-
-            seed = new Random().Next();
-            rand = new StateRandom(seed);
-
-            SetWorldSize(WORLD_WIDTH, WORLD_HEIGHT);
-
+            newSimulationBT.PerformClick();
         }
 
         public void OneStep()
@@ -108,10 +82,10 @@ namespace CyberBiology
             while (CELL != 0)
             {
                 cell_count++;
-                CELL = cell_step(CELL);
+                CELL = CellStep(CELL);
             }
                 
-            Print_cell_count = cell_count;
+            print_cell_count = cell_count;
             age++;
 
             if (imageSaveStep != 0 && age % imageSaveStep == 0 && saveImage)
@@ -139,13 +113,13 @@ namespace CyberBiology
                 OneStep();
         }
 
-        int cell_step(int num)
+        int CellStep(int num)
         {
             int lv = cells[num, LIVING];
             if (lv == LV_DEAD)
             {
                 Fall(num);
-                if (SolidBelow(num))
+                if (IsSolidBelow(num))
                 {
                     if (isPressure)
                         Pressure(num);
@@ -155,7 +129,7 @@ namespace CyberBiology
                         int y = cells[num, Y_COORD];
                         if (cells[world[x, y - 1], LIVING] == LV_DEAD)
                         {
-                            delete_cell(world[x, y - 1]);
+                            DeleteCell(world[x, y - 1]);
                         }
                         cells[num, LIVING] = LV_EARTH;
                     }
@@ -165,7 +139,7 @@ namespace CyberBiology
             if(lv == LV_EARTH)
             {
                 Fall(num);
-                if (SolidBelow(num))
+                if (IsSolidBelow(num))
                 {
                     Pressure(num);
                     if (cells[num, PUSH] >= 63)
@@ -174,7 +148,7 @@ namespace CyberBiology
                         int y = cells[num, Y_COORD];
                         if (cells[world[x, y - 1], LIVING] == LV_DEAD)
                         {
-                            delete_cell(world[x, y - 1]);
+                            DeleteCell(world[x, y - 1]);
                         }
                         cells[num, LIVING] = LV_STONE;
                     }
@@ -192,7 +166,7 @@ namespace CyberBiology
                 cells[num, ENERGY] -= ETL/2;
                 if (cells[num, ENERGY] < 1)
                 {
-                    cell_die(num);
+                    CellDie(num);
                     return (cells[num, NEXT]);
                 }
                 cells[num, CELL_AGE]++;
@@ -206,133 +180,133 @@ namespace CyberBiology
                 int command = cells[num, cells[num, ADR]];
                 if (command == 19)//сон
                 {
-                    cells[num, CELL_SLEEP] = get_param(num);
-                    indirect_inc_cmd_address(num, cells[num, CELL_SLEEP]);
+                    cells[num, CELL_SLEEP] = GetParam(num);
+                    IndirectIncCmdAddress(num, cells[num, CELL_SLEEP]);
                     goto Out;
                 }
                 else if (command == 20)//растворить в относителном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, acid_split(num, drct, 0));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, AcidSplit(num, drct, 0));
                     goto Out;
                 }
                 else if (command == 21)//растворить в абсолютном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, acid_split(num, drct, 1));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, AcidSplit(num, drct, 1));
                     goto Out;
                 }
                 else if (command == 22)//Деление с абсолютной сменой команды
                 {
-                    cell_double(num);
-                    inc_command_address(num, 1);
+                    CellDouble(num);
+                    IncCommandAddress(num, 1);
                     goto Out;
                 }
                 else if (command == 23)//смена направления относительно
                 {
-                    int newdrct = (cells[num, DIRECT] + get_param(num)) % 8;
+                    int newdrct = (cells[num, DIRECT] + GetParam(num)) % 8;
 
                     cells[num, DIRECT] = newdrct;
-                    inc_command_address(num, 1);
+                    IncCommandAddress(num, 1);
                     goto ag;
                 }
                 else if (command == 24)//смена направления абсолютно
                 {
-                    cells[num, DIRECT] = get_param(num) % 8;
-                    inc_command_address(num, 1);
+                    cells[num, DIRECT] = GetParam(num) % 8;
+                    IncCommandAddress(num, 1);
                     goto ag;
                 }
                 else if (command == 25)//фотосинтез
                 {
-                    fotosintez(num);
-                    inc_command_address(num, 1);
+                    Fotosintez(num);
+                    IncCommandAddress(num, 1);
                     goto Out;
                 }
                 else if (command == 26)//движение относительно
                 {
-                    int a = isMulti(num);
+                    int a = IsMulti(num);
                     if (a == 0)
                     {
-                        int drct = get_param(num) % 8;
-                        indirect_inc_cmd_address(num, cell_move(num, drct, 0));
+                        int drct = GetParam(num) % 8;
+                        IndirectIncCmdAddress(num, CellMove(num, drct, 0));
                     }
                     else if(a < 5)
                     {
-                        int drct = get_param(num) % 8;
-                        indirect_inc_cmd_address(num, cell_multi_move(num, drct, 0));
+                        int drct = GetParam(num) % 8;
+                        IndirectIncCmdAddress(num, CellMultiMove(num, drct, 0));
                     }
                     else
                     {
-                        inc_command_address(num, 1);
+                        IncCommandAddress(num, 1);
                     }
 
                     goto Out;
                 }
                 else if (command == 27)//движение абсолютно
                 {
-                    int a = isMulti(num);
+                    int a = IsMulti(num);
                     if (a == 0)
                     {
-                        int drct = get_param(num) % 8;
-                        indirect_inc_cmd_address(num, cell_move(num, drct, 1));
+                        int drct = GetParam(num) % 8;
+                        IndirectIncCmdAddress(num, CellMove(num, drct, 1));
                     }
                     else if (a < 5)
                     {
-                        int drct = get_param(num) % 8;
-                        indirect_inc_cmd_address(num, cell_multi_move(num, drct, 1));
+                        int drct = GetParam(num) % 8;
+                        IndirectIncCmdAddress(num, CellMultiMove(num, drct, 1));
                     }
                     else
                     {
-                        inc_command_address(num, 1);
+                        IncCommandAddress(num, 1);
                     }
                     goto Out;
                 }
                 else if (command == 28)//съесть в относителном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_eat(num, drct, 0));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellEat(num, drct, 0));
                     goto Out;
                 }
                 else if (command == 29)//съесть в абсолютном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_eat(num, drct, 1));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellEat(num, drct, 1));
                     goto Out;
                 }
                 else if (command == 30)//посмотреть в относительном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_look(num, drct, 0));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellLook(num, drct, 0));
                     goto ag;
                 }
                 else if (command == 31)//посмотреть в абсолютном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_look(num, drct, 1));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellLook(num, drct, 1));
                     goto ag;
                 }
                 else if (command == 32)//поделиться лишними ресурсами в относительном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_care(num, drct, 0));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellCare(num, drct, 0));
                     goto ag;
                 }
                 else if (command == 33)//поделиться лишними ресурсами в абсолютном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_care(num, drct, 1));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellCare(num, drct, 1));
                     goto ag;
                 }
                 else if (command == 34)//отдать ресурсы в относительном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_give(num, drct, 0));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellGive(num, drct, 0));
                     goto ag;
                 }
                 else if (command == 35)//отдать ресурсы в абсолютном направлении
                 {
-                    int drct = get_param(num) % 8;
-                    indirect_inc_cmd_address(num, cell_give(num, drct, 1));
+                    int drct = GetParam(num) % 8;
+                    IndirectIncCmdAddress(num, CellGive(num, drct, 1));
                     goto ag;
                 }
                 else if (command == 36)//выровняться по горизонтали
@@ -345,109 +319,109 @@ namespace CyberBiology
                     {
                         cells[num, DIRECT] = 7;
                     }
-                    inc_command_address(num, 1);
+                    IncCommandAddress(num, 1);
                     goto ag;
                 }
                 else if (command == 37)//узнать высоту
                 {
-                    float param = get_param(num) * WORLD_HEIGHT / 64;
+                    float param = GetParam(num) * WORLD_HEIGHT / 64;
                     if (cells[num, Y_COORD]  < param)
                     {
-                        indirect_inc_cmd_address(num, 2);
+                        IndirectIncCmdAddress(num, 2);
                     }
                     else
                     {
-                        indirect_inc_cmd_address(num, 3);
+                        IndirectIncCmdAddress(num, 3);
                     }
                     goto ag;
                 }
                 else if (command == 38)//узнать количество энергии
                 {
-                    int param = get_param(num) * 15;
+                    int param = GetParam(num) * 15;
                     if (cells[num, ENERGY] < param)
                     {
-                        indirect_inc_cmd_address(num, 2);
+                        IndirectIncCmdAddress(num, 2);
                     }
                     else
                     {
-                        indirect_inc_cmd_address(num, 3);
+                        IndirectIncCmdAddress(num, 3);
                     }
                     goto ag;
                 }
                 else if (command == 39)//узнать количество минералов
                 {
-                    int param = get_param(num) * 15;
+                    int param = GetParam(num) * 15;
                     if (cells[num, MINERAL] < param)
                     {
-                        indirect_inc_cmd_address(num, 2);
+                        IndirectIncCmdAddress(num, 2);
                     }
                     else
                     {
-                        indirect_inc_cmd_address(num, 3);
+                        IndirectIncCmdAddress(num, 3);
                     }
                     goto ag;
                 }
                 else if (command == 40)//многоклеточное деление
                 {
-                    cell_multi(num);
-                    inc_command_address(num, 1);
+                    CellMulti(num);
+                    IncCommandAddress(num, 1);
                     goto Out;
                 }
                 else if (command == 41)//свободное деление
                 {
-                    cell_double(num);
-                    inc_command_address(num, 1);
+                    CellDouble(num);
+                    IncCommandAddress(num, 1);
                     goto Out;
                 }
                 else if (command == 43)//окружена ли клетка?
                 {
-                    indirect_inc_cmd_address(num, full_around(num));
+                    IndirectIncCmdAddress(num, IsFullAround(num));
                     goto ag;
                 }
                 else if (command == 44)//приход энергии есть?
                 {
-                    indirect_inc_cmd_address(num, is_energy_grow(num));
+                    IndirectIncCmdAddress(num, IsEnergyGrow(num));
                     goto ag;
                 }
                 else if (command == 45)//минералы прибавляются?
                 {
                     if (cells[num, Y_COORD] > WORLD_HEIGHT / 2)
                     {
-                        indirect_inc_cmd_address(num, 1);
+                        IndirectIncCmdAddress(num, 1);
                     }
                     else
                     {
-                        indirect_inc_cmd_address(num, 2);
+                        IndirectIncCmdAddress(num, 2);
                     }
                     goto ag;
                 }
                 else if (command == 46)//многоклеточный ли бот?
                 {
-                    int mu = isMulti(num);
-                    if (mu == 0) { indirect_inc_cmd_address(num, 1); }
-                    else if (mu == 8) { indirect_inc_cmd_address(num, 3); }
-                    else { indirect_inc_cmd_address(num, 2); }
+                    int mu = IsMulti(num);
+                    if (mu == 0) { IndirectIncCmdAddress(num, 1); }
+                    else if (mu == 8) { IndirectIncCmdAddress(num, 3); }
+                    else { IndirectIncCmdAddress(num, 2); }
                     goto ag;
                 }
                 else if (command == 47)//преобразовать минералы в энергию
                 {
-                    cell_mineral2energy(num);
-                    inc_command_address(num, 1);
+                    CellMineralToEnergy(num);
+                    IncCommandAddress(num, 1);
                     goto Out;
                 }
                 else if (command == 48)//отобрать и поделить
                 {
-                    colonySharing(num);
-                    inc_command_address(num, 1);
+                    ColonySharing(num);
+                    IncCommandAddress(num, 1);
                     goto Out;
                 }
-                inc_command_address(num, command);
+                IncCommandAddress(num, command);
                 goto ag;
             }
         Out:
             if (cells[num, LIVING] == LV_ALIVE)
             {
-                int a = isMulti(num);
+                int a = IsMulti(num);
 
                 if(a > 0)
                 {
@@ -456,13 +430,13 @@ namespace CyberBiology
 
                 if(cells[num,ENERGY] > 999 && isAutoDivide)
                 {
-                    if(a > 0) { cell_multi(num); }
-                    else { cell_double(num); }
+                    if(a > 0) { CellMulti(num); }
+                    else { CellDouble(num); }
                 }
                 cells[num, ENERGY] -= ETL;
                 if(cells[num,ENERGY] < 1)
                 {
-                    cell_die(num);
+                    CellDie(num);
                     return (cells[num, NEXT]);
                 }
                 if(cells[num,Y_COORD] > 56 * WORLD_HEIGHT / 96)
@@ -477,7 +451,7 @@ namespace CyberBiology
                 if(!performanceTest && cells[num, CELL_AGE] % 10000 == 0)
                 {
                     int vi = rand.Next();
-                    if (MuteChance != 0 && vi % MuteChance == 0)
+                    if (muteChance != 0 && vi % muteChance == 0)
                     {
                         int ma = rand.Next() % MIND_SIZE;
                         int mc = rand.Next() % MIND_SIZE;
@@ -549,7 +523,7 @@ namespace CyberBiology
             WORLD_BOX.Invalidate();
         }
 
-        private void ScreenUpdate()
+        private void UpdateScreen()
         {
             isDrawing = true;
 
@@ -567,7 +541,7 @@ namespace CyberBiology
         {
             if (!performanceTest)
             {
-                MuteChance = customMuteChance;
+                muteChance = customMuteChance;
 
                 //seasons = new int[] { 11, 10, 9, 10 };
 
@@ -582,7 +556,7 @@ namespace CyberBiology
             }
             else
             {
-                MuteChance = 0;
+                muteChance = 0;
                 //seasons = new int[] { 33, 30, 27, 30 };
 
                 seed = 1;
@@ -590,13 +564,13 @@ namespace CyberBiology
 
                 CreatePerformanceTestWorld();
             }
-            Print_cell_count = 1;
+            print_cell_count = 1;
             currentSeason = 0;
 
             season_str = seasonsString[currentSeason];
 
 
-            ScreenUpdate();
+            UpdateScreen();
             Refresh();
         }
 
@@ -638,7 +612,7 @@ namespace CyberBiology
                 SetWorldSettings();
 
                 SetScrollers();
-                ScreenUpdate();
+                UpdateScreen();
                 Refresh();
             }
         }
@@ -652,12 +626,7 @@ namespace CyberBiology
             if (isDrawing || !wantToDraw || !GO || tryToSave)
                 return;
 
-            ScreenUpdate();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
+            UpdateScreen();
         }
 
         private void Size_plus(object sender, EventArgs e)
@@ -666,18 +635,18 @@ namespace CyberBiology
             {
                 WORLD_SIZE++;
                 SetScrollers();
-                ScreenUpdate();
+                UpdateScreen();
                 Refresh();
             }
         }
 
-        private void size_minus(object sender, EventArgs e)
+        private void Size_minus(object sender, EventArgs e)
         {
             if (WORLD_SIZE > 1)
             {
                 WORLD_SIZE--;
                 SetScrollers();
-                ScreenUpdate();
+                UpdateScreen();
                 Refresh();
             }
         }
@@ -723,7 +692,7 @@ namespace CyberBiology
 
                 label1.Text = saveTime;
             }
-            ScreenUpdate();
+            UpdateScreen();
         }
         
         private void Stop_Play(object sender, EventArgs e)
@@ -731,63 +700,64 @@ namespace CyberBiology
             GO = !GO;
             if (GO)
             {
-                t = new System.Threading.Thread(MainFunction);
-                t.Start();
+                simulationThread = new System.Threading.Thread(MainFunction);
+                simulationThread.Start();
                 clock.Start();
                 WORLD_BOX.Invalidate();
 
-                WorldSizeScroll.Enabled = false;
-                toolStripMenuItem1.Enabled = false;
+                worldSizeScroll.Enabled = false;
+                perfomanceTestMenuItem.Enabled = false;
                 worldSettingsToolStripMenuItem.Enabled = false;
             }
             else
             {
-                t.Join();
+                simulationThread.Join();
                 clock.Stop();
                 if(age == 0)
-                    WorldSizeScroll.Enabled = true;
+                    worldSizeScroll.Enabled = true;
 
-                ScreenUpdate();
+                UpdateScreen();
                 WORLD_BOX.Invalidate();
             }
         }
 
-        private void ViewMode1(object sender, EventArgs e)
+        private void TurnViewMode1(object sender, EventArgs e)
         {
             viewMode = 1;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
-        private void ViewMode2(object sender, EventArgs e)
+        private void TurnViewMode2(object sender, EventArgs e)
         {
             viewMode = 2;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
-        private void ViewMode3(object sender, EventArgs e)
+        private void TurnViewMode3(object sender, EventArgs e)
         {
             viewMode = 3;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
-        private void viewMode4_Click(object sender, EventArgs e)
+        private void TurnViewMode4(object sender, EventArgs e)
         {
             viewMode = 4;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
         private void ChangeFPS(object sender, EventArgs e)
         {
+            //временно скрыт
             drawInterval = FPS_Scroll.Value;
-            textBox1.Text = $"Draw every {drawInterval} iteration";
+            fpsTB.Text = $"Draw every {drawInterval} iteration";
         }
 
-        public void WorldSizeChange(object sender, EventArgs e)
+        public void ChangeWorldSize(object sender, EventArgs e)
         {
-            SetWorldSize(WorldSizeScroll.Value * 180, WorldSizeScroll.Value * 96);
+            SetWorldSize(worldSizeScroll.Value * 180, worldSizeScroll.Value * 96);
         }
 
-        public void NewSimulate(object sender, EventArgs e)
+        public void NewSimulation(object sender, EventArgs e)
         {
             if (GO)
                 Stop_Play(sender, e);
@@ -804,52 +774,32 @@ namespace CyberBiology
 
                 CELL = 0;
                 cell_count = 0;
-                Print_cell_count = 0;
+                print_cell_count = 0;
 
                 clock.Reset();
                 prev_milliseconds = 0;
 
-                WorldSizeScroll.Enabled = true;
-                toolStripMenuItem1.Enabled = true;
+                worldSizeScroll.Enabled = true;
+                perfomanceTestMenuItem.Enabled = true;
                 worldSettingsToolStripMenuItem.Enabled = true;
 
                 Refresh();
             }
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (GO)
-            {
-                GO = false;
-                t.Join();    
-            }
-            System.Windows.Forms.Application.Exit();
-        }
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            System.Windows.Forms.Application.Exit();
-        }
-
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             xDrawStartIndex = hScrollBar1.Value * 10;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             yDrawStartIndex = vScrollBar1.Value * 10;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
-        private void lacationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ChangeImageSavePath(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -857,27 +807,21 @@ namespace CyberBiology
             }
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            //button1.Location = new Point(this.Size.Width - 125, 34);
-            //button2.Location = new Point(this.Size.Width - 250, 34);
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void PerfomanceTest_Click(object sender, EventArgs e)
         {
             performanceTest = !performanceTest;
-            toolStripMenuItem1.Checked = performanceTest;
+            perfomanceTestMenuItem.Checked = performanceTest;
 
-            NewSimulate(sender, e);
+            NewSimulation(sender, e);
         }
 
-        private void saveImagesToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void TurnImagesSaving(object sender, EventArgs e)
         {
             saveImage = !saveImage;
             saveImagesToolStripMenuItem1.Checked = saveImage;
         }
 
-        private void saveParametresToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowImageSaveParametresWindow(object sender, EventArgs e)
         {
             ImageSaveParametresFrom imageSaveParametresFrom = new ImageSaveParametresFrom();
             
@@ -886,47 +830,41 @@ namespace CyberBiology
             imageSaveParametresFrom.ShowDialog();
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void TurnDrawing(object sender, EventArgs e)
         {
             wantToDraw = !wantToDraw;
 
             if(wantToDraw)
             {
-                button10.Text = "Turn Off Drawing";
-                ScreenUpdate();
+                turnDrawingBT.Text = "Turn Off Drawing";
+                UpdateScreen();
                 WORLD_BOX.Invalidate();
             }
             else
             {
-                button10.Text = "Turn On Drawing";
+                turnDrawingBT.Text = "Turn On Drawing";
             }
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        private void DoOneStep(object sender, EventArgs e)
         {
             if (GO)
             {
                 Stop_Play(sender, e);
-                t.Join();
+                simulationThread.Join();
             }
             
             OneStep();
-            ScreenUpdate();
+            UpdateScreen();
         }
 
-        private void textBox2_Click(object sender, EventArgs e)
-        {
-            //Кастомный размер поля
-            //button11_Click(sender, e);
-        }
-
-        private void saveWorldsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TurnWorldSaving(object sender, EventArgs e)
         {
             saveWorld = !saveWorld;
             saveWorldsToolStripMenuItem.Checked = saveWorld;
         }
 
-        private void worldSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowWorldSettingsWindow(object sender, EventArgs e)
         {
             WorldSettingsForm worldSettingsForm = new WorldSettingsForm();
 
@@ -935,7 +873,7 @@ namespace CyberBiology
             worldSettingsForm.ShowDialog();
         }
 
-        private void saveToTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToText(object sender, EventArgs e)
         {
             bool t = GO;
             if (GO)
@@ -953,7 +891,7 @@ namespace CyberBiology
             GO = t;
         }
 
-        private void loadFromTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadFromText(object sender, EventArgs e)
         {
             if (GO)
                 Stop_Play(sender, e);
@@ -976,12 +914,7 @@ namespace CyberBiology
 
                 label1.Text = saveTime;
             }
-            ScreenUpdate();
-        }
-
-        private void WORLD_BOX_MouseClick(object sender, MouseEventArgs e)
-        {
-            
+            UpdateScreen();
         }
 
         private void WORLD_BOX_MouseDown(object sender, MouseEventArgs e)
@@ -989,7 +922,6 @@ namespace CyberBiology
             addWorld = true;
 
             WORLD_BOX_MouseMove(sender, e);
-
         }
 
         private void WORLD_BOX_MouseUp(object sender, MouseEventArgs e)
@@ -999,7 +931,7 @@ namespace CyberBiology
 
         private void WORLD_BOX_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!GO && (age == 0 || !saveDraw))
+            if (!GO && (age == 0 || !saveDrawing))
             {
                 int mouseX = e.X;
                 int mouseY = e.Y;
@@ -1010,21 +942,22 @@ namespace CyberBiology
                     mouseX = (mouseX - 40) / WORLD_SIZE + xDrawStartIndex;
                     mouseY = (mouseY - 40) / WORLD_SIZE + yDrawStartIndex;
 
-                    if (mouseX < WORLD_WIDTH && mouseY > 0 && mouseY < (WORLD_HEIGHT + 1) && addWorld)
+                    if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0 
+                        && mouseY < (WORLD_HEIGHT + 1) && addWorld)
                     {
                         if (world[mouseX, mouseY] != addType)
                         {
-                            if (!saveDraw || world[mouseX, mouseY] <= 0)
+                            if (!saveDrawing || world[mouseX, mouseY] <= 0)
                             {
                                 if (world[mouseX, mouseY] > 0)
-                                    delete_cell(world[mouseX, mouseY]);
+                                    DeleteCell(world[mouseX, mouseY]);
 
                                 if (addType <= 0)
                                     world[mouseX, mouseY] = addType;
                                 else
-                                    addCell(mouseX, mouseY);
+                                    AddCell(mouseX, mouseY);
 
-                                ScreenUpdate();
+                                UpdateScreen();
                             }
                         }
                     }
@@ -1032,12 +965,12 @@ namespace CyberBiology
             }
         }
 
-        private void saveDrawToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TurnSaveDrawing(object sender, EventArgs e)
         {
-            saveDraw = saveDrawToolStripMenuItem.Checked;
+            saveDrawing = saveDrawToolStripMenuItem.Checked;
         }
 
-        private void clearAllWallsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearAllWalls(object sender, EventArgs e)
         {
             if (DialogResult.No == MessageBox.Show("ALL DRAWN WALLS WILL BE DELETED!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                 return;
@@ -1046,27 +979,37 @@ namespace CyberBiology
                 for (int x = 0; x < WORLD_WIDTH; x++)
                     if (world[x, y] == WC_WALL)
                         world[x, y] = WC_EMPTY;
-            ScreenUpdate();
+            UpdateScreen();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void TurnRandomGenome(object sender, EventArgs e)
         {
-            isRandom = checkBox1.Checked;
+            isRandom = randomGenomeCB.Checked;
         }
 
-        private void addCellBT_Click(object sender, EventArgs e)
+        private void AddTypeCell(object sender, EventArgs e)
         {
             addType = 1;
         }
 
-        private void button12_Click(object sender, EventArgs e)
+        private void AddTypeWall(object sender, EventArgs e)
         {
             addType = WC_WALL;
         }
 
-        private void button13_Click(object sender, EventArgs e)
+        private void AddTypeEmpty(object sender, EventArgs e)
         {
             addType = WC_EMPTY;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (GO)
+            {
+                GO = false;
+                simulationThread.Join();
+            }
+            System.Windows.Forms.Application.Exit();
         }
     }
     #endregion

@@ -22,38 +22,38 @@ namespace CyberBiology
 
         private void numericSaveStep_ValueChanged(object sender, EventArgs e)
         {
-            mainForm.imageSaveStep = (int)numericSaveStep.Value;
+            mainForm.imageSaveStep = (int)saveImageStepNum.Value;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            mainForm.imageSaveViewMode[0] = checkBox1.Checked ? 1 : 0;
+            mainForm.imageSaveViewMode[0] = viewMode1CB.Checked ? 1 : 0;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            mainForm.imageSaveViewMode[1] = checkBox2.Checked ? 1 : 0;
+            mainForm.imageSaveViewMode[1] = viewMode2CB.Checked ? 1 : 0;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            mainForm.imageSaveViewMode[2] = checkBox3.Checked ? 1 : 0;
+            mainForm.imageSaveViewMode[2] = viewMode3CB.Checked ? 1 : 0;
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
-            mainForm.imageSaveViewMode[3] = checkBox4.Checked ? 1 : 0;
+            mainForm.imageSaveViewMode[3] = viewMode4CB.Checked ? 1 : 0;
         }
 
         private void ImageSaveParametresFrom_Load(object sender, EventArgs e)
         {
-            numericSaveStep.Value = mainForm.imageSaveStep;
-            numericUpDown1.Value = mainForm.worldSaveStep;
-            checkBox1.Checked = mainForm.imageSaveViewMode[0] == 1;
-            checkBox2.Checked = mainForm.imageSaveViewMode[1] == 1;
-            checkBox3.Checked = mainForm.imageSaveViewMode[2] == 1;
-            checkBox4.Checked = mainForm.imageSaveViewMode[3] == 1;
-            checkBox5.Checked = drawInfo;
+            saveImageStepNum.Value = mainForm.imageSaveStep;
+            saveWorldStepNum.Value = mainForm.worldSaveStep;
+            viewMode1CB.Checked = mainForm.imageSaveViewMode[0] == 1;
+            viewMode2CB.Checked = mainForm.imageSaveViewMode[1] == 1;
+            viewMode3CB.Checked = mainForm.imageSaveViewMode[2] == 1;
+            viewMode4CB.Checked = mainForm.imageSaveViewMode[3] == 1;
+            drawInfoCB.Checked = drawInfo;
 
             if (saveSize != 0)
                 AutoImageSizeCB_CheckedChanged(sender, e);
@@ -61,12 +61,12 @@ namespace CyberBiology
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            mainForm.worldSaveStep = (int)numericUpDown1.Value;
+            mainForm.worldSaveStep = (int)saveWorldStepNum.Value;
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
-            drawInfo = checkBox5.Checked;
+            drawInfo = drawInfoCB.Checked;
             mainForm.ChangeSaveBitmap();
         }
 

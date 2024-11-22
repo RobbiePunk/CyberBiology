@@ -28,15 +28,15 @@ namespace CyberBiology
         {
             xSizeTB.Text = WORLD_WIDTH.ToString();
             ySizeTB.Text = WORLD_HEIGHT.ToString();
-            checkBox1.Checked = isPressure;
-            checkBox2.Checked = isAutoDivide;
-            numericUpDown1.Value = mainForm.customMuteChance;
+            pressureCB.Checked = isPressure;
+            autoDivideCB.Checked = isAutoDivide;
+            mutationChanceNum.Value = mainForm.customMuteChance;
 
             ETL_Num.Value = ETL;
             MTE_Num.Value = MTE;
             ETM_Num.Value = ETM;
 
-            maskedTextBox1.Text = seasonTime.ToString();
+            seasonTimeTB.Text = seasonTime.ToString();
 
             seasons.CopyTo(seasonsBuf, 0);
 
@@ -55,23 +55,23 @@ namespace CyberBiology
                 }
             }
 
-            isPressure = checkBox1.Checked;
-            isAutoDivide = checkBox2.Checked;
+            isPressure = pressureCB.Checked;
+            isAutoDivide = autoDivideCB.Checked;
 
-            mainForm.customMuteChance = (int)numericUpDown1.Value;
+            mainForm.customMuteChance = (int)mutationChanceNum.Value;
 
-            if (textBox1.Text == "")
+            if (seedNum.Text == "")
                 mainForm.SetWorldSettings();
             else
             {
                 try
                 {
-                    mainForm.SetWorldSettings(int.Parse(textBox1.Text));
+                    mainForm.SetWorldSettings(int.Parse(seedNum.Text));
                 }
                 catch
                 {
                     int s = 0;
-                    string str = textBox1.Text;
+                    string str = seedNum.Text;
                     for (int i = 0; i < str.Length; i++)
                         s += str[i];
                     mainForm.SetWorldSettings(s);
@@ -82,32 +82,12 @@ namespace CyberBiology
             MTE = (int)MTE_Num.Value;
             ETM = (int)ETM_Num.Value;
 
-            if(int.Parse(maskedTextBox1.Text) > 0)
-                seasonTime = int.Parse(maskedTextBox1.Text);
+            if(int.Parse(seasonTimeTB.Text) > 0)
+                seasonTime = int.Parse(seasonTimeTB.Text);
 
             seasonsBuf.CopyTo(seasons, 0);
 
             Close();
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            //isPressure = checkBox1.Checked;
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
-        private void ETM_Num_ValueChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void setDefBT_Click(object sender, EventArgs e)
@@ -132,7 +112,7 @@ namespace CyberBiology
 
         private void SeasonsUD_SelectedItemChanged(object sender, EventArgs e)
         {
-            int n = Array.IndexOf(seasonsString, SeasonsUD.Text);
+            int n = Array.IndexOf(seasonsString, seasonsStringUD.Text);
             if (n == -1)
             {
 
@@ -145,7 +125,7 @@ namespace CyberBiology
 
         private void SeasonsNum_ValueChanged(object sender, EventArgs e)
         {
-            int n = Array.IndexOf(seasonsString, SeasonsUD.Text);
+            int n = Array.IndexOf(seasonsString, seasonsStringUD.Text);
             if (n == -1)
             {
 
@@ -158,7 +138,7 @@ namespace CyberBiology
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            isAutoDivide = checkBox2.Checked;
+            isAutoDivide = autoDivideCB.Checked;
         }
     }
 }

@@ -117,9 +117,9 @@ namespace CyberBiology
             cells[1, 63] = 40;
         }
 
-        public static void addCell(int x, int y)
+        public static void AddCell(int x, int y)
         {
-            int num = find_empty();
+            int num = FindEmptyCell();
 
             cells[num, NEXT] = cells[0, NEXT];
             cells[cells[num, NEXT], PREV] = num;
@@ -160,7 +160,7 @@ namespace CyberBiology
             }
         }
 
-        public static void addWall(int x, int y)
+        public static void AddWall(int x, int y)
         {
             world[x, y] = WC_WALL;
         }
@@ -188,7 +188,7 @@ namespace CyberBiology
             return (0);
         }
 
-        static int isMultiForDrawing(int num)
+        static int IsMultiForDrawing(int num)
         {
             int a = 0;
             for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
@@ -225,7 +225,7 @@ namespace CyberBiology
                 sw.Write(seed);
                 sw.Write(rand.NumberOfInvokes);
 
-                sw.Write(MuteChance);
+                sw.Write(muteChance);
                 sw.Write(season_str);
                 sw.Write(viewMode);
                 sw.Write(WORLD_SIZE);
@@ -235,7 +235,7 @@ namespace CyberBiology
                 sw.Write(currentSeason);
                 sw.Write(age);
                 sw.Write(cell_count);
-                sw.Write(Print_cell_count);
+                sw.Write(print_cell_count);
                 sw.Write(WORLD_HEIGHT);
                 sw.Write(WORLD_WIDTH);
 
@@ -283,7 +283,7 @@ namespace CyberBiology
                 UInt64 state = reader.ReadUInt64();
                 rand = new StateRandom(seed, state);
 
-                MuteChance = reader.ReadInt32();
+                muteChance = reader.ReadInt32();
                 season_str = reader.ReadString();
                 viewMode = reader.ReadInt32();
                 WORLD_SIZE = reader.ReadInt32();
@@ -293,7 +293,7 @@ namespace CyberBiology
                 currentSeason = reader.ReadInt32();
                 age = reader.ReadInt32();
                 cell_count = reader.ReadInt32();
-                Print_cell_count = reader.ReadInt32();
+                print_cell_count = reader.ReadInt32();
                 WORLD_HEIGHT = reader.ReadInt32();
                 WORLD_WIDTH = reader.ReadInt32();
 
@@ -341,7 +341,7 @@ namespace CyberBiology
             sw.WriteLine(seed.ToString());
             sw.WriteLine(rand.NumberOfInvokes.ToString());
 
-            sw.WriteLine(MuteChance);
+            sw.WriteLine(muteChance);
             sw.WriteLine(season_str);
             sw.WriteLine(viewMode.ToString());
             sw.WriteLine(WORLD_SIZE.ToString());
@@ -351,7 +351,7 @@ namespace CyberBiology
             sw.WriteLine(currentSeason.ToString());
             sw.WriteLine(age.ToString());
             sw.WriteLine(cell_count.ToString());
-            sw.WriteLine(Print_cell_count.ToString());
+            sw.WriteLine(print_cell_count.ToString());
             sw.WriteLine(WORLD_HEIGHT.ToString());
             sw.WriteLine(WORLD_WIDTH.ToString());
 
@@ -383,7 +383,7 @@ namespace CyberBiology
                 UInt64 state = UInt64.Parse(Str[1]);
                 rand = new StateRandom(seed, state);
 
-                MuteChance = int.Parse(Str[2]); ;
+                muteChance = int.Parse(Str[2]); ;
                 season_str = Str[3];
                 viewMode = int.Parse(Str[4]);
                 WORLD_SIZE = int.Parse(Str[5]);
@@ -393,7 +393,7 @@ namespace CyberBiology
                 currentSeason = int.Parse(Str[9]);
                 age = int.Parse(Str[10]);
                 cell_count = int.Parse(Str[11]);
-                Print_cell_count = int.Parse(Str[12]);
+                print_cell_count = int.Parse(Str[12]);
                 WORLD_HEIGHT = int.Parse(Str[13]);
                 WORLD_WIDTH = int.Parse(Str[14]);
 
@@ -485,7 +485,7 @@ namespace CyberBiology
                             }
                             else if (mode == 2)
                             {
-                                int a = isMultiForDrawing(celln);
+                                int a = IsMultiForDrawing(celln);
                                 if (a > 0)
                                 {
 
@@ -555,7 +555,7 @@ namespace CyberBiology
                 graphics.FillRectangle(BR, 300, 10, 70, 20);
 
                 BR.Color = Color.Black;
-                graphics.DrawString("Cells: " + Print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                graphics.DrawString("Cells: " + print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 40, 10);
                 graphics.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 150, 10);

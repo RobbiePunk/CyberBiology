@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.WORLD_BOX = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.plusSizeBT = new System.Windows.Forms.Button();
+            this.minusSizeBT = new System.Windows.Forms.Button();
+            this.viewMode1BT = new System.Windows.Forms.Button();
+            this.saveWorldBT = new System.Windows.Forms.Button();
+            this.stopPlayBT = new System.Windows.Forms.Button();
+            this.loadWorldBT = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.viewMode2BT = new System.Windows.Forms.Button();
+            this.viewMode3BT = new System.Windows.Forms.Button();
             this.FPS_Scroll = new System.Windows.Forms.TrackBar();
-            this.WorldSizeScroll = new System.Windows.Forms.TrackBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button9 = new System.Windows.Forms.Button();
+            this.worldSizeScroll = new System.Windows.Forms.TrackBar();
+            this.fpsTB = new System.Windows.Forms.TextBox();
+            this.worldSizeTB = new System.Windows.Forms.TextBox();
+            this.newSimulationBT = new System.Windows.Forms.Button();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -55,24 +55,24 @@
             this.saveToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFromTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тестыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.perfomanceTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.worldSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveDrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllWallsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.viewMode4 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.turnDrawingBT = new System.Windows.Forms.Button();
+            this.oneStepBT = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.randomGenomeCB = new System.Windows.Forms.CheckBox();
             this.addCellBT = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
+            this.addWallBT = new System.Windows.Forms.Button();
+            this.eraseCellBT = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,76 +87,75 @@
             this.WORLD_BOX.TabIndex = 0;
             this.WORLD_BOX.TabStop = false;
             this.WORLD_BOX.Paint += new System.Windows.Forms.PaintEventHandler(this.WORLD_BOX_Paint);
-            this.WORLD_BOX.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseClick);
             this.WORLD_BOX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseDown);
             this.WORLD_BOX.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseMove);
             this.WORLD_BOX.MouseUp += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseUp);
             // 
-            // button1
+            // plusSizeBT
             // 
-            this.button1.Location = new System.Drawing.Point(1775, 34);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 63);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Size+";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Size_plus);
+            this.plusSizeBT.Location = new System.Drawing.Point(1775, 34);
+            this.plusSizeBT.Margin = new System.Windows.Forms.Padding(4);
+            this.plusSizeBT.Name = "plusSizeBT";
+            this.plusSizeBT.Size = new System.Drawing.Size(125, 63);
+            this.plusSizeBT.TabIndex = 1;
+            this.plusSizeBT.Text = "Size+";
+            this.plusSizeBT.UseVisualStyleBackColor = true;
+            this.plusSizeBT.Click += new System.EventHandler(this.Size_plus);
             // 
-            // button2
+            // minusSizeBT
             // 
-            this.button2.Location = new System.Drawing.Point(1640, 34);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(125, 63);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Size-";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.size_minus);
+            this.minusSizeBT.Location = new System.Drawing.Point(1640, 34);
+            this.minusSizeBT.Margin = new System.Windows.Forms.Padding(4);
+            this.minusSizeBT.Name = "minusSizeBT";
+            this.minusSizeBT.Size = new System.Drawing.Size(125, 63);
+            this.minusSizeBT.TabIndex = 2;
+            this.minusSizeBT.Text = "Size-";
+            this.minusSizeBT.UseVisualStyleBackColor = true;
+            this.minusSizeBT.Click += new System.EventHandler(this.Size_minus);
             // 
-            // button3
+            // viewMode1BT
             // 
-            this.button3.Location = new System.Drawing.Point(1640, 105);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(57, 74);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "1";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.ViewMode1);
+            this.viewMode1BT.Location = new System.Drawing.Point(1640, 105);
+            this.viewMode1BT.Margin = new System.Windows.Forms.Padding(4);
+            this.viewMode1BT.Name = "viewMode1BT";
+            this.viewMode1BT.Size = new System.Drawing.Size(57, 74);
+            this.viewMode1BT.TabIndex = 3;
+            this.viewMode1BT.Text = "1";
+            this.viewMode1BT.UseVisualStyleBackColor = true;
+            this.viewMode1BT.Click += new System.EventHandler(this.TurnViewMode1);
             // 
-            // button4
+            // saveWorldBT
             // 
-            this.button4.Location = new System.Drawing.Point(1640, 414);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(263, 74);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Save";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.Save);
+            this.saveWorldBT.Location = new System.Drawing.Point(1640, 414);
+            this.saveWorldBT.Margin = new System.Windows.Forms.Padding(4);
+            this.saveWorldBT.Name = "saveWorldBT";
+            this.saveWorldBT.Size = new System.Drawing.Size(263, 74);
+            this.saveWorldBT.TabIndex = 4;
+            this.saveWorldBT.Text = "Save";
+            this.saveWorldBT.UseVisualStyleBackColor = true;
+            this.saveWorldBT.Click += new System.EventHandler(this.Save);
             // 
-            // button5
+            // stopPlayBT
             // 
-            this.button5.Location = new System.Drawing.Point(1640, 235);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(259, 74);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Stop/Play";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.Stop_Play);
+            this.stopPlayBT.Location = new System.Drawing.Point(1640, 235);
+            this.stopPlayBT.Margin = new System.Windows.Forms.Padding(4);
+            this.stopPlayBT.Name = "stopPlayBT";
+            this.stopPlayBT.Size = new System.Drawing.Size(259, 74);
+            this.stopPlayBT.TabIndex = 5;
+            this.stopPlayBT.Text = "Stop/Play";
+            this.stopPlayBT.UseVisualStyleBackColor = true;
+            this.stopPlayBT.Click += new System.EventHandler(this.Stop_Play);
             // 
-            // button6
+            // loadWorldBT
             // 
-            this.button6.Location = new System.Drawing.Point(1640, 495);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(259, 74);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Load";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.Load_file);
+            this.loadWorldBT.Location = new System.Drawing.Point(1640, 495);
+            this.loadWorldBT.Margin = new System.Windows.Forms.Padding(4);
+            this.loadWorldBT.Name = "loadWorldBT";
+            this.loadWorldBT.Size = new System.Drawing.Size(259, 74);
+            this.loadWorldBT.TabIndex = 6;
+            this.loadWorldBT.Text = "Load";
+            this.loadWorldBT.UseVisualStyleBackColor = true;
+            this.loadWorldBT.Click += new System.EventHandler(this.Load_file);
             // 
             // openFileDialog1
             // 
@@ -165,29 +164,28 @@
             // saveFileDialog1
             // 
             this.saveFileDialog1.FileName = "NewSave";
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // button7
+            // viewMode2BT
             // 
-            this.button7.Location = new System.Drawing.Point(1708, 105);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(57, 74);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "2";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.ViewMode2);
+            this.viewMode2BT.Location = new System.Drawing.Point(1708, 105);
+            this.viewMode2BT.Margin = new System.Windows.Forms.Padding(4);
+            this.viewMode2BT.Name = "viewMode2BT";
+            this.viewMode2BT.Size = new System.Drawing.Size(57, 74);
+            this.viewMode2BT.TabIndex = 7;
+            this.viewMode2BT.Text = "2";
+            this.viewMode2BT.UseVisualStyleBackColor = true;
+            this.viewMode2BT.Click += new System.EventHandler(this.TurnViewMode2);
             // 
-            // button8
+            // viewMode3BT
             // 
-            this.button8.Location = new System.Drawing.Point(1775, 105);
-            this.button8.Margin = new System.Windows.Forms.Padding(4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(57, 74);
-            this.button8.TabIndex = 8;
-            this.button8.Text = "3";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.ViewMode3);
+            this.viewMode3BT.Location = new System.Drawing.Point(1775, 105);
+            this.viewMode3BT.Margin = new System.Windows.Forms.Padding(4);
+            this.viewMode3BT.Name = "viewMode3BT";
+            this.viewMode3BT.Size = new System.Drawing.Size(57, 74);
+            this.viewMode3BT.TabIndex = 8;
+            this.viewMode3BT.Text = "3";
+            this.viewMode3BT.UseVisualStyleBackColor = true;
+            this.viewMode3BT.Click += new System.EventHandler(this.TurnViewMode3);
             // 
             // FPS_Scroll
             // 
@@ -202,51 +200,50 @@
             this.FPS_Scroll.Visible = false;
             this.FPS_Scroll.Scroll += new System.EventHandler(this.ChangeFPS);
             // 
-            // WorldSizeScroll
+            // worldSizeScroll
             // 
-            this.WorldSizeScroll.Location = new System.Drawing.Point(1640, 633);
-            this.WorldSizeScroll.Margin = new System.Windows.Forms.Padding(4);
-            this.WorldSizeScroll.Maximum = 5;
-            this.WorldSizeScroll.Minimum = 1;
-            this.WorldSizeScroll.Name = "WorldSizeScroll";
-            this.WorldSizeScroll.Size = new System.Drawing.Size(263, 56);
-            this.WorldSizeScroll.TabIndex = 10;
-            this.WorldSizeScroll.Value = 1;
-            this.WorldSizeScroll.Scroll += new System.EventHandler(this.WorldSizeChange);
+            this.worldSizeScroll.Location = new System.Drawing.Point(1640, 633);
+            this.worldSizeScroll.Margin = new System.Windows.Forms.Padding(4);
+            this.worldSizeScroll.Maximum = 5;
+            this.worldSizeScroll.Minimum = 1;
+            this.worldSizeScroll.Name = "worldSizeScroll";
+            this.worldSizeScroll.Size = new System.Drawing.Size(263, 56);
+            this.worldSizeScroll.TabIndex = 10;
+            this.worldSizeScroll.Value = 1;
+            this.worldSizeScroll.Scroll += new System.EventHandler(this.ChangeWorldSize);
             // 
-            // textBox1
+            // fpsTB
             // 
-            this.textBox1.Location = new System.Drawing.Point(1640, 714);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(257, 22);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "Draw every 100 iteration";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox1.Visible = false;
+            this.fpsTB.Location = new System.Drawing.Point(1640, 714);
+            this.fpsTB.Margin = new System.Windows.Forms.Padding(4);
+            this.fpsTB.Name = "fpsTB";
+            this.fpsTB.Size = new System.Drawing.Size(257, 22);
+            this.fpsTB.TabIndex = 11;
+            this.fpsTB.Text = "Draw every 100 iteration";
+            this.fpsTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.fpsTB.Visible = false;
             // 
-            // textBox2
+            // worldSizeTB
             // 
-            this.textBox2.Location = new System.Drawing.Point(1640, 590);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(253, 22);
-            this.textBox2.TabIndex = 12;
-            this.textBox2.Text = "World Size";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox2.Click += new System.EventHandler(this.textBox2_Click);
+            this.worldSizeTB.Location = new System.Drawing.Point(1640, 590);
+            this.worldSizeTB.Margin = new System.Windows.Forms.Padding(4);
+            this.worldSizeTB.Name = "worldSizeTB";
+            this.worldSizeTB.ReadOnly = true;
+            this.worldSizeTB.Size = new System.Drawing.Size(253, 22);
+            this.worldSizeTB.TabIndex = 12;
+            this.worldSizeTB.Text = "World Size";
+            this.worldSizeTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button9
+            // newSimulationBT
             // 
-            this.button9.Location = new System.Drawing.Point(1708, 853);
-            this.button9.Margin = new System.Windows.Forms.Padding(4);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(125, 43);
-            this.button9.TabIndex = 13;
-            this.button9.Text = "New Simulate";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.NewSimulate);
+            this.newSimulationBT.Location = new System.Drawing.Point(1708, 853);
+            this.newSimulationBT.Margin = new System.Windows.Forms.Padding(4);
+            this.newSimulationBT.Name = "newSimulationBT";
+            this.newSimulationBT.Size = new System.Drawing.Size(125, 43);
+            this.newSimulationBT.TabIndex = 13;
+            this.newSimulationBT.Text = "New Simulate";
+            this.newSimulationBT.UseVisualStyleBackColor = true;
+            this.newSimulationBT.Click += new System.EventHandler(this.NewSimulation);
             // 
             // hScrollBar1
             // 
@@ -299,47 +296,47 @@
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
             this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(200, 26);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
-            this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.saveImagesToolStripMenuItem1_Click);
+            this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.TurnImagesSaving);
             // 
             // saveWorldsToolStripMenuItem
             // 
             this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
             this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
-            this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.saveWorldsToolStripMenuItem_Click);
+            this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.TurnWorldSaving);
             // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
             this.lacationToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.lacationToolStripMenuItem.Text = "Lacation";
-            this.lacationToolStripMenuItem.Click += new System.EventHandler(this.lacationToolStripMenuItem_Click);
+            this.lacationToolStripMenuItem.Click += new System.EventHandler(this.ChangeImageSavePath);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
             this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
-            this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.saveParametresToolStripMenuItem_Click);
+            this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.ShowImageSaveParametresWindow);
             // 
             // saveToTextToolStripMenuItem
             // 
             this.saveToTextToolStripMenuItem.Name = "saveToTextToolStripMenuItem";
             this.saveToTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveToTextToolStripMenuItem.Text = "Save To Text";
-            this.saveToTextToolStripMenuItem.Click += new System.EventHandler(this.saveToTextToolStripMenuItem_Click);
+            this.saveToTextToolStripMenuItem.Click += new System.EventHandler(this.SaveToText);
             // 
             // loadFromTextToolStripMenuItem
             // 
             this.loadFromTextToolStripMenuItem.Name = "loadFromTextToolStripMenuItem";
             this.loadFromTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.loadFromTextToolStripMenuItem.Text = "Load From Text";
-            this.loadFromTextToolStripMenuItem.Click += new System.EventHandler(this.loadFromTextToolStripMenuItem_Click);
+            this.loadFromTextToolStripMenuItem.Click += new System.EventHandler(this.LoadFromText);
             // 
             // тестыToolStripMenuItem
             // 
             this.тестыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
+            this.perfomanceTestMenuItem,
             this.worldSettingsToolStripMenuItem,
             this.saveDrawToolStripMenuItem,
             this.clearAllWallsToolStripMenuItem});
@@ -347,19 +344,19 @@
             this.тестыToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
             this.тестыToolStripMenuItem.Text = "Simulation";
             // 
-            // toolStripMenuItem1
+            // perfomanceTestMenuItem
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 26);
-            this.toolStripMenuItem1.Text = "Performans Test";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.perfomanceTestMenuItem.Name = "perfomanceTestMenuItem";
+            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.perfomanceTestMenuItem.Text = "Performans Test";
+            this.perfomanceTestMenuItem.Click += new System.EventHandler(this.PerfomanceTest_Click);
             // 
             // worldSettingsToolStripMenuItem
             // 
             this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
-            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.worldSettingsToolStripMenuItem.Text = "World Settings";
-            this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.worldSettingsToolStripMenuItem_Click);
+            this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.ShowWorldSettingsWindow);
             // 
             // saveDrawToolStripMenuItem
             // 
@@ -367,16 +364,16 @@
             this.saveDrawToolStripMenuItem.CheckOnClick = true;
             this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
-            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
-            this.saveDrawToolStripMenuItem.Text = "Save Draw";
-            this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.saveDrawToolStripMenuItem_Click);
+            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveDrawToolStripMenuItem.Text = "Save Drawing";
+            this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.TurnSaveDrawing);
             // 
             // clearAllWallsToolStripMenuItem
             // 
             this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
-            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
-            this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.clearAllWallsToolStripMenuItem_Click);
+            this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.ClearAllWalls);
             // 
             // viewMode4
             // 
@@ -387,29 +384,29 @@
             this.viewMode4.TabIndex = 18;
             this.viewMode4.Text = "4";
             this.viewMode4.UseVisualStyleBackColor = true;
-            this.viewMode4.Click += new System.EventHandler(this.viewMode4_Click);
+            this.viewMode4.Click += new System.EventHandler(this.TurnViewMode4);
             // 
-            // button10
+            // turnDrawingBT
             // 
-            this.button10.Location = new System.Drawing.Point(1641, 316);
-            this.button10.Margin = new System.Windows.Forms.Padding(4);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(259, 74);
-            this.button10.TabIndex = 19;
-            this.button10.Text = "Turn Off Drawing";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.turnDrawingBT.Location = new System.Drawing.Point(1641, 316);
+            this.turnDrawingBT.Margin = new System.Windows.Forms.Padding(4);
+            this.turnDrawingBT.Name = "turnDrawingBT";
+            this.turnDrawingBT.Size = new System.Drawing.Size(259, 74);
+            this.turnDrawingBT.TabIndex = 19;
+            this.turnDrawingBT.Text = "Turn Off Drawing";
+            this.turnDrawingBT.UseVisualStyleBackColor = true;
+            this.turnDrawingBT.Click += new System.EventHandler(this.TurnDrawing);
             // 
-            // button11
+            // oneStepBT
             // 
-            this.button11.Location = new System.Drawing.Point(1841, 187);
-            this.button11.Margin = new System.Windows.Forms.Padding(4);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(57, 39);
-            this.button11.TabIndex = 20;
-            this.button11.Text = ">";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.oneStepBT.Location = new System.Drawing.Point(1841, 187);
+            this.oneStepBT.Margin = new System.Windows.Forms.Padding(4);
+            this.oneStepBT.Name = "oneStepBT";
+            this.oneStepBT.Size = new System.Drawing.Size(57, 39);
+            this.oneStepBT.TabIndex = 20;
+            this.oneStepBT.Text = ">";
+            this.oneStepBT.UseVisualStyleBackColor = true;
+            this.oneStepBT.Click += new System.EventHandler(this.DoOneStep);
             // 
             // label1
             // 
@@ -429,17 +426,17 @@
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // checkBox1
+            // randomGenomeCB
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(1708, 903);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(128, 20);
-            this.checkBox1.TabIndex = 22;
-            this.checkBox1.Text = "random genome";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.randomGenomeCB.AutoSize = true;
+            this.randomGenomeCB.Location = new System.Drawing.Point(1708, 903);
+            this.randomGenomeCB.Name = "randomGenomeCB";
+            this.randomGenomeCB.Size = new System.Drawing.Size(128, 20);
+            this.randomGenomeCB.TabIndex = 22;
+            this.randomGenomeCB.Text = "random genome";
+            this.randomGenomeCB.UseVisualStyleBackColor = true;
+            this.randomGenomeCB.Visible = false;
+            this.randomGenomeCB.CheckedChanged += new System.EventHandler(this.TurnRandomGenome);
             // 
             // addCellBT
             // 
@@ -450,29 +447,29 @@
             this.addCellBT.TabIndex = 23;
             this.addCellBT.Text = "o";
             this.addCellBT.UseVisualStyleBackColor = true;
-            this.addCellBT.Click += new System.EventHandler(this.addCellBT_Click);
+            this.addCellBT.Click += new System.EventHandler(this.AddTypeCell);
             // 
-            // button12
+            // addWallBT
             // 
-            this.button12.Location = new System.Drawing.Point(1708, 187);
-            this.button12.Margin = new System.Windows.Forms.Padding(4);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(57, 39);
-            this.button12.TabIndex = 24;
-            this.button12.Text = "||";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.addWallBT.Location = new System.Drawing.Point(1708, 187);
+            this.addWallBT.Margin = new System.Windows.Forms.Padding(4);
+            this.addWallBT.Name = "addWallBT";
+            this.addWallBT.Size = new System.Drawing.Size(57, 39);
+            this.addWallBT.TabIndex = 24;
+            this.addWallBT.Text = "||";
+            this.addWallBT.UseVisualStyleBackColor = true;
+            this.addWallBT.Click += new System.EventHandler(this.AddTypeWall);
             // 
-            // button13
+            // eraseCellBT
             // 
-            this.button13.Location = new System.Drawing.Point(1776, 188);
-            this.button13.Margin = new System.Windows.Forms.Padding(4);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(57, 39);
-            this.button13.TabIndex = 25;
-            this.button13.Text = "X";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
+            this.eraseCellBT.Location = new System.Drawing.Point(1776, 188);
+            this.eraseCellBT.Margin = new System.Windows.Forms.Padding(4);
+            this.eraseCellBT.Name = "eraseCellBT";
+            this.eraseCellBT.Size = new System.Drawing.Size(57, 39);
+            this.eraseCellBT.TabIndex = 25;
+            this.eraseCellBT.Text = "X";
+            this.eraseCellBT.UseVisualStyleBackColor = true;
+            this.eraseCellBT.Click += new System.EventHandler(this.AddTypeEmpty);
             // 
             // Form1
             // 
@@ -480,30 +477,30 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1924, 956);
-            this.Controls.Add(this.button13);
-            this.Controls.Add(this.button12);
+            this.Controls.Add(this.eraseCellBT);
+            this.Controls.Add(this.addWallBT);
             this.Controls.Add(this.addCellBT);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.randomGenomeCB);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button11);
-            this.Controls.Add(this.button10);
+            this.Controls.Add(this.oneStepBT);
+            this.Controls.Add(this.turnDrawingBT);
             this.Controls.Add(this.viewMode4);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.WorldSizeScroll);
+            this.Controls.Add(this.newSimulationBT);
+            this.Controls.Add(this.worldSizeTB);
+            this.Controls.Add(this.fpsTB);
+            this.Controls.Add(this.worldSizeScroll);
             this.Controls.Add(this.FPS_Scroll);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.viewMode3BT);
+            this.Controls.Add(this.viewMode2BT);
+            this.Controls.Add(this.loadWorldBT);
+            this.Controls.Add(this.stopPlayBT);
+            this.Controls.Add(this.saveWorldBT);
+            this.Controls.Add(this.viewMode1BT);
+            this.Controls.Add(this.minusSizeBT);
+            this.Controls.Add(this.plusSizeBT);
             this.Controls.Add(this.WORLD_BOX);
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
@@ -511,12 +508,9 @@
             this.Name = "Form1";
             this.Text = "Cyber Biology";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WorldSizeScroll)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -527,21 +521,21 @@
         #endregion
 
         private System.Windows.Forms.PictureBox WORLD_BOX;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button plusSizeBT;
+        private System.Windows.Forms.Button minusSizeBT;
+        private System.Windows.Forms.Button viewMode1BT;
+        private System.Windows.Forms.Button saveWorldBT;
+        private System.Windows.Forms.Button stopPlayBT;
+        private System.Windows.Forms.Button loadWorldBT;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button viewMode2BT;
+        private System.Windows.Forms.Button viewMode3BT;
         private System.Windows.Forms.TrackBar FPS_Scroll;
-        private System.Windows.Forms.TrackBar WorldSizeScroll;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TrackBar worldSizeScroll;
+        private System.Windows.Forms.TextBox fpsTB;
+        private System.Windows.Forms.TextBox worldSizeTB;
+        private System.Windows.Forms.Button newSimulationBT;
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -550,11 +544,11 @@
         private System.Windows.Forms.ToolStripMenuItem saveParametresToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ToolStripMenuItem тестыToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem perfomanceTestMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveImagesToolStripMenuItem1;
         private System.Windows.Forms.Button viewMode4;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button turnDrawingBT;
+        private System.Windows.Forms.Button oneStepBT;
         private System.Windows.Forms.ToolStripMenuItem saveWorldsToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem worldSettingsToolStripMenuItem;
@@ -564,10 +558,10 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.ToolStripMenuItem saveDrawToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearAllWallsToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox randomGenomeCB;
         private System.Windows.Forms.Button addCellBT;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button addWallBT;
+        private System.Windows.Forms.Button eraseCellBT;
     }
 }
 
