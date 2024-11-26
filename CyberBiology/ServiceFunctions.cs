@@ -31,44 +31,7 @@ namespace CyberBiology
         
         public static void FirstCell()
         {
-            cells[0, NEXT] = 1;
-            cells[0, PREV] = 1;
-
-            cells[1, NEXT] = 0;
-            cells[1, PREV] = 0;
-
-            cells[1, C_RED] = 170;
-            cells[1, C_GREEN] = 170;
-            cells[1, C_BLUE] = 170;
-
-            cells[1, ENERGY] = 900;
-            cells[1, MINERAL] = 0;
-            cells[1, LIVING] = LV_ALIVE;
-            cells[1, DIRECT] = 5;
-            cells[1, X_COORD] = WORLD_WIDTH / 2;
-            cells[1, Y_COORD] = WORLD_HEIGHT / 4 + 1;
-
-            cells[1, CELL_AGE] = 0;
-
-            for (int j = M1; j < M8 + 1; j++)
-            {
-                cells[1, j] = 0;
-            }
-            world[cells[1, X_COORD], cells[1, Y_COORD]] = 1;
-            int i = 0;
-            while (i < MIND_SIZE)
-            {
-                if (isRandom)
-                    cells[1, i] = rand.Next() % MIND_SIZE;
-                else
-                    cells[1, i] = 25;
-                i++;
-            }
-            if (!isAutoDivide)
-            {
-                cells[1, rand.Next() % MIND_SIZE] = 23; //поворот
-                cells[1, rand.Next() % MIND_SIZE] = 22; //Деление
-            }
+            AddCell(WORLD_WIDTH / 2, WORLD_HEIGHT / 4 + 1);
         }
         public static void CreatePerformanceTestWorld()
         {
@@ -155,7 +118,7 @@ namespace CyberBiology
             }
             if (!isAutoDivide)
             {
-                cells[num, rand.Next() % MIND_SIZE] = 23; //поворот
+                //cells[num, rand.Next() % MIND_SIZE] = 23; //поворот
                 cells[num, rand.Next() % MIND_SIZE] = 22; //Деление
             }
         }

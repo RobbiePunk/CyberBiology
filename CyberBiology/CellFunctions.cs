@@ -425,7 +425,7 @@ namespace CyberBiology
                 cells[newcell, i] = cells[num, i];
             }
             int vi = rand.Next();
-            if (muteChance != 0 && vi % muteChance == 0)
+            if (vi % 100 < muteChance)
             {
                 int ma = rand.Next() % MIND_SIZE;
                 int mc = rand.Next() % MIND_SIZE;
@@ -485,7 +485,7 @@ namespace CyberBiology
                 cells[newcell, i] = cells[num, i];
             }
             int vi = rand.Next();
-            if (muteChance != 0 && vi % muteChance == 0)
+            if (vi % 100 < muteChance)
             {
                 int ma = rand.Next() % 64;
                 int mc = rand.Next() % 64;

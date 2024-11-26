@@ -35,7 +35,7 @@ namespace CyberBiology
     {
         public static int seed = 1;
         public static Stopwatch clock = new Stopwatch();
-        public static StateRandom rand = new StateRandom(1);//new MathNet.Numerics.Random.Random(seed);
+        public static StateRandom rand = new StateRandom(1);
 
 
         public static int WORLD_WIDTH = 360;

@@ -293,15 +293,17 @@
             // 
             // saveImagesToolStripMenuItem1
             // 
+            this.saveImagesToolStripMenuItem1.CheckOnClick = true;
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(200, 26);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.TurnImagesSaving);
             // 
             // saveWorldsToolStripMenuItem
             // 
+            this.saveWorldsToolStripMenuItem.CheckOnClick = true;
             this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
-            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
             this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.TurnWorldSaving);
             // 
@@ -346,6 +348,7 @@
             // 
             // perfomanceTestMenuItem
             // 
+            this.perfomanceTestMenuItem.CheckOnClick = true;
             this.perfomanceTestMenuItem.Name = "perfomanceTestMenuItem";
             this.perfomanceTestMenuItem.Size = new System.Drawing.Size(224, 26);
             this.perfomanceTestMenuItem.Text = "Performans Test";
@@ -354,7 +357,7 @@
             // worldSettingsToolStripMenuItem
             // 
             this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
-            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.worldSettingsToolStripMenuItem.Text = "World Settings";
             this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.ShowWorldSettingsWindow);
             // 
@@ -364,14 +367,14 @@
             this.saveDrawToolStripMenuItem.CheckOnClick = true;
             this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
-            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.saveDrawToolStripMenuItem.Text = "Save Drawing";
             this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.TurnSaveDrawing);
             // 
             // clearAllWallsToolStripMenuItem
             // 
             this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
-            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
             this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.ClearAllWalls);
             // 
@@ -435,7 +438,6 @@
             this.randomGenomeCB.TabIndex = 22;
             this.randomGenomeCB.Text = "random genome";
             this.randomGenomeCB.UseVisualStyleBackColor = true;
-            this.randomGenomeCB.Visible = false;
             this.randomGenomeCB.CheckedChanged += new System.EventHandler(this.TurnRandomGenome);
             // 
             // addCellBT

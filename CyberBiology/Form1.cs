@@ -451,7 +451,7 @@ namespace CyberBiology
                 if(!performanceTest && cells[num, CELL_AGE] % 10000 == 0)
                 {
                     int vi = rand.Next();
-                    if (muteChance != 0 && vi % muteChance == 0)
+                    if (vi % 100 < muteChance)
                     {
                         int ma = rand.Next() % MIND_SIZE;
                         int mc = rand.Next() % MIND_SIZE;
@@ -543,8 +543,6 @@ namespace CyberBiology
             {
                 muteChance = customMuteChance;
 
-                //seasons = new int[] { 11, 10, 9, 10 };
-
                 if(s == 0)
                     seed = new Random().Next();
                 else
@@ -557,7 +555,6 @@ namespace CyberBiology
             else
             {
                 muteChance = 0;
-                //seasons = new int[] { 33, 30, 27, 30 };
 
                 seed = 1;
                 rand = new StateRandom(1);
@@ -810,15 +807,18 @@ namespace CyberBiology
         private void PerfomanceTest_Click(object sender, EventArgs e)
         {
             performanceTest = !performanceTest;
-            perfomanceTestMenuItem.Checked = performanceTest;
+
+            if(performanceTest)
+                seasons = new int[] { 33, 30, 27, 30 };
+            else
+                seasons = new int[] { 11, 10, 9, 10 };
 
             NewSimulation(sender, e);
         }
 
         private void TurnImagesSaving(object sender, EventArgs e)
         {
-            saveImage = !saveImage;
-            saveImagesToolStripMenuItem1.Checked = saveImage;
+            saveImage = saveImagesToolStripMenuItem1.Checked;
         }
 
         private void ShowImageSaveParametresWindow(object sender, EventArgs e)
@@ -860,8 +860,7 @@ namespace CyberBiology
 
         private void TurnWorldSaving(object sender, EventArgs e)
         {
-            saveWorld = !saveWorld;
-            saveWorldsToolStripMenuItem.Checked = saveWorld;
+            saveWorld = saveWorldsToolStripMenuItem.Checked;
         }
 
         private void ShowWorldSettingsWindow(object sender, EventArgs e)
