@@ -38,15 +38,12 @@ namespace CyberBiology
         public static StateRandom rand = new StateRandom(1);
 
 
-        public static int WORLD_WIDTH = 360;
+        public static int WORLD_WIDTH = 180;
         public static int WORLD_HEIGHT = 192;
         public static int MAX_CELLS;
 
         public static int[,] cells;
         public static int[,] world;
-
-        public static int[,] drawWorld;
-        public static int[,] drawCells;
 
         public static int ETM = 5;
         public static int MTE = 2;

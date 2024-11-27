@@ -61,6 +61,8 @@ namespace CyberBiology
 
         public int customMuteChance = 10;
 
+        InspectForm inspectForm;
+
         public Form1()
         {
             InitializeComponent();
@@ -495,9 +497,6 @@ namespace CyberBiology
             //Stopwatch time = new Stopwatch();
             //time.Start();
 
-            drawWorld = (int[,])world.Clone();
-            drawCells = (int[,])cells.Clone();
-
             float ips = IPS;
 
             for (int i = 0; i < imageSaveViewMode.Length; i++)
@@ -527,12 +526,12 @@ namespace CyberBiology
         {
             isDrawing = true;
 
-            drawWorld = (int[,])world.Clone();
-            drawCells = (int[,])cells.Clone();
-
             DrawWorld(GR, viewMode, WORLD_SIZE, xDrawStartIndex, yDrawStartIndex);
 
             WORLD_BOX.Image = bmp;
+
+            if (inspectForm != null)
+                inspectForm.UpdateInfo();
 
             isDrawing = false;
         }
@@ -581,9 +580,7 @@ namespace CyberBiology
                 MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
 
                 cells = new int[MAX_CELLS, CELL_SIZE];
-                drawCells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
-                drawWorld = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
                 if (saveSize == 0)
                 {
@@ -740,13 +737,6 @@ namespace CyberBiology
         {
             viewMode = 4;
             UpdateScreen();
-        }
-
-        private void ChangeFPS(object sender, EventArgs e)
-        {
-            //временно скрыт
-            drawInterval = FPS_Scroll.Value;
-            fpsTB.Text = $"Draw every {drawInterval} iteration";
         }
 
         public void ChangeWorldSize(object sender, EventArgs e)
@@ -918,9 +908,36 @@ namespace CyberBiology
 
         private void WORLD_BOX_MouseDown(object sender, MouseEventArgs e)
         {
-            addWorld = true;
+            if (e.Button == MouseButtons.Left)
+            {
+                addWorld = true;
 
-            WORLD_BOX_MouseMove(sender, e);
+                WORLD_BOX_MouseMove(sender, e);
+            }
+            else if(e.Button == MouseButtons.Right)
+            {
+                int mouseX = e.X;
+                int mouseY = e.Y;
+
+                if (mouseX > WORLD_BOX.Location.X && mouseX < WORLD_BOX.Location.X + WORLD_BOX.Size.Width
+                    && mouseY > WORLD_BOX.Location.Y && mouseY < WORLD_BOX.Location.Y + WORLD_BOX.Size.Height)
+                {
+                    mouseX = (mouseX - 40) / WORLD_SIZE + xDrawStartIndex;
+                    mouseY = (mouseY - 40) / WORLD_SIZE + yDrawStartIndex;
+
+                    if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0
+                        && mouseY < (WORLD_HEIGHT + 1))
+                    {
+                        if (world[mouseX, mouseY] > 0)
+                        {
+                            inspectForm = new InspectForm();
+                            inspectForm.mainForm = this;
+                            inspectForm.cellNum = world[mouseX, mouseY];
+                            inspectForm.Show();
+                        }
+                    }
+                }
+            }
         }
 
         private void WORLD_BOX_MouseUp(object sender, MouseEventArgs e)

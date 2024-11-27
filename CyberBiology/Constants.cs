@@ -2,8 +2,8 @@
 {
     public static class Constants
     {
-        public const int MIND_SIZE = 64;
-        public const int CELL_SIZE = 64 + 23;
+        public const int MIND_SIZE = 80;
+        public const int CELL_SIZE = MIND_SIZE + 23;
 
         public const int ADR = MIND_SIZE + 0;
         public const int X_COORD = MIND_SIZE + 1;

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.WORLD_BOX = new System.Windows.Forms.PictureBox();
             this.plusSizeBT = new System.Windows.Forms.Button();
             this.minusSizeBT = new System.Windows.Forms.Button();
             this.viewMode1BT = new System.Windows.Forms.Button();
@@ -39,9 +38,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.viewMode2BT = new System.Windows.Forms.Button();
             this.viewMode3BT = new System.Windows.Forms.Button();
-            this.FPS_Scroll = new System.Windows.Forms.TrackBar();
             this.worldSizeScroll = new System.Windows.Forms.TrackBar();
-            this.fpsTB = new System.Windows.Forms.TextBox();
             this.worldSizeTB = new System.Windows.Forms.TextBox();
             this.newSimulationBT = new System.Windows.Forms.Button();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
@@ -70,26 +67,11 @@
             this.addCellBT = new System.Windows.Forms.Button();
             this.addWallBT = new System.Windows.Forms.Button();
             this.eraseCellBT = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).BeginInit();
+            this.WORLD_BOX = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
             this.SuspendLayout();
-            // 
-            // WORLD_BOX
-            // 
-            this.WORLD_BOX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.WORLD_BOX.InitialImage = null;
-            this.WORLD_BOX.Location = new System.Drawing.Point(40, 32);
-            this.WORLD_BOX.Margin = new System.Windows.Forms.Padding(4);
-            this.WORLD_BOX.Name = "WORLD_BOX";
-            this.WORLD_BOX.Size = new System.Drawing.Size(1590, 864);
-            this.WORLD_BOX.TabIndex = 0;
-            this.WORLD_BOX.TabStop = false;
-            this.WORLD_BOX.Paint += new System.Windows.Forms.PaintEventHandler(this.WORLD_BOX_Paint);
-            this.WORLD_BOX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseDown);
-            this.WORLD_BOX.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseMove);
-            this.WORLD_BOX.MouseUp += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseUp);
             // 
             // plusSizeBT
             // 
@@ -126,7 +108,7 @@
             // 
             // saveWorldBT
             // 
-            this.saveWorldBT.Location = new System.Drawing.Point(1640, 414);
+            this.saveWorldBT.Location = new System.Drawing.Point(1641, 533);
             this.saveWorldBT.Margin = new System.Windows.Forms.Padding(4);
             this.saveWorldBT.Name = "saveWorldBT";
             this.saveWorldBT.Size = new System.Drawing.Size(263, 74);
@@ -137,7 +119,7 @@
             // 
             // stopPlayBT
             // 
-            this.stopPlayBT.Location = new System.Drawing.Point(1640, 235);
+            this.stopPlayBT.Location = new System.Drawing.Point(1641, 354);
             this.stopPlayBT.Margin = new System.Windows.Forms.Padding(4);
             this.stopPlayBT.Name = "stopPlayBT";
             this.stopPlayBT.Size = new System.Drawing.Size(259, 74);
@@ -148,7 +130,7 @@
             // 
             // loadWorldBT
             // 
-            this.loadWorldBT.Location = new System.Drawing.Point(1640, 495);
+            this.loadWorldBT.Location = new System.Drawing.Point(1641, 614);
             this.loadWorldBT.Margin = new System.Windows.Forms.Padding(4);
             this.loadWorldBT.Name = "loadWorldBT";
             this.loadWorldBT.Size = new System.Drawing.Size(259, 74);
@@ -187,22 +169,9 @@
             this.viewMode3BT.UseVisualStyleBackColor = true;
             this.viewMode3BT.Click += new System.EventHandler(this.TurnViewMode3);
             // 
-            // FPS_Scroll
-            // 
-            this.FPS_Scroll.Location = new System.Drawing.Point(1640, 752);
-            this.FPS_Scroll.Margin = new System.Windows.Forms.Padding(4);
-            this.FPS_Scroll.Maximum = 1000;
-            this.FPS_Scroll.Minimum = 1;
-            this.FPS_Scroll.Name = "FPS_Scroll";
-            this.FPS_Scroll.Size = new System.Drawing.Size(259, 56);
-            this.FPS_Scroll.TabIndex = 9;
-            this.FPS_Scroll.Value = 100;
-            this.FPS_Scroll.Visible = false;
-            this.FPS_Scroll.Scroll += new System.EventHandler(this.ChangeFPS);
-            // 
             // worldSizeScroll
             // 
-            this.worldSizeScroll.Location = new System.Drawing.Point(1640, 633);
+            this.worldSizeScroll.Location = new System.Drawing.Point(1641, 752);
             this.worldSizeScroll.Margin = new System.Windows.Forms.Padding(4);
             this.worldSizeScroll.Maximum = 5;
             this.worldSizeScroll.Minimum = 1;
@@ -212,20 +181,9 @@
             this.worldSizeScroll.Value = 1;
             this.worldSizeScroll.Scroll += new System.EventHandler(this.ChangeWorldSize);
             // 
-            // fpsTB
-            // 
-            this.fpsTB.Location = new System.Drawing.Point(1640, 714);
-            this.fpsTB.Margin = new System.Windows.Forms.Padding(4);
-            this.fpsTB.Name = "fpsTB";
-            this.fpsTB.Size = new System.Drawing.Size(257, 22);
-            this.fpsTB.TabIndex = 11;
-            this.fpsTB.Text = "Draw every 100 iteration";
-            this.fpsTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.fpsTB.Visible = false;
-            // 
             // worldSizeTB
             // 
-            this.worldSizeTB.Location = new System.Drawing.Point(1640, 590);
+            this.worldSizeTB.Location = new System.Drawing.Point(1641, 709);
             this.worldSizeTB.Margin = new System.Windows.Forms.Padding(4);
             this.worldSizeTB.Name = "worldSizeTB";
             this.worldSizeTB.ReadOnly = true;
@@ -274,7 +232,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1924, 30);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -288,14 +246,14 @@
             this.saveToTextToolStripMenuItem,
             this.loadFromTextToolStripMenuItem});
             this.saveImagesToolStripMenuItem.Name = "saveImagesToolStripMenuItem";
-            this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
+            this.saveImagesToolStripMenuItem.Size = new System.Drawing.Size(60, 26);
             this.saveImagesToolStripMenuItem.Text = "Saves";
             // 
             // saveImagesToolStripMenuItem1
             // 
             this.saveImagesToolStripMenuItem1.CheckOnClick = true;
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(200, 26);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.TurnImagesSaving);
             // 
@@ -303,7 +261,7 @@
             // 
             this.saveWorldsToolStripMenuItem.CheckOnClick = true;
             this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
-            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
             this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.TurnWorldSaving);
             // 
@@ -343,14 +301,14 @@
             this.saveDrawToolStripMenuItem,
             this.clearAllWallsToolStripMenuItem});
             this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
-            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
+            this.тестыToolStripMenuItem.Size = new System.Drawing.Size(94, 26);
             this.тестыToolStripMenuItem.Text = "Simulation";
             // 
             // perfomanceTestMenuItem
             // 
             this.perfomanceTestMenuItem.CheckOnClick = true;
             this.perfomanceTestMenuItem.Name = "perfomanceTestMenuItem";
-            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(196, 26);
             this.perfomanceTestMenuItem.Text = "Performans Test";
             this.perfomanceTestMenuItem.Click += new System.EventHandler(this.PerfomanceTest_Click);
             // 
@@ -391,7 +349,7 @@
             // 
             // turnDrawingBT
             // 
-            this.turnDrawingBT.Location = new System.Drawing.Point(1641, 316);
+            this.turnDrawingBT.Location = new System.Drawing.Point(1642, 435);
             this.turnDrawingBT.Margin = new System.Windows.Forms.Padding(4);
             this.turnDrawingBT.Name = "turnDrawingBT";
             this.turnDrawingBT.Size = new System.Drawing.Size(259, 74);
@@ -414,7 +372,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1637, 693);
+            this.label1.Location = new System.Drawing.Point(1588, 900);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 16);
             this.label1.TabIndex = 21;
@@ -473,6 +431,21 @@
             this.eraseCellBT.UseVisualStyleBackColor = true;
             this.eraseCellBT.Click += new System.EventHandler(this.AddTypeEmpty);
             // 
+            // WORLD_BOX
+            // 
+            this.WORLD_BOX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.WORLD_BOX.InitialImage = null;
+            this.WORLD_BOX.Location = new System.Drawing.Point(40, 32);
+            this.WORLD_BOX.Margin = new System.Windows.Forms.Padding(4);
+            this.WORLD_BOX.Name = "WORLD_BOX";
+            this.WORLD_BOX.Size = new System.Drawing.Size(1590, 864);
+            this.WORLD_BOX.TabIndex = 0;
+            this.WORLD_BOX.TabStop = false;
+            this.WORLD_BOX.Paint += new System.Windows.Forms.PaintEventHandler(this.WORLD_BOX_Paint);
+            this.WORLD_BOX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseDown);
+            this.WORLD_BOX.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseMove);
+            this.WORLD_BOX.MouseUp += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseUp);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -492,9 +465,7 @@
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.newSimulationBT);
             this.Controls.Add(this.worldSizeTB);
-            this.Controls.Add(this.fpsTB);
             this.Controls.Add(this.worldSizeScroll);
-            this.Controls.Add(this.FPS_Scroll);
             this.Controls.Add(this.viewMode3BT);
             this.Controls.Add(this.viewMode2BT);
             this.Controls.Add(this.loadWorldBT);
@@ -508,13 +479,13 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cyber Biology";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FPS_Scroll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -533,9 +504,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button viewMode2BT;
         private System.Windows.Forms.Button viewMode3BT;
-        private System.Windows.Forms.TrackBar FPS_Scroll;
         private System.Windows.Forms.TrackBar worldSizeScroll;
-        private System.Windows.Forms.TextBox fpsTB;
         private System.Windows.Forms.TextBox worldSizeTB;
         private System.Windows.Forms.Button newSimulationBT;
         private System.Windows.Forms.HScrollBar hScrollBar1;

@@ -156,7 +156,7 @@ namespace CyberBiology
             int a = 0;
             for (int i = MIND_SIZE + 12; i < MIND_SIZE + 20; i++)
             {
-                if (drawCells[num, i] != 0)
+                if (cells[num, i] != 0)
                 {
                     a++;
                 }
@@ -417,7 +417,7 @@ namespace CyberBiology
                         graphics.FillRectangle(BR, 10 - xDrawStartIndex * size, y * size + yBias, 10, size);
                     }
 
-                    int celln = drawWorld[x + xDrawStartIndex, y + yDrawStartIndex];
+                    int celln = world[x + xDrawStartIndex, y + yDrawStartIndex];
                     if (celln == WC_EMPTY)
                     {
 
@@ -427,19 +427,19 @@ namespace CyberBiology
                         BR.Color = Color.FromArgb(255, 40, 40, 40);
                         graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
-                    else if (drawCells[celln, LIVING] == LV_EARTH)
+                    else if (cells[celln, LIVING] == LV_EARTH)
                     {
                         BR.Color = Color.FromArgb(255, 150, 100, 0);
                         graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
-                    else if (drawCells[celln, LIVING] == LV_STONE)
+                    else if (cells[celln, LIVING] == LV_STONE)
                     {
                         BR.Color = Color.FromArgb(255, 150, 150, 200);
                         graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
                     }
                     else
                     {
-                        if (drawCells[celln, LIVING] == LV_ALIVE)
+                        if (cells[celln, LIVING] == LV_ALIVE)
                         {
                             Color C;
                             if (mode == 1)
@@ -461,7 +461,7 @@ namespace CyberBiology
                             }
                             else if (mode == 3)
                             {
-                                int E = drawCells[celln, ENERGY];
+                                int E = cells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
                                 {
                                     C = Color.FromArgb(255, 255, 255 - E / 4, 0);
@@ -477,7 +477,7 @@ namespace CyberBiology
                             }
                             else
                             {
-                                int cellAge = drawCells[celln, CELL_AGE];
+                                int cellAge = cells[celln, CELL_AGE];
                                 if (cellAge <= 1000 && cellAge >= 0)
                                 {
                                     C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);

@@ -53,3 +53,4 @@ D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.Form1.resource
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.Form1.resources
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.WorldSettingsForm.resources
 D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.WorldSettingsForm.resources
+C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.InspectForm.resources
