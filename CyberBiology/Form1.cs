@@ -61,7 +61,7 @@ namespace CyberBiology
 
         public int customMuteChance = 10;
 
-        InspectForm inspectForm;
+        public List<InspectForm> inspectForm = new List<InspectForm>();
 
         public Form1()
         {
@@ -165,7 +165,7 @@ namespace CyberBiology
             if(cells[num, CELL_SLEEP] > 0)
             {
                 cells[num, CELL_SLEEP]--;
-                cells[num, ENERGY] -= ETL/2;
+                cells[num, ENERGY] -= ETL/3;
                 if (cells[num, ENERGY] < 1)
                 {
                     CellDie(num);
@@ -177,7 +177,7 @@ namespace CyberBiology
             int cyc = 0;
         ag:
             cyc++;
-            if (cyc < 10)
+            if (cyc < 2)
             {
                 int command = cells[num, cells[num, ADR]];
                 if (command == 19)//сон
@@ -522,7 +522,7 @@ namespace CyberBiology
             WORLD_BOX.Invalidate();
         }
 
-        private void UpdateScreen()
+        public void UpdateScreen()
         {
             isDrawing = true;
 
@@ -530,8 +530,8 @@ namespace CyberBiology
 
             WORLD_BOX.Image = bmp;
 
-            if (inspectForm != null)
-                inspectForm.UpdateInfo();
+            foreach(InspectForm inspectF in inspectForm)
+                inspectF.UpdateInfo();
 
             isDrawing = false;
         }
@@ -928,12 +928,16 @@ namespace CyberBiology
                     if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0
                         && mouseY < (WORLD_HEIGHT + 1))
                     {
-                        if (world[mouseX, mouseY] > 0)
+                        if (world[mouseX, mouseY] > 0 && inspectedNums.IndexOf(world[mouseX, mouseY]) == -1)
                         {
-                            inspectForm = new InspectForm();
-                            inspectForm.mainForm = this;
-                            inspectForm.cellNum = world[mouseX, mouseY];
-                            inspectForm.Show();
+                            InspectForm newInspectForm = new InspectForm();
+                            newInspectForm.mainForm = this;
+                            newInspectForm.cellNum = world[mouseX, mouseY];
+                            newInspectForm.Show();
+                            inspectForm.Add(newInspectForm);
+                            inspectedNums.Add(world[mouseX, mouseY]);
+
+                            UpdateScreen();
                         }
                     }
                 }

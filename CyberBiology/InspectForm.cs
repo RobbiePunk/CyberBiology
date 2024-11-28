@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using static CyberBiology.Constants;
 using static CyberBiology.Simulation;
+using static CyberBiology.ServiceFunctions;
 
 namespace CyberBiology
 {
@@ -42,7 +43,7 @@ namespace CyberBiology
             gr.Clear(Color.White);
             SolidBrush BR = new SolidBrush(Color.Black);
 
-            int size = 220 / y;
+            int size = 200 / y;
             int command = cells[cellNum, cells[cellNum, ADR]];
 
             for (int i = 0; i < y; i++)
@@ -59,18 +60,44 @@ namespace CyberBiology
                 }
             }
 
+            switch (cells[cellNum, LIVING])
+            {
+                case LV_ALIVE:
+                    gr.DrawString($"Status: Alive", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                   BR, 360, 0);
+                    break;
+                case LV_DEAD:
+                    gr.DrawString($"Status: Dead", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                   BR, 360, 0);
+                    break;
+                case LV_EARTH:
+                    gr.DrawString($"Status: Earth", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                   BR, 360, 0);
+                    break;
+                case LV_FREE:
+                    gr.DrawString($"Status: Empty", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                   BR, 360, 0);
+                    break;
+                case LV_STONE:
+                    gr.DrawString($"Status: Stone", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                   BR, 360, 0);
+                    break;
+                default:
+                    break;
+            }
+            
             gr.DrawString($"Coordinats: {cells[cellNum, X_COORD]}, {cells[cellNum, X_COORD]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
-                    BR, 360, 0);
-            gr.DrawString($"Energy: {cells[cellNum, ENERGY]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 40);
-            gr.DrawString($"Mineral: {cells[cellNum, MINERAL]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+            gr.DrawString($"Energy: {cells[cellNum, ENERGY]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 80);
-            gr.DrawString($"Direct: {cells[cellNum, DIRECT]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+            gr.DrawString($"Mineral: {cells[cellNum, MINERAL]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 120);
-            gr.DrawString($"Age: {cells[cellNum, CELL_AGE]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+            gr.DrawString($"Direct: {cells[cellNum, DIRECT]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 160);
-            gr.DrawString($"Sleep for: {cells[cellNum, CELL_SLEEP]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+            gr.DrawString($"Age: {cells[cellNum, CELL_AGE]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 200);
+            gr.DrawString($"Sleep for: {cells[cellNum, CELL_SLEEP]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                    BR, 360, 280);
 
             if (command == 19)//сон
             {
@@ -226,5 +253,11 @@ namespace CyberBiology
             pictureBox1.Image = bitmap;
         }
 
+        private void InspectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            inspectedNums.Remove(cellNum);
+            mainForm.UpdateScreen();
+            mainForm.inspectForm.Remove(this);
+        }
     }
 }

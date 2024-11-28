@@ -11,6 +11,7 @@ using System.Text;
 using System.Diagnostics;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace CyberBiology
 {
@@ -28,6 +29,8 @@ namespace CyberBiology
 
         public static long prev_milliseconds = 0;
         public static int prev_age = 0;
+
+        public static List<int> inspectedNums = new List<int>();
         
         public static void FirstCell()
         {
@@ -443,53 +446,34 @@ namespace CyberBiology
                         {
                             Color C;
                             if (mode == 1)
-                            {
                                 C = Color.FromArgb(255, CheckColor(celln, 1), CheckColor(celln, 2), CheckColor(celln, 3));
-                            }
                             else if (mode == 2)
                             {
                                 int a = IsMultiForDrawing(celln);
                                 if (a > 0)
-                                {
-
                                     C = Color.FromArgb(255, 240 - 20 * a, 10 * a, 200 - 15 * a);
-                                }
                                 else
-                                {
                                     C = Color.FromArgb(255, 0, 240, 240);
-                                }
                             }
                             else if (mode == 3)
                             {
                                 int E = cells[celln, ENERGY];
                                 if (E <= 1000 && E >= 0)
-                                {
                                     C = Color.FromArgb(255, 255, 255 - E / 4, 0);
-                                }
                                 else if (E > 1000)
-                                {
                                     C = Color.FromArgb(255, 255, 0, 0);
-                                }
                                 else
-                                {
                                     C = Color.FromArgb(255, 150, 150, 150);
-                                }
                             }
                             else
                             {
                                 int cellAge = cells[celln, CELL_AGE];
                                 if (cellAge <= 1000 && cellAge >= 0)
-                                {
                                     C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
-                                }
                                 else if (cellAge > 1000 && cellAge <= 10000)
-                                {
                                     C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
-                                }
                                 else
-                                {
                                     C = Color.FromArgb(255, 55, 20, 200);
-                                }
                             }
 
                             BR.Color = C;
@@ -499,6 +483,24 @@ namespace CyberBiology
                         {
                             BR.Color = Color.FromArgb(255, 100, 100, 100);
                             graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
+                        }
+                    }
+                }
+            }
+
+            if (ips == -1)
+            {
+                foreach (int inspect in inspectedNums)
+                {
+                    if (cells[inspect, LIVING] != LV_FREE)
+                    {
+                        int x = cells[inspect, X_COORD] - xDrawStartIndex;
+                        int y = cells[inspect, Y_COORD] - yDrawStartIndex;
+                        if (x > 0 && y > 0)
+                        {
+                            Pen pen = new Pen(Color.FromArgb(255, 150, 25, 25));
+                            graphics.DrawRectangle(pen, x * size + xBias, y * size + yBias, size, size);
+                            graphics.DrawRectangle(pen, x * size + xBias - 1, y * size + yBias - 1, size + 2, size + 2);
                         }
                     }
                 }
@@ -523,7 +525,6 @@ namespace CyberBiology
                 graphics.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 150, 10);
 
-
                 graphics.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 300, 10);
 
@@ -542,6 +543,9 @@ namespace CyberBiology
                     BR, 600, 10);
 
             }
+            
+            
+
             prev_milliseconds = clock.ElapsedMilliseconds;
             prev_age = age;
         }
