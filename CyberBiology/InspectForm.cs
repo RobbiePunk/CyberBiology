@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using static CyberBiology.Constants;
 using static CyberBiology.Simulation;
+using static CyberBiology.CellAditionalFunctions;
 using static CyberBiology.ServiceFunctions;
 
 namespace CyberBiology
@@ -86,13 +87,13 @@ namespace CyberBiology
                     break;
             }
             
-            gr.DrawString($"Coordinats: {cells[cellNum, X_COORD]}, {cells[cellNum, X_COORD]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+            gr.DrawString($"Coordinats: {cells[cellNum, X_COORD]}, {cells[cellNum, Y_COORD]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 40);
             gr.DrawString($"Energy: {cells[cellNum, ENERGY]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 80);
             gr.DrawString($"Mineral: {cells[cellNum, MINERAL]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 120);
-            gr.DrawString($"Direct: {cells[cellNum, DIRECT]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+            gr.DrawString($"Direct: {getDirString(cells[cellNum, DIRECT])}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 160);
             gr.DrawString($"Age: {cells[cellNum, CELL_AGE]}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 200);
@@ -106,12 +107,14 @@ namespace CyberBiology
             }
             else if (command == 20)//растворить в относителном направлении
             {
-                gr.DrawString($"Command: Acid Split", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Acid Split {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 21)//растворить в абсолютном направлении
             {
-                gr.DrawString($"Command: Acid Split", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Acid Split {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 22)//Деление с абсолютной сменой команды
@@ -121,12 +124,14 @@ namespace CyberBiology
             }
             else if (command == 23)//смена направления относительно
             {
-                gr.DrawString($"Command: Change Direction", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Change Direction {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 24)//смена направления абсолютно
             {
-                gr.DrawString($"Command: Change Direction", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Change Direction {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 25)//фотосинтез
@@ -136,52 +141,62 @@ namespace CyberBiology
             }
             else if (command == 26)//движение относительно
             {
-                gr.DrawString($"Command: Move", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Move {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 27)//движение абсолютно
             {
-                gr.DrawString($"Command: Move", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Move {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 28)//съесть в относителном направлении
             {
-                gr.DrawString($"Command: Eat", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Eat {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 29)//съесть в абсолютном направлении
             {
-                gr.DrawString($"Command: Eat", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Eat {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 30)//посмотреть в относительном направлении
             {
-                gr.DrawString($"Command: Look", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Look {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 31)//посмотреть в абсолютном направлении
             {
-                gr.DrawString($"Command: Look", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Look {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 32)//поделиться лишними ресурсами в относительном направлении
             {
-                gr.DrawString($"Command: Care", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Care {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 33)//поделиться лишними ресурсами в абсолютном направлении
             {
-                gr.DrawString($"Command: Care", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Care {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 34)//отдать ресурсы в относительном направлении
             {
-                gr.DrawString($"Command: Give Resourse", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = (GetParam(cellNum) + cells[cellNum, DIRECT]) % 8;
+                gr.DrawString($"Command: Give Resourse {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 35)//отдать ресурсы в абсолютном направлении
             {
-                gr.DrawString($"Command: Give Resourse", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
+                int dir = GetParam(cellNum) % 8;
+                gr.DrawString($"Command: Give Resourse {getDirString(dir)}", new Font(new FontFamily("Arial"), 20, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 360, 240);
             }
             else if (command == 36)//выровняться по горизонтали
@@ -259,5 +274,31 @@ namespace CyberBiology
             mainForm.UpdateScreen();
             mainForm.inspectForm.Remove(this);
         }
+
+        string getDirString(int dir)
+        {
+            switch (dir)
+            {
+                case 0:
+                    return "lu";
+                case 1:
+                    return "u";
+                case 2:
+                    return "ru";
+                case 3:
+                    return "r";
+                case 4:
+                    return "rd";
+                case 5:
+                    return "d";
+                case 6:
+                    return "ld";
+                case 7:
+                    return "l";
+                default:
+                    return "";
+            }
+        }
+
     }
 }
