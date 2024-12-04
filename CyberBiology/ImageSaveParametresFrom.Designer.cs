@@ -41,6 +41,7 @@
             this.sizeNum = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.AutoImageSizeCB = new System.Windows.Forms.CheckBox();
+            this.viewMode5CB = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.saveImageStepNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.saveWorldStepNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sizeNum)).BeginInit();
@@ -241,11 +242,24 @@
             this.AutoImageSizeCB.UseVisualStyleBackColor = true;
             this.AutoImageSizeCB.CheckedChanged += new System.EventHandler(this.AutoImageSizeCB_CheckedChanged);
             // 
+            // viewMode5CB
+            // 
+            this.viewMode5CB.AutoSize = true;
+            this.viewMode5CB.Location = new System.Drawing.Point(15, 214);
+            this.viewMode5CB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.viewMode5CB.Name = "viewMode5CB";
+            this.viewMode5CB.Size = new System.Drawing.Size(80, 20);
+            this.viewMode5CB.TabIndex = 14;
+            this.viewMode5CB.Text = "5 (origin)";
+            this.viewMode5CB.UseVisualStyleBackColor = true;
+            this.viewMode5CB.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            // 
             // ImageSaveParametresFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 254);
+            this.Controls.Add(this.viewMode5CB);
             this.Controls.Add(this.AutoImageSizeCB);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.sizeNum);
@@ -287,5 +301,6 @@
         private System.Windows.Forms.NumericUpDown sizeNum;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox AutoImageSizeCB;
+        private System.Windows.Forms.CheckBox viewMode5CB;
     }
 }

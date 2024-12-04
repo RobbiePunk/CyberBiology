@@ -45,6 +45,11 @@ namespace CyberBiology
             mainForm.imageSaveViewMode[3] = viewMode4CB.Checked ? 1 : 0;
         }
 
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            mainForm.imageSaveViewMode[4] = viewMode5CB.Checked ? 1 : 0;
+        }
+
         private void ImageSaveParametresFrom_Load(object sender, EventArgs e)
         {
             saveImageStepNum.Value = mainForm.imageSaveStep;
@@ -53,6 +58,7 @@ namespace CyberBiology
             viewMode2CB.Checked = mainForm.imageSaveViewMode[1] == 1;
             viewMode3CB.Checked = mainForm.imageSaveViewMode[2] == 1;
             viewMode4CB.Checked = mainForm.imageSaveViewMode[3] == 1;
+            viewMode5CB.Checked = mainForm.imageSaveViewMode[4] == 1;
             drawInfoCB.Checked = drawInfo;
 
             if (saveSize != 0)
@@ -90,5 +96,6 @@ namespace CyberBiology
             mainForm.imageSaveSize = saveSize;
             mainForm.ChangeSaveBitmap();
         }
+
     }
 }

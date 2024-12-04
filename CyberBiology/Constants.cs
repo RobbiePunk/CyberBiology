@@ -3,7 +3,7 @@
     public static class Constants
     {
         public const int MIND_SIZE = 80;
-        public const int CELL_SIZE = MIND_SIZE + 23;
+        public const int CELL_SIZE = MIND_SIZE + 26;
 
         public const int ADR = MIND_SIZE + 0;
         public const int X_COORD = MIND_SIZE + 1;
@@ -28,6 +28,9 @@
         public const int PUSH = MIND_SIZE + 20;
         public const int CELL_AGE = MIND_SIZE + 21;
         public const int CELL_SLEEP = MIND_SIZE + 22;
+        public const int ORIGIN_C_RED = MIND_SIZE + 23;
+        public const int ORIGIN_C_GREEN = MIND_SIZE + 24;
+        public const int ORIGIN_C_BLUE = MIND_SIZE + 25;
 
         public const int WC_EMPTY = 0;
         public const int WC_WALL = -5;

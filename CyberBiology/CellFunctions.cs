@@ -446,6 +446,10 @@ namespace CyberBiology
             cells[newcell, C_GREEN] = cells[num, C_GREEN];
             cells[newcell, C_BLUE] = cells[num, C_BLUE];
 
+            cells[newcell, ORIGIN_C_RED] = cells[num, ORIGIN_C_RED];
+            cells[newcell, ORIGIN_C_GREEN] = cells[num, ORIGIN_C_GREEN];
+            cells[newcell, ORIGIN_C_BLUE] = cells[num, ORIGIN_C_BLUE];
+
             cells[newcell, LIVING] = LV_ALIVE;
             cells[newcell, DIRECT] = rand.Next() % 8;
 
@@ -505,6 +509,10 @@ namespace CyberBiology
             cells[newcell, C_RED] = cells[num, C_RED];
             cells[newcell, C_GREEN] = cells[num, C_GREEN];
             cells[newcell, C_BLUE] = cells[num, C_BLUE];
+
+            cells[newcell, ORIGIN_C_RED] = cells[num, ORIGIN_C_RED];
+            cells[newcell, ORIGIN_C_GREEN] = cells[num, ORIGIN_C_GREEN];
+            cells[newcell, ORIGIN_C_BLUE] = cells[num, ORIGIN_C_BLUE];
 
             cells[newcell, LIVING] = LV_ALIVE;
             cells[newcell, DIRECT] = rand.Next() % 8;

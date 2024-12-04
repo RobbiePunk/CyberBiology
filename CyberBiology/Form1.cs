@@ -52,7 +52,7 @@ namespace CyberBiology
         public int worldSaveStep = 1000;
         public int imageSaveStep = 100;
         public int imageSaveSize = 10;
-        public int[] imageSaveViewMode = { 1, 0, 0, 0};
+        public int[] imageSaveViewMode = { 1, 0, 0, 0, 0};
 
         int xDrawStartIndex = 0;
         int yDrawStartIndex = 0;
@@ -739,6 +739,12 @@ namespace CyberBiology
             UpdateScreen();
         }
 
+        private void TurnViewMode5(object sender, EventArgs e)
+        {
+            viewMode = 5;
+            UpdateScreen();
+        }
+
         public void ChangeWorldSize(object sender, EventArgs e)
         {
             SetWorldSize(worldSizeScroll.Value * 180, worldSizeScroll.Value * 96);
@@ -1030,6 +1036,15 @@ namespace CyberBiology
                 simulationThread.Join();
             }
             System.Windows.Forms.Application.Exit();
+        }
+
+        private void CellColorBT_Click(object sender, EventArgs e)
+        {
+            if(colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                originColor = colorDialog1.Color;
+                CellColorBT.BackColor = originColor;
+            }
         }
     }
     #endregion

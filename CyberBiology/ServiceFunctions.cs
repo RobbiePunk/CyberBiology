@@ -18,6 +18,8 @@ namespace CyberBiology
 
     public static class ServiceFunctions
     {
+        public static Color originColor = Color.OrangeRed;
+
         public static String SaveDirectory;
         public static String season_str = "Summer";
         public static string saveTime;
@@ -104,6 +106,10 @@ namespace CyberBiology
             cells[num, Y_COORD] = y;
 
             cells[num, CELL_AGE] = 0;
+
+            cells[num, ORIGIN_C_RED] = originColor.R;
+            cells[num, ORIGIN_C_GREEN] = originColor.G;
+            cells[num, ORIGIN_C_BLUE] = originColor.B;
 
             for (int j = M1; j < M8 + 1; j++)
             {
@@ -465,7 +471,7 @@ namespace CyberBiology
                                 else
                                     C = Color.FromArgb(255, 150, 150, 150);
                             }
-                            else
+                            else if (mode == 4)
                             {
                                 int cellAge = cells[celln, CELL_AGE];
                                 if (cellAge <= 1000 && cellAge >= 0)
@@ -474,6 +480,10 @@ namespace CyberBiology
                                     C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
                                 else
                                     C = Color.FromArgb(255, 55, 20, 200);
+                            }
+                            else
+                            {
+                                C = Color.FromArgb(255, cells[celln, ORIGIN_C_RED], cells[celln, ORIGIN_C_GREEN], cells[celln, ORIGIN_C_BLUE]);
                             }
 
                             BR.Color = C;

@@ -68,6 +68,10 @@
             this.addWallBT = new System.Windows.Forms.Button();
             this.eraseCellBT = new System.Windows.Forms.Button();
             this.WORLD_BOX = new System.Windows.Forms.PictureBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.CellColorBT = new System.Windows.Forms.Button();
+            this.viewMode5 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
@@ -232,7 +236,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1924, 28);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -341,7 +345,7 @@
             this.viewMode4.Location = new System.Drawing.Point(1841, 105);
             this.viewMode4.Margin = new System.Windows.Forms.Padding(4);
             this.viewMode4.Name = "viewMode4";
-            this.viewMode4.Size = new System.Drawing.Size(57, 74);
+            this.viewMode4.Size = new System.Drawing.Size(57, 34);
             this.viewMode4.TabIndex = 18;
             this.viewMode4.Text = "4";
             this.viewMode4.UseVisualStyleBackColor = true;
@@ -446,12 +450,46 @@
             this.WORLD_BOX.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseMove);
             this.WORLD_BOX.MouseUp += new System.Windows.Forms.MouseEventHandler(this.WORLD_BOX_MouseUp);
             // 
+            // CellColorBT
+            // 
+            this.CellColorBT.BackColor = System.Drawing.Color.OrangeRed;
+            this.CellColorBT.Location = new System.Drawing.Point(1641, 245);
+            this.CellColorBT.Name = "CellColorBT";
+            this.CellColorBT.Size = new System.Drawing.Size(56, 38);
+            this.CellColorBT.TabIndex = 26;
+            this.CellColorBT.Text = "Color";
+            this.CellColorBT.UseVisualStyleBackColor = false;
+            this.CellColorBT.Click += new System.EventHandler(this.CellColorBT_Click);
+            // 
+            // viewMode5
+            // 
+            this.viewMode5.Location = new System.Drawing.Point(1841, 145);
+            this.viewMode5.Margin = new System.Windows.Forms.Padding(4);
+            this.viewMode5.Name = "viewMode5";
+            this.viewMode5.Size = new System.Drawing.Size(57, 34);
+            this.viewMode5.TabIndex = 27;
+            this.viewMode5.Text = "5";
+            this.viewMode5.UseVisualStyleBackColor = true;
+            this.viewMode5.Click += new System.EventHandler(this.TurnViewMode5);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1662, 226);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 16);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "/\\";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1924, 956);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.viewMode5);
+            this.Controls.Add(this.CellColorBT);
             this.Controls.Add(this.eraseCellBT);
             this.Controls.Add(this.addWallBT);
             this.Controls.Add(this.addCellBT);
@@ -533,6 +571,10 @@
         private System.Windows.Forms.Button addCellBT;
         private System.Windows.Forms.Button addWallBT;
         private System.Windows.Forms.Button eraseCellBT;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button CellColorBT;
+        private System.Windows.Forms.Button viewMode5;
+        private System.Windows.Forms.Label label2;
     }
 }
 
