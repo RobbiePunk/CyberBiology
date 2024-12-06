@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+using static CyberBiology.Constants;
+
 namespace CyberBiology
 {
     public class StateRandom : System.Random
@@ -59,14 +61,17 @@ namespace CyberBiology
 
         public static int age = 0;
         public static int CELL = 0;
-        public static int cell_count;
-        public static int print_cell_count;
+        public static int cellCount;
+        public static int printCellCount;
+        public static int aliveCellCount;
+        public static int printAliveCellCount;
 
         public static int viewMode = 1;
-        public static int WORLD_SIZE = 6;
+        public static int worldSize = 6;
 
         public static bool isPressure = false;
         public static bool isAutoDivide = true;
-        public static bool isRandom = false;
+        public static int newCellType = CT_FOTOSINTEZ;
+
     }
 }

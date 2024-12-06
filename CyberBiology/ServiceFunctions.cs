@@ -36,7 +36,8 @@ namespace CyberBiology
         
         public static void FirstCell()
         {
-            AddCell(WORLD_WIDTH / 2, WORLD_HEIGHT / 4 + 1);
+            if (world[WORLD_WIDTH / 2, WORLD_HEIGHT / 4 + 1] != WC_WALL)
+                AddCell(WORLD_WIDTH / 2, WORLD_HEIGHT / 4 + 1);
         }
         public static void CreatePerformanceTestWorld()
         {
@@ -119,10 +120,12 @@ namespace CyberBiology
             int i = 0;
             while (i < MIND_SIZE)
             {
-                if (isRandom)
+                if (newCellType == CT_RANDOM)
                     cells[num, i] = rand.Next() % MIND_SIZE;
-                else
+                else if (newCellType == CT_FOTOSINTEZ)
                     cells[num, i] = 25;
+                else if (newCellType == CT_MINERAL)
+                    cells[num, i] = 47;
                 i++;
             }
             if (!isAutoDivide)
@@ -200,14 +203,14 @@ namespace CyberBiology
                 sw.Write(muteChance);
                 sw.Write(season_str);
                 sw.Write(viewMode);
-                sw.Write(WORLD_SIZE);
+                sw.Write(worldSize);
                 sw.Write(ETM);
                 sw.Write(MTE);
                 sw.Write(ETL);
                 sw.Write(currentSeason);
                 sw.Write(age);
-                sw.Write(cell_count);
-                sw.Write(print_cell_count);
+                sw.Write(cellCount);
+                sw.Write(printCellCount);
                 sw.Write(WORLD_HEIGHT);
                 sw.Write(WORLD_WIDTH);
 
@@ -258,14 +261,14 @@ namespace CyberBiology
                 muteChance = reader.ReadInt32();
                 season_str = reader.ReadString();
                 viewMode = reader.ReadInt32();
-                WORLD_SIZE = reader.ReadInt32();
+                worldSize = reader.ReadInt32();
                 ETM = reader.ReadInt32();
                 MTE = reader.ReadInt32();
                 ETL = reader.ReadInt32();
                 currentSeason = reader.ReadInt32();
                 age = reader.ReadInt32();
-                cell_count = reader.ReadInt32();
-                print_cell_count = reader.ReadInt32();
+                cellCount = reader.ReadInt32();
+                printCellCount = reader.ReadInt32();
                 WORLD_HEIGHT = reader.ReadInt32();
                 WORLD_WIDTH = reader.ReadInt32();
 
@@ -316,14 +319,14 @@ namespace CyberBiology
             sw.WriteLine(muteChance);
             sw.WriteLine(season_str);
             sw.WriteLine(viewMode.ToString());
-            sw.WriteLine(WORLD_SIZE.ToString());
+            sw.WriteLine(worldSize.ToString());
             sw.WriteLine(ETM.ToString());
             sw.WriteLine(MTE.ToString());
             sw.WriteLine(ETL.ToString());
             sw.WriteLine(currentSeason.ToString());
             sw.WriteLine(age.ToString());
-            sw.WriteLine(cell_count.ToString());
-            sw.WriteLine(print_cell_count.ToString());
+            sw.WriteLine(cellCount.ToString());
+            sw.WriteLine(printCellCount.ToString());
             sw.WriteLine(WORLD_HEIGHT.ToString());
             sw.WriteLine(WORLD_WIDTH.ToString());
 
@@ -358,14 +361,14 @@ namespace CyberBiology
                 muteChance = int.Parse(Str[2]); ;
                 season_str = Str[3];
                 viewMode = int.Parse(Str[4]);
-                WORLD_SIZE = int.Parse(Str[5]);
+                worldSize = int.Parse(Str[5]);
                 ETM = int.Parse(Str[6]);
                 MTE = int.Parse(Str[7]);
                 ETL = int.Parse(Str[8]);
                 currentSeason = int.Parse(Str[9]);
                 age = int.Parse(Str[10]);
-                cell_count = int.Parse(Str[11]);
-                print_cell_count = int.Parse(Str[12]);
+                cellCount = int.Parse(Str[11]);
+                printCellCount = int.Parse(Str[12]);
                 WORLD_HEIGHT = int.Parse(Str[13]);
                 WORLD_WIDTH = int.Parse(Str[14]);
 
@@ -405,6 +408,7 @@ namespace CyberBiology
 
             int s = season;
             int maxLight = GetLightForHeight(0, s);
+            int maxMineral = GetMineralForHeight(WORLD_HEIGHT + 1);
 
             int xBias = 40;
             int yBias = 40;
@@ -418,12 +422,16 @@ namespace CyberBiology
             {
                 for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
                 {
-                    int light = GetLightForHeight(y + yDrawStartIndex, s);
-
                     if (drawInfo || ips == -1)
                     {
+                        int light = GetLightForHeight(y + yDrawStartIndex, s);
+                        int mineral = GetMineralForHeight(y + yDrawStartIndex);
+
                         BR.Color = Color.FromArgb(255, 255 * light / maxLight, 255 * light / maxLight, 0);
                         graphics.FillRectangle(BR, 10 - xDrawStartIndex * size, y * size + yBias, 10, size);
+
+                        BR.Color = Color.FromArgb(255, 0, 0, 255 * mineral / maxMineral);
+                        graphics.FillRectangle(BR, 25 - xDrawStartIndex * size, y * size + yBias, 10, size);
                     }
 
                     int celln = world[x + xDrawStartIndex, y + yDrawStartIndex];
@@ -527,21 +535,21 @@ namespace CyberBiology
                 else
                     BR.Color = Color.FromArgb(255, 50, 240, 50);
 
-                graphics.FillRectangle(BR, 300, 10, 70, 20);
+                graphics.FillRectangle(BR, 320, 10, 70, 20);
 
                 BR.Color = Color.Black;
-                graphics.DrawString("Cells: " + print_cell_count.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-                BR, 40, 10);
-                graphics.DrawString("Iteration: " + age.ToString(), new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-                BR, 150, 10);
+                graphics.DrawString($"Cells: {printAliveCellCount}/{printCellCount}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 10, 10);
+                graphics.DrawString($"Iteration: {age}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                BR, 175, 10);
 
                 graphics.DrawString(season_str, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
-                BR, 300, 10);
+                BR, 320, 10);
 
                 string elapsedTime = string.Format("{0:00}:{1:00}:{2:00}",
                 clock.Elapsed.Hours, clock.Elapsed.Minutes, clock.Elapsed.Seconds);
 
-                graphics.DrawString("Simulation Time: " + elapsedTime, new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                graphics.DrawString($"Simulation Time: {elapsedTime}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                 BR, 400, 10);
 
                 if (ips > 0)

@@ -51,7 +51,8 @@ namespace CyberBiology
                 int newHeight = int.Parse(ySizeTB.Text);
                 if (newHeight > 0)
                 {
-                    mainForm.SetWorldSize(newWidth, newHeight);
+                    if(newWidth != WORLD_WIDTH || newHeight != WORLD_HEIGHT)
+                        mainForm.SetWorldSize(newWidth, newHeight);
                 }
             }
 

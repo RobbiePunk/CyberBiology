@@ -460,11 +460,11 @@ namespace CyberBiology
             cells[newcell, NEXT] = num;
             cells[num, PREV] = newcell;
 
-            cells[num, CELL_AGE] = 0;
+            cells[newcell, CELL_AGE] = 0;
 
             for (int i = M1; i <= M8; i++)
             {
-                cells[num, i] = 0;
+                cells[newcell, i] = 0;
             }
         }
         public static void CellMulti(int num)
@@ -524,7 +524,7 @@ namespace CyberBiology
             cells[newcell, NEXT] = num;
             cells[num, PREV] = newcell;
 
-            cells[num, CELL_AGE] = 0;
+            cells[newcell, CELL_AGE] = 0;
 
             for (int i = M1; i <= M8; i++)
             {
@@ -535,7 +535,7 @@ namespace CyberBiology
                 if (cells[num, i] == 0)
                 {
                     cells[num, i] = newcell;
-                    cells[newcell, MIND_SIZE + 12] = num;
+                    cells[newcell, M1] = num;
                     break;
                 }
             }

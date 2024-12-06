@@ -9,18 +9,14 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Diagnostics;
 
 using static CyberBiology.Constants;
 using static CyberBiology.Simulation;
 using static CyberBiology.CellFunctions;
 using static CyberBiology.CellAditionalFunctions;
 using static CyberBiology.ServiceFunctions;
-using System.Runtime.Serialization.Formatters.Binary;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using System.Security;
+using static CyberBiology.Templates;
+
 
 namespace CyberBiology
 {
@@ -80,14 +76,16 @@ namespace CyberBiology
             season = seasons[currentSeason];
 
             CELL = cells[0, NEXT];
-            cell_count = 0;
+            cellCount = 0;
+            aliveCellCount = 0;
             while (CELL != 0)
             {
-                cell_count++;
+                cellCount++;
                 CELL = CellStep(CELL);
             }
                 
-            print_cell_count = cell_count;
+            printCellCount = cellCount;
+            printAliveCellCount = aliveCellCount;
             age++;
 
             if (imageSaveStep != 0 && age % imageSaveStep == 0 && saveImage)
@@ -104,7 +102,10 @@ namespace CyberBiology
 
                 season = seasons[currentSeason];
             }
-                
+
+            if (aliveCellCount == 0)
+                GO = false;
+
         }
 
         public void MainFunction()
@@ -162,7 +163,10 @@ namespace CyberBiology
                 Fall(num);
                 return (cells[num, NEXT]);
             }
-            if(cells[num, CELL_SLEEP] > 0)
+
+            aliveCellCount++;
+
+            if (cells[num, CELL_SLEEP] > 0)
             {
                 cells[num, CELL_SLEEP]--;
                 cells[num, ENERGY] -= ETL/3;
@@ -441,13 +445,9 @@ namespace CyberBiology
                     CellDie(num);
                     return (cells[num, NEXT]);
                 }
-                if(cells[num,Y_COORD] > 56 * WORLD_HEIGHT / 96)
-                {
-                    cells[num, MINERAL]++;
-                    if(cells[num,Y_COORD] > 72 * WORLD_HEIGHT / 96) { cells[num, MINERAL]++; }
-                    if (cells[num, Y_COORD] > 90 * WORLD_HEIGHT / 96) { cells[num, MINERAL]++; }
-                    if(cells[num,MINERAL] > 499) { cells[num, MINERAL] = 499; }
-                }
+
+                cells[num, MINERAL] += GetMineralForHeight(cells[num, Y_COORD]);
+                if (cells[num,MINERAL] > 499) { cells[num, MINERAL] = 499; }
 
                 cells[num, CELL_AGE]++;
                 if(!performanceTest && cells[num, CELL_AGE] % 10000 == 0)
@@ -482,11 +482,11 @@ namespace CyberBiology
 
         void SetScrollers()
         {
-            hScrollBar1.Maximum = WORLD_WIDTH < (xScreenSize / WORLD_SIZE) ? 0 : WORLD_WIDTH - (xScreenSize / WORLD_SIZE);
+            hScrollBar1.Maximum = WORLD_WIDTH < (xScreenSize / worldSize) ? 0 : WORLD_WIDTH - (xScreenSize / worldSize);
             hScrollBar1.Maximum /= 10;
             xDrawStartIndex = hScrollBar1.Value * 10;
 
-            vScrollBar1.Maximum = (WORLD_HEIGHT + 2) < (yScreenSize / WORLD_SIZE) ? 0 : (WORLD_HEIGHT + 2) - (yScreenSize / WORLD_SIZE);
+            vScrollBar1.Maximum = (WORLD_HEIGHT + 2) < (yScreenSize / worldSize) ? 0 : (WORLD_HEIGHT + 2) - (yScreenSize / worldSize);
             vScrollBar1.Maximum /= 10;
             yDrawStartIndex = vScrollBar1.Value * 10;
         }
@@ -526,7 +526,7 @@ namespace CyberBiology
         {
             isDrawing = true;
 
-            DrawWorld(GR, viewMode, WORLD_SIZE, xDrawStartIndex, yDrawStartIndex);
+            DrawWorld(GR, viewMode, worldSize, xDrawStartIndex, yDrawStartIndex);
 
             WORLD_BOX.Image = bmp;
 
@@ -560,7 +560,8 @@ namespace CyberBiology
 
                 CreatePerformanceTestWorld();
             }
-            print_cell_count = 1;
+            printCellCount = 1;
+            printAliveCellCount = 1;
             currentSeason = 0;
 
             season_str = seasonsString[currentSeason];
@@ -625,9 +626,9 @@ namespace CyberBiology
 
         private void Size_plus(object sender, EventArgs e)
         {
-            if(WORLD_SIZE < 10)
+            if(worldSize < 10)
             {
-                WORLD_SIZE++;
+                worldSize++;
                 SetScrollers();
                 UpdateScreen();
                 Refresh();
@@ -636,9 +637,9 @@ namespace CyberBiology
 
         private void Size_minus(object sender, EventArgs e)
         {
-            if (WORLD_SIZE > 1)
+            if (worldSize > 1)
             {
-                WORLD_SIZE--;
+                worldSize--;
                 SetScrollers();
                 UpdateScreen();
                 Refresh();
@@ -766,8 +767,6 @@ namespace CyberBiology
                 SetWorldSize(WORLD_WIDTH, WORLD_HEIGHT);
 
                 CELL = 0;
-                cell_count = 0;
-                print_cell_count = 0;
 
                 clock.Reset();
                 prev_milliseconds = 0;
@@ -928,8 +927,8 @@ namespace CyberBiology
                 if (mouseX > WORLD_BOX.Location.X && mouseX < WORLD_BOX.Location.X + WORLD_BOX.Size.Width
                     && mouseY > WORLD_BOX.Location.Y && mouseY < WORLD_BOX.Location.Y + WORLD_BOX.Size.Height)
                 {
-                    mouseX = (mouseX - 40) / WORLD_SIZE + xDrawStartIndex;
-                    mouseY = (mouseY - 40) / WORLD_SIZE + yDrawStartIndex;
+                    mouseX = (mouseX - 40) / worldSize + xDrawStartIndex;
+                    mouseY = (mouseY - 40) / worldSize + yDrawStartIndex;
 
                     if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0
                         && mouseY < (WORLD_HEIGHT + 1))
@@ -965,8 +964,8 @@ namespace CyberBiology
                 if (mouseX > WORLD_BOX.Location.X && mouseX < WORLD_BOX.Location.X + WORLD_BOX.Size.Width
                     && mouseY > WORLD_BOX.Location.Y && mouseY < WORLD_BOX.Location.Y + WORLD_BOX.Size.Height)
                 {
-                    mouseX = (mouseX - 40) / WORLD_SIZE + xDrawStartIndex;
-                    mouseY = (mouseY - 40) / WORLD_SIZE + yDrawStartIndex;
+                    mouseX = (mouseX - 40) / worldSize + xDrawStartIndex;
+                    mouseY = (mouseY - 40) / worldSize + yDrawStartIndex;
 
                     if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0 
                         && mouseY < (WORLD_HEIGHT + 1) && addWorld)
@@ -1008,11 +1007,6 @@ namespace CyberBiology
             UpdateScreen();
         }
 
-        private void TurnRandomGenome(object sender, EventArgs e)
-        {
-            isRandom = randomGenomeCB.Checked;
-        }
-
         private void AddTypeCell(object sender, EventArgs e)
         {
             addType = 1;
@@ -1044,6 +1038,108 @@ namespace CyberBiology
             {
                 originColor = colorDialog1.Color;
                 CellColorBT.BackColor = originColor;
+            }
+        }
+
+        private void TemplateDualWorld(object sender, EventArgs e)
+        {
+            if (GO)
+                Stop_Play(sender, e);
+
+            if (!GO)
+            {
+                if (age > 0)
+                    if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return;
+
+                age = 0;
+
+                CreateDualWorld();
+
+                CELL = 0;
+
+                clock.Reset();
+                prev_milliseconds = 0;
+
+                worldSizeScroll.Enabled = true;
+                perfomanceTestMenuItem.Enabled = true;
+                worldSettingsToolStripMenuItem.Enabled = true;
+                UpdateScreen();
+                Refresh();
+            }
+        }
+
+        private void TemplateQuadroWorld(object sender, EventArgs e)
+        {
+            if (GO)
+                Stop_Play(sender, e);
+
+            if (!GO)
+            {
+                if (age > 0)
+                    if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return;
+
+                age = 0;
+
+                CreateQuadroWorld();
+
+                CELL = 0;
+
+                clock.Reset();
+                prev_milliseconds = 0;
+
+                worldSizeScroll.Enabled = true;
+                perfomanceTestMenuItem.Enabled = true;
+                worldSettingsToolStripMenuItem.Enabled = true;
+                UpdateScreen();
+                Refresh();
+            }
+        }
+
+        private void TemplateLabyrinthWorld(object sender, EventArgs e)
+        {
+            if (GO)
+                Stop_Play(sender, e);
+
+            if (!GO)
+            {
+                if (age > 0)
+                    if (DialogResult.No == MessageBox.Show("YOU WILL LOSE UNSAVED WORLD!", "ARE YOU SHURE?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return;
+
+                age = 0;
+
+                CreateLabyrinthWorld();
+
+                CELL = 0;
+
+                clock.Reset();
+                prev_milliseconds = 0;
+
+                worldSizeScroll.Enabled = true;
+                perfomanceTestMenuItem.Enabled = true;
+                worldSettingsToolStripMenuItem.Enabled = true;
+                UpdateScreen();
+                Refresh();
+            }
+        }
+
+        private void newCellTypeSwitch(object sender, EventArgs e)
+        {
+            switch (newCellTypeUD.Text)
+            {
+                case "FOTOSINTEZ":
+                    newCellType = CT_FOTOSINTEZ;
+                    break;
+                case "MINERAL":
+                    newCellType = CT_MINERAL;
+                    break;
+                case "RANDOM":
+                    newCellType = CT_RANDOM;
+                    break;
+                default:
+                    break;
             }
         }
     }

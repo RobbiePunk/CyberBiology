@@ -61,59 +61,62 @@
             // 
             // xSizeTB
             // 
-            this.xSizeTB.Location = new System.Drawing.Point(27, 32);
-            this.xSizeTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.xSizeTB.Location = new System.Drawing.Point(20, 26);
+            this.xSizeTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.xSizeTB.Mask = "00000";
             this.xSizeTB.Name = "xSizeTB";
             this.xSizeTB.PromptChar = ' ';
-            this.xSizeTB.Size = new System.Drawing.Size(100, 22);
+            this.xSizeTB.Size = new System.Drawing.Size(76, 20);
             this.xSizeTB.TabIndex = 0;
             this.xSizeTB.ValidatingType = typeof(int);
             // 
             // ySizeTB
             // 
-            this.ySizeTB.Location = new System.Drawing.Point(28, 73);
-            this.ySizeTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ySizeTB.Location = new System.Drawing.Point(21, 59);
+            this.ySizeTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ySizeTB.Mask = "00000";
             this.ySizeTB.Name = "ySizeTB";
             this.ySizeTB.PromptChar = ' ';
-            this.ySizeTB.Size = new System.Drawing.Size(100, 22);
+            this.ySizeTB.Size = new System.Drawing.Size(76, 20);
             this.ySizeTB.TabIndex = 1;
             this.ySizeTB.ValidatingType = typeof(int);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 38);
+            this.label1.Location = new System.Drawing.Point(4, 31);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(15, 16);
+            this.label1.Size = new System.Drawing.Size(14, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "X";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 79);
+            this.label2.Location = new System.Drawing.Point(5, 64);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(16, 16);
+            this.label2.Size = new System.Drawing.Size(14, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Y";
             // 
             // worldSizeLB
             // 
             this.worldSizeLB.AutoSize = true;
-            this.worldSizeLB.Location = new System.Drawing.Point(24, 9);
+            this.worldSizeLB.Location = new System.Drawing.Point(18, 7);
+            this.worldSizeLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.worldSizeLB.Name = "worldSizeLB";
-            this.worldSizeLB.Size = new System.Drawing.Size(72, 16);
+            this.worldSizeLB.Size = new System.Drawing.Size(58, 13);
             this.worldSizeLB.TabIndex = 4;
             this.worldSizeLB.Text = "World Size";
             // 
             // applyBT
             // 
-            this.applyBT.Location = new System.Drawing.Point(439, 290);
-            this.applyBT.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.applyBT.Location = new System.Drawing.Point(329, 236);
+            this.applyBT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.applyBT.Name = "applyBT";
-            this.applyBT.Size = new System.Drawing.Size(85, 34);
+            this.applyBT.Size = new System.Drawing.Size(64, 28);
             this.applyBT.TabIndex = 5;
             this.applyBT.Text = "Apply";
             this.applyBT.UseVisualStyleBackColor = true;
@@ -122,20 +125,19 @@
             // pressureCB
             // 
             this.pressureCB.AutoSize = true;
-            this.pressureCB.Location = new System.Drawing.Point(435, 36);
-            this.pressureCB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pressureCB.Location = new System.Drawing.Point(326, 29);
+            this.pressureCB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pressureCB.Name = "pressureCB";
-            this.pressureCB.Size = new System.Drawing.Size(83, 20);
+            this.pressureCB.Size = new System.Drawing.Size(67, 17);
             this.pressureCB.TabIndex = 6;
             this.pressureCB.Text = "Pressure";
             this.pressureCB.UseVisualStyleBackColor = true;
             // 
             // mutationChanceNum
             // 
-            this.mutationChanceNum.Location = new System.Drawing.Point(184, 32);
-            this.mutationChanceNum.Margin = new System.Windows.Forms.Padding(4);
+            this.mutationChanceNum.Location = new System.Drawing.Point(138, 26);
             this.mutationChanceNum.Name = "mutationChanceNum";
-            this.mutationChanceNum.Size = new System.Drawing.Size(160, 22);
+            this.mutationChanceNum.Size = new System.Drawing.Size(120, 20);
             this.mutationChanceNum.TabIndex = 7;
             this.mutationChanceNum.Value = new decimal(new int[] {
             10,
@@ -146,86 +148,87 @@
             // mutationChanceLB
             // 
             this.mutationChanceLB.AutoSize = true;
-            this.mutationChanceLB.Location = new System.Drawing.Point(180, 9);
+            this.mutationChanceLB.Location = new System.Drawing.Point(135, 7);
+            this.mutationChanceLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.mutationChanceLB.Name = "mutationChanceLB";
-            this.mutationChanceLB.Size = new System.Drawing.Size(106, 16);
+            this.mutationChanceLB.Size = new System.Drawing.Size(88, 13);
             this.mutationChanceLB.TabIndex = 8;
             this.mutationChanceLB.Text = "Mutation Chance";
             // 
             // seedLB
             // 
             this.seedLB.AutoSize = true;
-            this.seedLB.Location = new System.Drawing.Point(180, 59);
+            this.seedLB.Location = new System.Drawing.Point(135, 48);
+            this.seedLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.seedLB.Name = "seedLB";
-            this.seedLB.Size = new System.Drawing.Size(40, 16);
+            this.seedLB.Size = new System.Drawing.Size(32, 13);
             this.seedLB.TabIndex = 10;
             this.seedLB.Text = "Seed";
             // 
             // seedNum
             // 
-            this.seedNum.Location = new System.Drawing.Point(184, 79);
-            this.seedNum.Margin = new System.Windows.Forms.Padding(4);
+            this.seedNum.Location = new System.Drawing.Point(138, 64);
             this.seedNum.Name = "seedNum";
-            this.seedNum.Size = new System.Drawing.Size(159, 22);
+            this.seedNum.Size = new System.Drawing.Size(120, 20);
             this.seedNum.TabIndex = 11;
             // 
             // MTE_Num
             // 
-            this.MTE_Num.Location = new System.Drawing.Point(184, 190);
-            this.MTE_Num.Margin = new System.Windows.Forms.Padding(4);
+            this.MTE_Num.Location = new System.Drawing.Point(138, 154);
             this.MTE_Num.Name = "MTE_Num";
-            this.MTE_Num.Size = new System.Drawing.Size(160, 22);
+            this.MTE_Num.Size = new System.Drawing.Size(120, 20);
             this.MTE_Num.TabIndex = 12;
             // 
             // ETM_Num
             // 
-            this.ETM_Num.Location = new System.Drawing.Point(184, 137);
-            this.ETM_Num.Margin = new System.Windows.Forms.Padding(4);
+            this.ETM_Num.Location = new System.Drawing.Point(138, 111);
             this.ETM_Num.Name = "ETM_Num";
-            this.ETM_Num.Size = new System.Drawing.Size(160, 22);
+            this.ETM_Num.Size = new System.Drawing.Size(120, 20);
             this.ETM_Num.TabIndex = 13;
             // 
             // ETL_Num
             // 
-            this.ETL_Num.Location = new System.Drawing.Point(184, 239);
-            this.ETL_Num.Margin = new System.Windows.Forms.Padding(4);
+            this.ETL_Num.Location = new System.Drawing.Point(138, 194);
             this.ETL_Num.Name = "ETL_Num";
-            this.ETL_Num.Size = new System.Drawing.Size(160, 22);
+            this.ETL_Num.Size = new System.Drawing.Size(120, 20);
             this.ETL_Num.TabIndex = 14;
             // 
             // ETM_LB
             // 
             this.ETM_LB.AutoSize = true;
-            this.ETM_LB.Location = new System.Drawing.Point(180, 117);
+            this.ETM_LB.Location = new System.Drawing.Point(135, 95);
+            this.ETM_LB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ETM_LB.Name = "ETM_LB";
-            this.ETM_LB.Size = new System.Drawing.Size(107, 16);
+            this.ETM_LB.Size = new System.Drawing.Size(86, 13);
             this.ETM_LB.TabIndex = 15;
             this.ETM_LB.Text = "Energy To Move";
             // 
             // MTE_LB
             // 
             this.MTE_LB.AutoSize = true;
-            this.MTE_LB.Location = new System.Drawing.Point(183, 170);
+            this.MTE_LB.Location = new System.Drawing.Point(137, 138);
+            this.MTE_LB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.MTE_LB.Name = "MTE_LB";
-            this.MTE_LB.Size = new System.Drawing.Size(117, 16);
+            this.MTE_LB.Size = new System.Drawing.Size(93, 13);
             this.MTE_LB.TabIndex = 16;
             this.MTE_LB.Text = "Mineral To Energy";
             // 
             // ETL_LB
             // 
             this.ETL_LB.AutoSize = true;
-            this.ETL_LB.Location = new System.Drawing.Point(183, 219);
+            this.ETL_LB.Location = new System.Drawing.Point(137, 178);
+            this.ETL_LB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ETL_LB.Name = "ETL_LB";
-            this.ETL_LB.Size = new System.Drawing.Size(98, 16);
+            this.ETL_LB.Size = new System.Drawing.Size(79, 13);
             this.ETL_LB.TabIndex = 17;
             this.ETL_LB.Text = "Energy To Live";
             // 
             // setDefBT
             // 
-            this.setDefBT.Location = new System.Drawing.Point(15, 290);
-            this.setDefBT.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.setDefBT.Location = new System.Drawing.Point(11, 236);
+            this.setDefBT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.setDefBT.Name = "setDefBT";
-            this.setDefBT.Size = new System.Drawing.Size(85, 34);
+            this.setDefBT.Size = new System.Drawing.Size(64, 28);
             this.setDefBT.TabIndex = 18;
             this.setDefBT.Text = "Default";
             this.setDefBT.UseVisualStyleBackColor = true;
@@ -233,21 +236,22 @@
             // 
             // seasonTimeTB
             // 
-            this.seasonTimeTB.Location = new System.Drawing.Point(27, 137);
-            this.seasonTimeTB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.seasonTimeTB.Location = new System.Drawing.Point(20, 111);
+            this.seasonTimeTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.seasonTimeTB.Mask = "0000000";
             this.seasonTimeTB.Name = "seasonTimeTB";
             this.seasonTimeTB.PromptChar = ' ';
-            this.seasonTimeTB.Size = new System.Drawing.Size(100, 22);
+            this.seasonTimeTB.Size = new System.Drawing.Size(76, 20);
             this.seasonTimeTB.TabIndex = 19;
             this.seasonTimeTB.ValidatingType = typeof(int);
             // 
             // seasonTimeLB
             // 
             this.seasonTimeLB.AutoSize = true;
-            this.seasonTimeLB.Location = new System.Drawing.Point(24, 117);
+            this.seasonTimeLB.Location = new System.Drawing.Point(18, 95);
+            this.seasonTimeLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.seasonTimeLB.Name = "seasonTimeLB";
-            this.seasonTimeLB.Size = new System.Drawing.Size(88, 16);
+            this.seasonTimeLB.Size = new System.Drawing.Size(69, 13);
             this.seasonTimeLB.TabIndex = 20;
             this.seasonTimeLB.Text = "Season Time";
             // 
@@ -257,9 +261,11 @@
             this.seasonsStringUD.Items.Add("Autumn");
             this.seasonsStringUD.Items.Add("Winter");
             this.seasonsStringUD.Items.Add("Spring");
-            this.seasonsStringUD.Location = new System.Drawing.Point(183, 290);
+            this.seasonsStringUD.Location = new System.Drawing.Point(137, 236);
+            this.seasonsStringUD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.seasonsStringUD.Name = "seasonsStringUD";
-            this.seasonsStringUD.Size = new System.Drawing.Size(80, 22);
+            this.seasonsStringUD.ReadOnly = true;
+            this.seasonsStringUD.Size = new System.Drawing.Size(60, 20);
             this.seasonsStringUD.TabIndex = 21;
             this.seasonsStringUD.Text = "Summer";
             this.seasonsStringUD.SelectedItemChanged += new System.EventHandler(this.SeasonsUD_SelectedItemChanged);
@@ -267,18 +273,18 @@
             // seasonsLB
             // 
             this.seasonsLB.AutoSize = true;
-            this.seasonsLB.Location = new System.Drawing.Point(183, 271);
+            this.seasonsLB.Location = new System.Drawing.Point(137, 220);
+            this.seasonsLB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.seasonsLB.Name = "seasonsLB";
-            this.seasonsLB.Size = new System.Drawing.Size(61, 16);
+            this.seasonsLB.Size = new System.Drawing.Size(48, 13);
             this.seasonsLB.TabIndex = 22;
             this.seasonsLB.Text = "Seasons";
             // 
             // SeasonsNum
             // 
-            this.SeasonsNum.Location = new System.Drawing.Point(272, 290);
-            this.SeasonsNum.Margin = new System.Windows.Forms.Padding(4);
+            this.SeasonsNum.Location = new System.Drawing.Point(204, 236);
             this.SeasonsNum.Name = "SeasonsNum";
-            this.SeasonsNum.Size = new System.Drawing.Size(72, 22);
+            this.SeasonsNum.Size = new System.Drawing.Size(54, 20);
             this.SeasonsNum.TabIndex = 23;
             this.SeasonsNum.ValueChanged += new System.EventHandler(this.SeasonsNum_ValueChanged);
             // 
@@ -287,10 +293,10 @@
             this.autoDivideCB.AutoSize = true;
             this.autoDivideCB.Checked = true;
             this.autoDivideCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoDivideCB.Location = new System.Drawing.Point(435, 73);
-            this.autoDivideCB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.autoDivideCB.Location = new System.Drawing.Point(326, 59);
+            this.autoDivideCB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.autoDivideCB.Name = "autoDivideCB";
-            this.autoDivideCB.Size = new System.Drawing.Size(98, 20);
+            this.autoDivideCB.Size = new System.Drawing.Size(81, 17);
             this.autoDivideCB.TabIndex = 24;
             this.autoDivideCB.Text = "Auto Divide";
             this.autoDivideCB.UseVisualStyleBackColor = true;
@@ -298,9 +304,9 @@
             // 
             // WorldSettingsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(547, 334);
+            this.ClientSize = new System.Drawing.Size(410, 271);
             this.Controls.Add(this.autoDivideCB);
             this.Controls.Add(this.SeasonsNum);
             this.Controls.Add(this.seasonsLB);
@@ -326,7 +332,7 @@
             this.Controls.Add(this.ySizeTB);
             this.Controls.Add(this.xSizeTB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "WorldSettingsForm";
             this.Text = "World Settings";
             this.Load += new System.EventHandler(this.WorldSettingsForm_Load);

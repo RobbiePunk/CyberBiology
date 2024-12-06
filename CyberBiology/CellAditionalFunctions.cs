@@ -13,6 +13,17 @@ namespace CyberBiology
             int light = s - ((96 * y  / WORLD_HEIGHT - 1) / 8);
             return (light > 0) ? light : 0;
         }
+        public static int GetMineralForHeight(int y)
+        {
+            int val = 0;
+            if (y > 56 * WORLD_HEIGHT / 96)
+            {
+                val++;
+                if (y > 72 * WORLD_HEIGHT / 96) { val++; }
+                if (y > 90 * WORLD_HEIGHT / 96) { val++; }
+            }
+            return val;
+        }
 
         public static void EarthBlockCreate(int num)
         {
@@ -240,7 +251,7 @@ namespace CyberBiology
         public static int YFromVectorR(int num, int n)
         {
             int y = cells[num, Y_COORD];
-            n += cells[num, DIRECT] % 8;
+            n = (n + cells[num, DIRECT]) % 8;
 
             if (n < 3)
                 y--;
@@ -252,7 +263,7 @@ namespace CyberBiology
         public static int XFromVectorR(int num, int n)
         {
             int x = cells[num, X_COORD];
-            n += cells[num, DIRECT] % 8;
+            n = (n + cells[num, DIRECT]) % 8;
 
             if (n == 0 || n == 6 || n == 7)
             {

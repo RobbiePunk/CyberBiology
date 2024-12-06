@@ -40,5 +40,9 @@
         public const int LV_DEAD = 2;
         public const int LV_EARTH = 3;
         public const int LV_STONE = 4;
+
+        public const int CT_RANDOM = 1;
+        public const int CT_FOTOSINTEZ = 2;
+        public const int CT_MINERAL = 3;
     }
 }
