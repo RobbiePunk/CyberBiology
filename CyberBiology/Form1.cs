@@ -55,6 +55,8 @@ namespace CyberBiology
         int xScreenSize = 1060;
         int yScreenSize = 560;
 
+        int stopIteration = 0;
+
         public int customMuteChance = 10;
 
         public List<InspectForm> inspectForm = new List<InspectForm>();
@@ -103,7 +105,7 @@ namespace CyberBiology
                 season = seasons[currentSeason];
             }
 
-            if (aliveCellCount == 0)
+            if (aliveCellCount == 0 || stopIteration == age)
                 GO = false;
 
         }
@@ -1142,6 +1144,12 @@ namespace CyberBiology
                     break;
             }
         }
+
+        void SetStopIteration(object sender, EventArgs e)
+        {
+            stopIteration = (int)stopIterationNUM.Value;
+        }
+
     }
     #endregion
 }
