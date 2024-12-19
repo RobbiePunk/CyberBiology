@@ -59,11 +59,17 @@ namespace CyberBiology
 
         public int customMuteChance = 10;
 
+        int prevWidth;
+        int prevHeight;
+
         public List<InspectForm> inspectForm = new List<InspectForm>();
 
         public Form1()
         {
             InitializeComponent();
+
+            prevWidth = this.Width;
+            prevHeight = this.Height;
 
             bmp = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
             GR = Graphics.FromImage(bmp);
@@ -618,6 +624,24 @@ namespace CyberBiology
 
         #region Events
 
+        private void SetWindowElemets(object sender, EventArgs e)
+        {
+            int width = this.Width;
+            int height = this.Height;
+
+            int difW = width - prevWidth;
+            int difH = height - prevHeight;
+
+            WORLD_BOX.Size += new Size(difW, difH);
+
+            bmp = new Bitmap(WORLD_BOX.Width, WORLD_BOX.Height);
+            GR = Graphics.FromImage(bmp);
+            UpdateScreen();
+
+            prevHeight = height;
+            prevWidth = width;
+        }
+
         private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
         {
             if (isDrawing || !wantToDraw || !GO || tryToSave)
@@ -1150,6 +1174,20 @@ namespace CyberBiology
             stopIteration = (int)stopIterationNUM.Value;
         }
 
+        void TurnFullScreen(object sender, EventArgs e)
+        {
+            if (fullScreenBT.Checked)
+            {
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.WindowState = FormWindowState.Normal;
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
     }
     #endregion
 }
