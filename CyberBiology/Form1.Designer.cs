@@ -44,6 +44,8 @@
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fullScreenBT = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImagesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveWorldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,8 +81,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.stopIterationNUM = new System.Windows.Forms.NumericUpDown();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fullScreenBT = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
@@ -254,6 +254,22 @@
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fullScreenBT});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // fullScreenBT
+            // 
+            this.fullScreenBT.CheckOnClick = true;
+            this.fullScreenBT.Name = "fullScreenBT";
+            this.fullScreenBT.Size = new System.Drawing.Size(131, 22);
+            this.fullScreenBT.Text = "Full Screen";
+            this.fullScreenBT.Click += new System.EventHandler(this.TurnFullScreen);
+            // 
             // saveImagesToolStripMenuItem
             // 
             this.saveImagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -271,7 +287,7 @@
             // 
             this.saveImagesToolStripMenuItem1.CheckOnClick = true;
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.TurnImagesSaving);
             // 
@@ -279,35 +295,35 @@
             // 
             this.saveWorldsToolStripMenuItem.CheckOnClick = true;
             this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
-            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
             this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.TurnWorldSaving);
             // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
-            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.lacationToolStripMenuItem.Text = "Lacation";
             this.lacationToolStripMenuItem.Click += new System.EventHandler(this.ChangeImageSavePath);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
-            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
             this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.ShowImageSaveParametresWindow);
             // 
             // saveToTextToolStripMenuItem
             // 
             this.saveToTextToolStripMenuItem.Name = "saveToTextToolStripMenuItem";
-            this.saveToTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.saveToTextToolStripMenuItem.Text = "Save To Text";
             this.saveToTextToolStripMenuItem.Click += new System.EventHandler(this.SaveToText);
             // 
             // loadFromTextToolStripMenuItem
             // 
             this.loadFromTextToolStripMenuItem.Name = "loadFromTextToolStripMenuItem";
-            this.loadFromTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFromTextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.loadFromTextToolStripMenuItem.Text = "Load From Text";
             this.loadFromTextToolStripMenuItem.Click += new System.EventHandler(this.LoadFromText);
             // 
@@ -326,14 +342,14 @@
             // 
             this.perfomanceTestMenuItem.CheckOnClick = true;
             this.perfomanceTestMenuItem.Name = "perfomanceTestMenuItem";
-            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(158, 22);
             this.perfomanceTestMenuItem.Text = "Performans Test";
             this.perfomanceTestMenuItem.Click += new System.EventHandler(this.PerfomanceTest_Click);
             // 
             // worldSettingsToolStripMenuItem
             // 
             this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
-            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.worldSettingsToolStripMenuItem.Text = "World Settings";
             this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.ShowWorldSettingsWindow);
             // 
@@ -343,14 +359,14 @@
             this.saveDrawToolStripMenuItem.CheckOnClick = true;
             this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
-            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.saveDrawToolStripMenuItem.Text = "Save Drawing";
             this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.TurnSaveDrawing);
             // 
             // clearAllWallsToolStripMenuItem
             // 
             this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
-            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
             this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.ClearAllWalls);
             // 
@@ -367,21 +383,21 @@
             // dualWorldToolStripMenuItem
             // 
             this.dualWorldToolStripMenuItem.Name = "dualWorldToolStripMenuItem";
-            this.dualWorldToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.dualWorldToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.dualWorldToolStripMenuItem.Text = "Dual World";
             this.dualWorldToolStripMenuItem.Click += new System.EventHandler(this.TemplateDualWorld);
             // 
             // quadroWorldToolStripMenuItem
             // 
             this.quadroWorldToolStripMenuItem.Name = "quadroWorldToolStripMenuItem";
-            this.quadroWorldToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.quadroWorldToolStripMenuItem.Text = "Quadro World";
-            this.quadroWorldToolStripMenuItem.Click += new System.EventHandler(this.TemplateQuadroWorld);
+            this.quadroWorldToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quadroWorldToolStripMenuItem.Text = "Quadruple World";
+            this.quadroWorldToolStripMenuItem.Click += new System.EventHandler(this.TemplateQuadrupleWorld);
             // 
             // labirintToolStripMenuItem
             // 
             this.labirintToolStripMenuItem.Name = "labirintToolStripMenuItem";
-            this.labirintToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.labirintToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.labirintToolStripMenuItem.Text = "Labyrinth";
             this.labirintToolStripMenuItem.Click += new System.EventHandler(this.TemplateLabyrinthWorld);
             // 
@@ -490,7 +506,7 @@
             this.CellColorBT.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CellColorBT.BackColor = System.Drawing.Color.OrangeRed;
             this.CellColorBT.Location = new System.Drawing.Point(1231, 199);
-            this.CellColorBT.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CellColorBT.Margin = new System.Windows.Forms.Padding(2);
             this.CellColorBT.Name = "CellColorBT";
             this.CellColorBT.Size = new System.Drawing.Size(42, 31);
             this.CellColorBT.TabIndex = 26;
@@ -532,7 +548,7 @@
             this.newCellTypeUD.Size = new System.Drawing.Size(96, 20);
             this.newCellTypeUD.TabIndex = 29;
             this.newCellTypeUD.Text = "FOTOSINTEZ";
-            this.newCellTypeUD.SelectedItemChanged += new System.EventHandler(this.newCellTypeSwitch);
+            this.newCellTypeUD.SelectedItemChanged += new System.EventHandler(this.NewCellTypeSwitch);
             // 
             // label3
             // 
@@ -565,7 +581,7 @@
             0,
             0});
             this.stopIterationNUM.Location = new System.Drawing.Point(1278, 243);
-            this.stopIterationNUM.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.stopIterationNUM.Margin = new System.Windows.Forms.Padding(2);
             this.stopIterationNUM.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -575,22 +591,6 @@
             this.stopIterationNUM.Size = new System.Drawing.Size(97, 20);
             this.stopIterationNUM.TabIndex = 34;
             this.stopIterationNUM.ValueChanged += new System.EventHandler(this.SetStopIteration);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fullScreenBT});
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // fullScreenBT
-            // 
-            this.fullScreenBT.CheckOnClick = true;
-            this.fullScreenBT.Name = "fullScreenBT";
-            this.fullScreenBT.Size = new System.Drawing.Size(180, 22);
-            this.fullScreenBT.Text = "Full Screen";
-            this.fullScreenBT.Click += new System.EventHandler(this.TurnFullScreen);
             // 
             // Form1
             // 

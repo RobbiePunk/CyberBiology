@@ -67,7 +67,7 @@ namespace CyberBiology
         public static int printAliveCellCount;
 
         public static int viewMode = 1;
-        public static int worldSize = 6;
+        public static float worldSize = 6;
 
         public static bool isPressure = false;
         public static bool isAutoDivide = true;

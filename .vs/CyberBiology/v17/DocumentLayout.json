@@ -3,28 +3,8 @@
   "WorkspaceRootPath": "D:\\Projects\\C#\\CyberBiology\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|d:\\projects\\c#\\cyberbiology\\cyberbiology\\cellfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\cellfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\templates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\templates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\celladitionalfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\celladitionalfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\worldsettingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\worldsettingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\imagesaveparametresfrom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\imagesaveparametresfrom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\servicefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,6 +15,34 @@
       "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\imagesaveparametresfrom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|d:\\projects\\c#\\cyberbiology\\cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\cellfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\cellfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\simulation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\simulation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\worldsettingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\worldsettingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\templates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\templates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\celladitionalfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\celladitionalfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -43,20 +51,12 @@
       "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\worldsettingsform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\simulation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\simulation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\inspectform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\inspectform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\inspectform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\inspectform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|D:\\Projects\\C#\\CyberBiology\\cyberbiology\\imagesaveparametresfrom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1ACAF1E6-BC67-43A1-BF21-3DD08BC3865F}|CyberBiology\\CyberBiology.csproj|solutionrelative:cyberbiology\\imagesaveparametresfrom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,71 +66,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "WorldSettingsForm.cs",
-              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\WorldSettingsForm.cs",
-              "RelativeDocumentMoniker": "CyberBiology\\WorldSettingsForm.cs",
-              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\WorldSettingsForm.cs",
-              "RelativeToolTip": "CyberBiology\\WorldSettingsForm.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAhwDgAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T20:20:43.282Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Templates.cs",
-              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Templates.cs",
-              "RelativeDocumentMoniker": "CyberBiology\\Templates.cs",
-              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Templates.cs",
-              "RelativeToolTip": "CyberBiology\\Templates.cs",
-              "ViewState": "AQIAAFUAAAAAAAAAAAAIwGoAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T18:56:21.048Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "ImageSaveParametresFrom.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ImageSaveParametresFrom.cs",
               "RelativeDocumentMoniker": "CyberBiology\\ImageSaveParametresFrom.cs",
               "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ImageSaveParametresFrom.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "CyberBiology\\ImageSaveParametresFrom.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T20:33:12.688Z"
+              "WhenOpened": "2024-11-17T20:33:12.688Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "ServiceFunctions.cs",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ServiceFunctions.cs",
               "RelativeDocumentMoniker": "CyberBiology\\ServiceFunctions.cs",
               "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ServiceFunctions.cs",
               "RelativeToolTip": "CyberBiology\\ServiceFunctions.cs",
-              "ViewState": "AQIAAGQAAAAAAAAAAAAAACcAAAA/AAAA",
+              "ViewState": "AQIAABEAAAAAAAAAAAAEwBwAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T13:56:44.027Z"
+              "WhenOpened": "2024-11-09T13:56:44.027Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Form1.cs",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Form1.cs",
               "RelativeDocumentMoniker": "CyberBiology\\Form1.cs",
               "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Form1.cs",
               "RelativeToolTip": "CyberBiology\\Form1.cs",
-              "ViewState": "AQIAAC0EAAAAAAAAAAAIwJ0EAAA6AAAA",
+              "ViewState": "AQIAAPoBAAAAAAAAAAAmwOUBAACEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-08T17:19:13.565Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Form1.cs",
               "RelativeDocumentMoniker": "CyberBiology\\Form1.cs",
@@ -142,7 +120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "Constants.cs",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Constants.cs",
               "RelativeDocumentMoniker": "CyberBiology\\Constants.cs",
@@ -154,20 +132,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "CellFunctions.cs",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\CellFunctions.cs",
               "RelativeDocumentMoniker": "CyberBiology\\CellFunctions.cs",
               "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\CellFunctions.cs",
               "RelativeToolTip": "CyberBiology\\CellFunctions.cs",
-              "ViewState": "AQIAAP8BAAAAAAAAAAAIwBoCAAAaAAAA",
+              "ViewState": "AQIAAAICAAAAAAAAAAAUwBoCAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T13:38:52.559Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "CellAditionalFunctions.cs",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\CellAditionalFunctions.cs",
               "RelativeDocumentMoniker": "CyberBiology\\CellAditionalFunctions.cs",
@@ -179,30 +157,70 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
+              "Title": "Simulation.cs",
+              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Simulation.cs",
+              "RelativeDocumentMoniker": "CyberBiology\\Simulation.cs",
+              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Simulation.cs",
+              "RelativeToolTip": "CyberBiology\\Simulation.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAAAEUAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-09T13:42:21.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ImageSaveParametresFrom.cs",
+              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ImageSaveParametresFrom.cs",
+              "RelativeDocumentMoniker": "CyberBiology\\ImageSaveParametresFrom.cs",
+              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ImageSaveParametresFrom.cs",
+              "RelativeToolTip": "CyberBiology\\ImageSaveParametresFrom.cs",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAUwHcAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T20:35:44.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WorldSettingsForm.cs",
+              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\WorldSettingsForm.cs",
+              "RelativeDocumentMoniker": "CyberBiology\\WorldSettingsForm.cs",
+              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\WorldSettingsForm.cs",
+              "RelativeToolTip": "CyberBiology\\WorldSettingsForm.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAhwDgAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T20:20:43.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Templates.cs",
+              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Templates.cs",
+              "RelativeDocumentMoniker": "CyberBiology\\Templates.cs",
+              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Templates.cs",
+              "RelativeToolTip": "CyberBiology\\Templates.cs",
+              "ViewState": "AQIAAFUAAAAAAAAAAAAIwGoAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T18:56:21.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "WorldSettingsForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\WorldSettingsForm.cs",
               "RelativeDocumentMoniker": "CyberBiology\\WorldSettingsForm.cs",
               "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\WorldSettingsForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "CyberBiology\\WorldSettingsForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T20:53:35.213Z"
+              "WhenOpened": "2024-11-17T20:53:35.213Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Simulation.cs",
-              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Simulation.cs",
-              "RelativeDocumentMoniker": "CyberBiology\\Simulation.cs",
-              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\Simulation.cs",
-              "RelativeToolTip": "CyberBiology\\Simulation.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAAADIAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T13:42:21.111Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "InspectForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\InspectForm.cs",
               "RelativeDocumentMoniker": "CyberBiology\\InspectForm.cs",
@@ -214,18 +232,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "ImageSaveParametresFrom.cs",
-              "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ImageSaveParametresFrom.cs",
-              "RelativeDocumentMoniker": "CyberBiology\\ImageSaveParametresFrom.cs",
-              "ToolTip": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\ImageSaveParametresFrom.cs",
-              "RelativeToolTip": "CyberBiology\\ImageSaveParametresFrom.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAewDoAAAA6AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T20:35:44.595Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
               "Title": "InspectForm.cs",
               "DocumentMoniker": "D:\\Projects\\C#\\CyberBiology\\CyberBiology\\InspectForm.cs",
               "RelativeDocumentMoniker": "CyberBiology\\InspectForm.cs",

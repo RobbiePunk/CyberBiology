@@ -27,7 +27,7 @@ namespace CyberBiology
         public static float IPS = 0;
         public static bool isDrawing = true;
         public static bool drawInfo = true;
-        public static int saveSize = 0;
+        public static float saveSize = 0;
 
         public static long prev_milliseconds = 0;
         public static int prev_age = 0;
@@ -401,7 +401,89 @@ namespace CyberBiology
                 }
         }
 
-        public static void DrawWorld(Graphics graphics, int mode, int size, int xDrawStartIndex, int yDrawStartIndex, float ips = -1)
+        static Color GetCellColor(int x, int y, float size, int mode)
+        {
+            if(x > WORLD_WIDTH || y > WORLD_HEIGHT + 2)
+                return Color.White;
+
+            if (size < 1)
+            {
+                int num = (int)Math.Round(1 / worldSize);
+
+                int r = 0;
+                int g = 0;
+                int b = 0;
+
+                for (int i = 0; i < num; i++)
+                {
+                    for (int j = 0; j < num; j++)
+                    {
+                        Color C = GetCellColor(x + i, y + j, 1, mode);
+                        r += C.R;
+                        g += C.G;
+                        b += C.B;
+                    }
+                }
+
+                return Color.FromArgb(255, (int)(r / (num * num)), (int)(g / (num * num)), (int)(b / (num * num)));
+            }
+            else
+            {
+                int celln = world[x, y];
+
+                if (celln == WC_EMPTY)
+                    return Color.White;
+                else if (celln == WC_WALL)
+                    return Color.FromArgb(255, 40, 40, 40);
+                else if (cells[celln, LIVING] == LV_EARTH)
+                    return Color.FromArgb(255, 150, 100, 0);
+                else if (cells[celln, LIVING] == LV_STONE)
+                    return Color.FromArgb(255, 150, 150, 200);
+                else
+                {
+                    if (cells[celln, LIVING] == LV_ALIVE)
+                    {
+                        Color C;
+                        if (mode == 1)
+                            return Color.FromArgb(255, CheckColor(celln, 1), CheckColor(celln, 2), CheckColor(celln, 3));
+                        else if (mode == 2)
+                        {
+                            int a = IsMultiForDrawing(celln);
+                            if (a > 0)
+                                return Color.FromArgb(255, 240 - 20 * a, 10 * a, 200 - 15 * a);
+                            else
+                                return Color.FromArgb(255, 0, 240, 240);
+                        }
+                        else if (mode == 3)
+                        {
+                            int E = cells[celln, ENERGY];
+                            if (E <= 1000 && E >= 0)
+                                return Color.FromArgb(255, 255, 255 - E / 4, 0);
+                            else if (E > 1000)
+                                return Color.FromArgb(255, 255, 0, 0);
+                            else
+                                return Color.FromArgb(255, 150, 150, 150);
+                        }
+                        else if (mode == 4)
+                        {
+                            int cellAge = cells[celln, CELL_AGE];
+                            if (cellAge <= 1000 && cellAge >= 0)
+                                return Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
+                            else if (cellAge > 1000 && cellAge <= 10000)
+                                return Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
+                            else
+                                return Color.FromArgb(255, 55, 20, 200);
+                        }
+                        else
+                            return Color.FromArgb(255, cells[celln, ORIGIN_C_RED], cells[celln, ORIGIN_C_GREEN], cells[celln, ORIGIN_C_BLUE]);
+                    }
+                    else
+                        return Color.FromArgb(255, 100, 100, 100);
+                }
+            }
+        }
+
+        public static void DrawWorld(Graphics graphics, int mode, float size, int xDrawStartIndex, int yDrawStartIndex, float ips = -1)
         {
             SolidBrush BR = new SolidBrush(Color.White);
             graphics.Clear(Color.White);
@@ -418,9 +500,13 @@ namespace CyberBiology
                 yBias = drawInfo ? 40 : 0;
             }
 
-            for (int x = 0; x < WORLD_WIDTH - xDrawStartIndex; x++)
+            int step = size >= 1f ? 1 : (int)Math.Round(1f / size);
+
+            int drawSize = size >= 1f ? (int)size : 1;
+
+            for (int x = 0; x < WORLD_WIDTH - xDrawStartIndex; x += step)
             {
-                for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y++)
+                for (int y = 0; y < WORLD_HEIGHT + 2 - yDrawStartIndex; y += step)
                 {
                     if (drawInfo || ips == -1)
                     {
@@ -428,80 +514,17 @@ namespace CyberBiology
                         int mineral = GetMineralForHeight(y + yDrawStartIndex);
 
                         BR.Color = Color.FromArgb(255, 255 * light / maxLight, 255 * light / maxLight, 0);
-                        graphics.FillRectangle(BR, 10 - xDrawStartIndex * size, y * size + yBias, 10, size);
+                        graphics.FillRectangle(BR, 10, y * drawSize / step + yBias, 10, drawSize);
 
                         BR.Color = Color.FromArgb(255, 0, 0, 255 * mineral / maxMineral);
-                        graphics.FillRectangle(BR, 25 - xDrawStartIndex * size, y * size + yBias, 10, size);
+                        graphics.FillRectangle(BR, 25, y * drawSize / step + yBias, 10, drawSize);
                     }
 
-                    int celln = world[x + xDrawStartIndex, y + yDrawStartIndex];
-                    if (celln == WC_EMPTY)
-                    {
+                    BR.Color = GetCellColor(x + xDrawStartIndex, y + yDrawStartIndex, size, mode);
 
-                    }
-                    else if (celln == WC_WALL)
-                    { 
-                        BR.Color = Color.FromArgb(255, 40, 40, 40);
-                        graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
-                    }
-                    else if (cells[celln, LIVING] == LV_EARTH)
+                    if (BR.Color != Color.White)
                     {
-                        BR.Color = Color.FromArgb(255, 150, 100, 0);
-                        graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
-                    }
-                    else if (cells[celln, LIVING] == LV_STONE)
-                    {
-                        BR.Color = Color.FromArgb(255, 150, 150, 200);
-                        graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
-                    }
-                    else
-                    {
-                        if (cells[celln, LIVING] == LV_ALIVE)
-                        {
-                            Color C;
-                            if (mode == 1)
-                                C = Color.FromArgb(255, CheckColor(celln, 1), CheckColor(celln, 2), CheckColor(celln, 3));
-                            else if (mode == 2)
-                            {
-                                int a = IsMultiForDrawing(celln);
-                                if (a > 0)
-                                    C = Color.FromArgb(255, 240 - 20 * a, 10 * a, 200 - 15 * a);
-                                else
-                                    C = Color.FromArgb(255, 0, 240, 240);
-                            }
-                            else if (mode == 3)
-                            {
-                                int E = cells[celln, ENERGY];
-                                if (E <= 1000 && E >= 0)
-                                    C = Color.FromArgb(255, 255, 255 - E / 4, 0);
-                                else if (E > 1000)
-                                    C = Color.FromArgb(255, 255, 0, 0);
-                                else
-                                    C = Color.FromArgb(255, 150, 150, 150);
-                            }
-                            else if (mode == 4)
-                            {
-                                int cellAge = cells[celln, CELL_AGE];
-                                if (cellAge <= 1000 && cellAge >= 0)
-                                    C = Color.FromArgb(255, 255 - cellAge / 5, 200, 200);
-                                else if (cellAge > 1000 && cellAge <= 10000)
-                                    C = Color.FromArgb(255, 55, 200 - (cellAge - 1000) / 50, 200);
-                                else
-                                    C = Color.FromArgb(255, 55, 20, 200);
-                            }
-                            else
-                            {
-                                C = Color.FromArgb(255, cells[celln, ORIGIN_C_RED], cells[celln, ORIGIN_C_GREEN], cells[celln, ORIGIN_C_BLUE]);
-                            }
-
-                            BR.Color = C;
-                            graphics.FillRectangle(BR, x * size + 40, y * size + 40, size, size);
-                        }
-                        else
-                        {
-                            BR.Color = Color.FromArgb(255, 100, 100, 100);
-                            graphics.FillRectangle(BR, x * size + xBias, y * size + yBias, size, size);
-                        }
+                        graphics.FillRectangle(BR, x * drawSize / step + xBias, y * drawSize / step + yBias, drawSize, drawSize);
                     }
                 }
             }
@@ -517,8 +540,8 @@ namespace CyberBiology
                         if (x > 0 && y > 0)
                         {
                             Pen pen = new Pen(Color.FromArgb(255, 150, 25, 25));
-                            graphics.DrawRectangle(pen, x * size + xBias, y * size + yBias, size, size);
-                            graphics.DrawRectangle(pen, x * size + xBias - 1, y * size + yBias - 1, size + 2, size + 2);
+                            graphics.DrawRectangle(pen, x * drawSize + xBias, y * drawSize + yBias, drawSize, drawSize);
+                            graphics.DrawRectangle(pen, x * drawSize + xBias - 1, y * drawSize + yBias - 1, drawSize + 2, drawSize + 2);
                         }
                     }
                 }

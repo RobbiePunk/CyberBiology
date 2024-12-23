@@ -47,7 +47,7 @@ namespace CyberBiology
         bool tryToSave = false;
         public int worldSaveStep = 1000;
         public int imageSaveStep = 100;
-        public int imageSaveSize = 10;
+        public float imageSaveSize = 10;
         public int[] imageSaveViewMode = { 1, 0, 0, 0, 0};
 
         int xDrawStartIndex = 0;
@@ -478,23 +478,23 @@ namespace CyberBiology
         {
             if (drawInfo)
             {
-                bmpSave = new Bitmap(imageSaveSize * WORLD_WIDTH + 80, imageSaveSize * WORLD_HEIGHT + 80);
+                bmpSave = new Bitmap((int)Math.Ceiling(imageSaveSize * WORLD_WIDTH + 80), (int)Math.Ceiling(imageSaveSize * WORLD_HEIGHT + 80));
                 GR_save = Graphics.FromImage(bmpSave);
             }
             else
             {
-                bmpSave = new Bitmap(imageSaveSize * WORLD_WIDTH, imageSaveSize * WORLD_HEIGHT);
+                bmpSave = new Bitmap((int)Math.Ceiling(imageSaveSize * WORLD_WIDTH), (int)Math.Ceiling(imageSaveSize * WORLD_HEIGHT));
                 GR_save = Graphics.FromImage(bmpSave);
             }
         }
 
         void SetScrollers()
         {
-            hScrollBar1.Maximum = WORLD_WIDTH < (xScreenSize / worldSize) ? 0 : WORLD_WIDTH - (xScreenSize / worldSize);
+            hScrollBar1.Maximum = WORLD_WIDTH < (xScreenSize / (int)Math.Ceiling(worldSize)) ? 0 : WORLD_WIDTH - (xScreenSize / (int)Math.Ceiling(worldSize));
             hScrollBar1.Maximum /= 10;
             xDrawStartIndex = hScrollBar1.Value * 10;
 
-            vScrollBar1.Maximum = (WORLD_HEIGHT + 2) < (yScreenSize / worldSize) ? 0 : (WORLD_HEIGHT + 2) - (yScreenSize / worldSize);
+            vScrollBar1.Maximum = (WORLD_HEIGHT + 2) < (yScreenSize / (int)Math.Ceiling(worldSize)) ? 0 : (WORLD_HEIGHT + 2) - (yScreenSize / (int)Math.Ceiling(worldSize));
             vScrollBar1.Maximum /= 10;
             yDrawStartIndex = vScrollBar1.Value * 10;
         }
@@ -594,8 +594,8 @@ namespace CyberBiology
                 if (saveSize == 0)
                 {
                     imageSaveSize = 1000 / (WORLD_WIDTH);
-                    if (imageSaveSize <= 0)
-                        imageSaveSize = 1;
+                    if (imageSaveSize <= 0.5f)
+                        imageSaveSize = 0.5f;
                 }
                 else
                 {
@@ -652,13 +652,22 @@ namespace CyberBiology
 
         private void Size_plus(object sender, EventArgs e)
         {
-            if(worldSize < 10)
+            if (worldSize < 1f)
+            {
+                worldSize *= 2;
+                SetScrollers();
+                UpdateScreen();
+                Refresh();
+            }
+            else if (worldSize < 10)
             {
                 worldSize++;
                 SetScrollers();
                 UpdateScreen();
                 Refresh();
             }
+
+            label1.Text = worldSize.ToString();
         }
 
         private void Size_minus(object sender, EventArgs e)
@@ -670,6 +679,15 @@ namespace CyberBiology
                 UpdateScreen();
                 Refresh();
             }
+            else if(worldSize > 0.5f)
+            {
+                worldSize /= 2;
+                SetScrollers();
+                UpdateScreen();
+                Refresh();
+            }
+
+            label1.Text = worldSize.ToString();
         }
 
         private void Save(object sender, EventArgs e)
@@ -939,6 +957,9 @@ namespace CyberBiology
 
         private void WORLD_BOX_MouseDown(object sender, MouseEventArgs e)
         {
+            if (worldSize < 1)
+                return;
+
             if (e.Button == MouseButtons.Left)
             {
                 addWorld = true;
@@ -953,8 +974,8 @@ namespace CyberBiology
                 if (mouseX > WORLD_BOX.Location.X && mouseX < WORLD_BOX.Location.X + WORLD_BOX.Size.Width
                     && mouseY > WORLD_BOX.Location.Y && mouseY < WORLD_BOX.Location.Y + WORLD_BOX.Size.Height)
                 {
-                    mouseX = (mouseX - 40) / worldSize + xDrawStartIndex;
-                    mouseY = (mouseY - 40) / worldSize + yDrawStartIndex;
+                    mouseX = (mouseX - 40) / (int)Math.Ceiling(worldSize) + xDrawStartIndex;
+                    mouseY = (mouseY - 40) / (int)Math.Ceiling(worldSize) + yDrawStartIndex;
 
                     if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0
                         && mouseY < (WORLD_HEIGHT + 1))
@@ -990,8 +1011,8 @@ namespace CyberBiology
                 if (mouseX > WORLD_BOX.Location.X && mouseX < WORLD_BOX.Location.X + WORLD_BOX.Size.Width
                     && mouseY > WORLD_BOX.Location.Y && mouseY < WORLD_BOX.Location.Y + WORLD_BOX.Size.Height)
                 {
-                    mouseX = (mouseX - 40) / worldSize + xDrawStartIndex;
-                    mouseY = (mouseY - 40) / worldSize + yDrawStartIndex;
+                    mouseX = (mouseX - 40) / (int)Math.Ceiling(worldSize) + xDrawStartIndex;
+                    mouseY = (mouseY - 40) / (int)Math.Ceiling(worldSize) + yDrawStartIndex;
 
                     if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0 
                         && mouseY < (WORLD_HEIGHT + 1) && addWorld)
@@ -1095,7 +1116,7 @@ namespace CyberBiology
             }
         }
 
-        private void TemplateQuadroWorld(object sender, EventArgs e)
+        private void TemplateQuadrupleWorld(object sender, EventArgs e)
         {
             if (GO)
                 Stop_Play(sender, e);
@@ -1151,7 +1172,7 @@ namespace CyberBiology
             }
         }
 
-        private void newCellTypeSwitch(object sender, EventArgs e)
+        private void NewCellTypeSwitch(object sender, EventArgs e)
         {
             switch (newCellTypeUD.Text)
             {

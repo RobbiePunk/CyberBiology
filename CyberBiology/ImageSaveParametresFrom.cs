@@ -61,8 +61,10 @@ namespace CyberBiology
             viewMode5CB.Checked = mainForm.imageSaveViewMode[4] == 1;
             drawInfoCB.Checked = drawInfo;
 
-            if (saveSize != 0)
-                AutoImageSizeCB_CheckedChanged(sender, e);
+            if(saveSize == 0.5f)
+                halfSizeCB.Checked = true;
+            else if (saveSize != 0)
+                AutoImageSizeCB.Checked = false;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -78,15 +80,19 @@ namespace CyberBiology
 
         private void AutoImageSizeCB_CheckedChanged(object sender, EventArgs e)
         {
-            sizeNum.Enabled = !AutoImageSizeCB.Checked;
-
             if (AutoImageSizeCB.Checked)
+            {
                 saveSize = 0;
+                halfSizeCB.Checked = false;
+            }
             else
             {
                 saveSize = (int)sizeNum.Value;
                 mainForm.imageSaveSize = saveSize;
             }
+
+            sizeNum.Enabled = !AutoImageSizeCB.Checked;
+
             mainForm.ChangeSaveBitmap();
         }
 
@@ -97,5 +103,22 @@ namespace CyberBiology
             mainForm.ChangeSaveBitmap();
         }
 
+        private void halfSizeCB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (halfSizeCB.Checked)
+            {
+                AutoImageSizeCB.Checked = false;
+                saveSize = 0.5f;
+            }
+            else
+            {
+                saveSize = (int)sizeNum.Value;
+            }
+
+            sizeNum.Enabled = !halfSizeCB.Checked;
+
+            mainForm.imageSaveSize = saveSize;
+            mainForm.ChangeSaveBitmap();
+        }
     }
 }
