@@ -55,3 +55,16 @@ C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.
 D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.WorldSettingsForm.resources
 C:\Users\RobbiePunk\Projects\CyberBiology\CyberBiology\obj\Release\CyberBiology.InspectForm.resources
 D:\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.InspectForm.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\bin\Release\CyberBiology.exe.config
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\bin\Release\CyberBiology.exe
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\bin\Release\CyberBiology.pdb
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.csproj.AssemblyReference.cache
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.Form1.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.ImageSaveParametresFrom.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.InspectForm.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.Properties.Resources.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.WorldSettingsForm.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.csproj.GenerateResource.cache
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.csproj.CoreCompileInputs.cache
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.exe
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.pdb

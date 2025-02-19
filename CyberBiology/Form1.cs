@@ -67,6 +67,7 @@ namespace CyberBiology
         public Form1()
         {
             InitializeComponent();
+            AdaptElements();
 
             prevWidth = this.Width;
             prevHeight = this.Height;
@@ -532,6 +533,9 @@ namespace CyberBiology
 
         public void UpdateScreen()
         {
+            if (world == null)
+                return;
+
             isDrawing = true;
 
             DrawWorld(GR, viewMode, worldSize, xDrawStartIndex, yDrawStartIndex);
@@ -618,6 +622,56 @@ namespace CyberBiology
                 UpdateScreen();
                 Refresh();
             }
+        }
+
+        public void AdaptElements()
+        {
+            int screenX = Screen.PrimaryScreen.Bounds.Width;
+            int screenY = Screen.PrimaryScreen.Bounds.Height;
+
+            float xRatio = screenX / 1920f;
+            float yRatio = screenY / 1080f;
+
+            int xBias = screenX - 1920;
+            int yBias = screenY - 1080;
+
+            this.Size = new Size(screenX, screenY - 40);
+
+            plusSizeBT.Location = new Point(1800 + xBias, 40);
+            minusSizeBT.Location = new Point(1700 + xBias, 40);
+
+            viewMode1BT.Location = new Point(1700 + xBias, 100);
+            viewMode2BT.Location = new Point(1750 + xBias, 100);
+            viewMode3BT.Location = new Point(1800 + xBias, 100);
+            viewMode4.Location = new Point(1850 + xBias, 100);
+            viewMode5.Location = new Point(1850 + xBias, 132);
+
+            addCellBT.Location = new Point(1700 + xBias, 170);
+            addWallBT.Location = new Point(1750 + xBias, 170);
+            eraseCellBT.Location = new Point(1800 + xBias, 170);
+            oneStepBT.Location = new Point(1850 + xBias, 170);
+
+            label2.Location = new Point(1713 + xBias, 202);
+            label3.Location = new Point(1750 + xBias, 202);
+            label4.Location = new Point(1750 + xBias, 242);
+
+            CellColorBT.Location = new Point(1700 + xBias, 220);
+            newCellTypeUD.Location = new Point(1750 + xBias, 220);
+            stopIterationNUM.Location = new Point(1750 + xBias, 260);
+
+            stopPlayBT.Location = new Point(1700 + xBias, 300);
+            turnDrawingBT.Location = new Point(1700 + xBias, 365);
+
+            saveWorldBT.Location = new Point(1700 + xBias, 450);
+            loadWorldBT.Location = new Point(1700 + xBias, 515);
+
+            worldSizeTB.Location = new Point(1700 + xBias, 600);
+            worldSizeScroll.Location = new Point(1700 + xBias, 630);
+
+            newSimulationBT.Location = new Point(1750 + xBias, 700);
+
+            WORLD_BOX.Size = new Size(1650 + xBias, 900 + yBias);
+
         }
 
         #endregion
