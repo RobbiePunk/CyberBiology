@@ -1263,6 +1263,12 @@ namespace CyberBiology
                 this.WindowState = FormWindowState.Normal;
             }
         }
+
+        private void ShowRulebook(object sender, EventArgs e)
+        {
+            RulebookForm rulebookForm = new RulebookForm();
+            rulebookForm.Show();
+        }
     }
     #endregion
 }

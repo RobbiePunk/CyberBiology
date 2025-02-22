@@ -81,6 +81,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.stopIterationNUM = new System.Windows.Forms.NumericUpDown();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rulebookMBT = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
@@ -257,7 +259,8 @@
             this.settingsToolStripMenuItem,
             this.saveImagesToolStripMenuItem,
             this.тестыToolStripMenuItem,
-            this.templatesToolStripMenuItem});
+            this.templatesToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(21, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -298,7 +301,7 @@
             // 
             this.saveImagesToolStripMenuItem1.CheckOnClick = true;
             this.saveImagesToolStripMenuItem1.Name = "saveImagesToolStripMenuItem1";
-            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.saveImagesToolStripMenuItem1.Size = new System.Drawing.Size(200, 26);
             this.saveImagesToolStripMenuItem1.Text = "Save Images";
             this.saveImagesToolStripMenuItem1.Click += new System.EventHandler(this.TurnImagesSaving);
             // 
@@ -306,35 +309,35 @@
             // 
             this.saveWorldsToolStripMenuItem.CheckOnClick = true;
             this.saveWorldsToolStripMenuItem.Name = "saveWorldsToolStripMenuItem";
-            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveWorldsToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveWorldsToolStripMenuItem.Text = "Save Worlds";
             this.saveWorldsToolStripMenuItem.Click += new System.EventHandler(this.TurnWorldSaving);
             // 
             // lacationToolStripMenuItem
             // 
             this.lacationToolStripMenuItem.Name = "lacationToolStripMenuItem";
-            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.lacationToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.lacationToolStripMenuItem.Text = "Lacation";
             this.lacationToolStripMenuItem.Click += new System.EventHandler(this.ChangeImageSavePath);
             // 
             // saveParametresToolStripMenuItem
             // 
             this.saveParametresToolStripMenuItem.Name = "saveParametresToolStripMenuItem";
-            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveParametresToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveParametresToolStripMenuItem.Text = "Save Parametres";
             this.saveParametresToolStripMenuItem.Click += new System.EventHandler(this.ShowImageSaveParametresWindow);
             // 
             // saveToTextToolStripMenuItem
             // 
             this.saveToTextToolStripMenuItem.Name = "saveToTextToolStripMenuItem";
-            this.saveToTextToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.saveToTextToolStripMenuItem.Text = "Save To Text";
             this.saveToTextToolStripMenuItem.Click += new System.EventHandler(this.SaveToText);
             // 
             // loadFromTextToolStripMenuItem
             // 
             this.loadFromTextToolStripMenuItem.Name = "loadFromTextToolStripMenuItem";
-            this.loadFromTextToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.loadFromTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.loadFromTextToolStripMenuItem.Text = "Load From Text";
             this.loadFromTextToolStripMenuItem.Click += new System.EventHandler(this.LoadFromText);
             // 
@@ -353,14 +356,14 @@
             // 
             this.perfomanceTestMenuItem.CheckOnClick = true;
             this.perfomanceTestMenuItem.Name = "perfomanceTestMenuItem";
-            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(196, 26);
             this.perfomanceTestMenuItem.Text = "Performans Test";
             this.perfomanceTestMenuItem.Click += new System.EventHandler(this.PerfomanceTest_Click);
             // 
             // worldSettingsToolStripMenuItem
             // 
             this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
-            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.worldSettingsToolStripMenuItem.Text = "World Settings";
             this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.ShowWorldSettingsWindow);
             // 
@@ -370,14 +373,14 @@
             this.saveDrawToolStripMenuItem.CheckOnClick = true;
             this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
-            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.saveDrawToolStripMenuItem.Text = "Save Drawing";
             this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.TurnSaveDrawing);
             // 
             // clearAllWallsToolStripMenuItem
             // 
             this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
-            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
             this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.ClearAllWalls);
             // 
@@ -608,6 +611,21 @@
             this.stopIterationNUM.TabIndex = 34;
             this.stopIterationNUM.ValueChanged += new System.EventHandler(this.SetStopIteration);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rulebookMBT});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // rulebookMBT
+            // 
+            this.rulebookMBT.Name = "rulebookMBT";
+            this.rulebookMBT.Size = new System.Drawing.Size(224, 26);
+            this.rulebookMBT.Text = "Rulebook";
+            this.rulebookMBT.Click += new System.EventHandler(this.ShowRulebook);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -715,6 +733,8 @@
         private System.Windows.Forms.NumericUpDown stopIterationNUM;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullScreenBT;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rulebookMBT;
     }
 }
 

@@ -18,6 +18,8 @@ namespace CyberBiology
 
     public static class ServiceFunctions
     {
+        public static string[] modeStrings = { "Normal Mode", "Colony Mode", "Energy Mode", "Age Mode", "Clan Mode" };
+
         public static Color originColor = Color.OrangeRed;
 
         public static String SaveDirectory;
@@ -450,7 +452,7 @@ namespace CyberBiology
                         {
                             int a = IsMultiForDrawing(celln);
                             if (a > 0)
-                                return Color.FromArgb(255, 240 - 20 * a, 10 * a, 200 - 15 * a);
+                                return Color.FromArgb(255, 240 - 10 * a, 8 * a, 200 - 10 * a);
                             else
                                 return Color.FromArgb(255, 0, 240, 240);
                         }
@@ -582,6 +584,9 @@ namespace CyberBiology
 
                 graphics.DrawString($"IPS: {IPS}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
                     BR, 600, 10);
+
+                graphics.DrawString($"{modeStrings[mode - 1]}", new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel),
+                    BR, 800, 10);
 
             }
             
