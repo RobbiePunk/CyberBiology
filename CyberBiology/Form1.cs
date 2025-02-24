@@ -36,7 +36,7 @@ namespace CyberBiology
         bool performanceTest = false;
         bool addWorld = false;
         bool saveDrawing = true;
-        //bool keepWalls = false;
+        bool keepWalls = false;
         int addType = WC_WALL;
 
         bool wantToDraw = true;
@@ -592,6 +592,16 @@ namespace CyberBiology
 
                 MAX_CELLS = WORLD_HEIGHT * WORLD_WIDTH + 1;
 
+
+                int[,] buffer = new int[w, h + 2];
+                //world.CopyTo(buffer, 0);
+
+                if (world != null)
+                    for (int _y = 1; _y < Math.Min(world.GetLength(1), h)  - 1; _y++)
+                        for (int _x = 0; _x < Math.Min(world.GetLength(0), w); _x++)
+                                buffer[_x, _y] = world[_x, _y];
+
+
                 cells = new int[MAX_CELLS, CELL_SIZE];
                 world = new int[WORLD_WIDTH, WORLD_HEIGHT + 2];
 
@@ -607,6 +617,20 @@ namespace CyberBiology
                 }
 
                 ChangeSaveBitmap();
+
+                if(keepWalls)
+                {
+                    for (int _y = 1; _y < WORLD_HEIGHT - 1; _y++)
+                    {
+                        for (int _x = 0; _x < WORLD_WIDTH; _x++)
+                        {
+                            if (buffer[_x, _y] == WC_WALL)
+                            {
+                                world[_x, _y] = buffer[_x, _y];
+                            }
+                        }
+                    }
+                }
 
                 int x = 0;
                 while (x < WORLD_WIDTH)
@@ -1268,6 +1292,11 @@ namespace CyberBiology
         {
             RulebookForm rulebookForm = new RulebookForm();
             rulebookForm.Show();
+        }
+
+        private void saveWallsMBT_Click(object sender, EventArgs e)
+        {
+            keepWalls = saveWallsMBT.Checked;
         }
     }
     #endregion

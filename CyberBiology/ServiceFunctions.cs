@@ -90,6 +90,9 @@ namespace CyberBiology
 
         public static void AddCell(int x, int y)
         {
+            if (world[x, y] == WC_WALL)
+                return;
+
             int num = FindEmptyCell();
 
             cells[num, NEXT] = cells[0, NEXT];

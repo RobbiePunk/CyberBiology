@@ -62,6 +62,8 @@
             this.dualWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quadroWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labirintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rulebookMBT = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.viewMode4 = new System.Windows.Forms.Button();
             this.turnDrawingBT = new System.Windows.Forms.Button();
@@ -81,8 +83,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.stopIterationNUM = new System.Windows.Forms.NumericUpDown();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rulebookMBT = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveWallsMBT = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.worldSizeScroll)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WORLD_BOX)).BeginInit();
@@ -347,7 +348,8 @@
             this.perfomanceTestMenuItem,
             this.worldSettingsToolStripMenuItem,
             this.saveDrawToolStripMenuItem,
-            this.clearAllWallsToolStripMenuItem});
+            this.clearAllWallsToolStripMenuItem,
+            this.saveWallsMBT});
             this.тестыToolStripMenuItem.Name = "тестыToolStripMenuItem";
             this.тестыToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
             this.тестыToolStripMenuItem.Text = "Simulation";
@@ -356,14 +358,14 @@
             // 
             this.perfomanceTestMenuItem.CheckOnClick = true;
             this.perfomanceTestMenuItem.Name = "perfomanceTestMenuItem";
-            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.perfomanceTestMenuItem.Size = new System.Drawing.Size(224, 26);
             this.perfomanceTestMenuItem.Text = "Performans Test";
             this.perfomanceTestMenuItem.Click += new System.EventHandler(this.PerfomanceTest_Click);
             // 
             // worldSettingsToolStripMenuItem
             // 
             this.worldSettingsToolStripMenuItem.Name = "worldSettingsToolStripMenuItem";
-            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.worldSettingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.worldSettingsToolStripMenuItem.Text = "World Settings";
             this.worldSettingsToolStripMenuItem.Click += new System.EventHandler(this.ShowWorldSettingsWindow);
             // 
@@ -373,14 +375,14 @@
             this.saveDrawToolStripMenuItem.CheckOnClick = true;
             this.saveDrawToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.saveDrawToolStripMenuItem.Name = "saveDrawToolStripMenuItem";
-            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.saveDrawToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveDrawToolStripMenuItem.Text = "Save Drawing";
             this.saveDrawToolStripMenuItem.Click += new System.EventHandler(this.TurnSaveDrawing);
             // 
             // clearAllWallsToolStripMenuItem
             // 
             this.clearAllWallsToolStripMenuItem.Name = "clearAllWallsToolStripMenuItem";
-            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.clearAllWallsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.clearAllWallsToolStripMenuItem.Text = "Clear All Walls";
             this.clearAllWallsToolStripMenuItem.Click += new System.EventHandler(this.ClearAllWalls);
             // 
@@ -397,23 +399,38 @@
             // dualWorldToolStripMenuItem
             // 
             this.dualWorldToolStripMenuItem.Name = "dualWorldToolStripMenuItem";
-            this.dualWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.dualWorldToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.dualWorldToolStripMenuItem.Text = "Dual World";
             this.dualWorldToolStripMenuItem.Click += new System.EventHandler(this.TemplateDualWorld);
             // 
             // quadroWorldToolStripMenuItem
             // 
             this.quadroWorldToolStripMenuItem.Name = "quadroWorldToolStripMenuItem";
-            this.quadroWorldToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.quadroWorldToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.quadroWorldToolStripMenuItem.Text = "Quadruple World";
             this.quadroWorldToolStripMenuItem.Click += new System.EventHandler(this.TemplateQuadrupleWorld);
             // 
             // labirintToolStripMenuItem
             // 
             this.labirintToolStripMenuItem.Name = "labirintToolStripMenuItem";
-            this.labirintToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.labirintToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.labirintToolStripMenuItem.Text = "Labyrinth";
             this.labirintToolStripMenuItem.Click += new System.EventHandler(this.TemplateLabyrinthWorld);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rulebookMBT});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // rulebookMBT
+            // 
+            this.rulebookMBT.Name = "rulebookMBT";
+            this.rulebookMBT.Size = new System.Drawing.Size(155, 26);
+            this.rulebookMBT.Text = "Rulebook";
+            this.rulebookMBT.Click += new System.EventHandler(this.ShowRulebook);
             // 
             // viewMode4
             // 
@@ -611,20 +628,13 @@
             this.stopIterationNUM.TabIndex = 34;
             this.stopIterationNUM.ValueChanged += new System.EventHandler(this.SetStopIteration);
             // 
-            // helpToolStripMenuItem
+            // saveWallsMBT
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rulebookMBT});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // rulebookMBT
-            // 
-            this.rulebookMBT.Name = "rulebookMBT";
-            this.rulebookMBT.Size = new System.Drawing.Size(224, 26);
-            this.rulebookMBT.Text = "Rulebook";
-            this.rulebookMBT.Click += new System.EventHandler(this.ShowRulebook);
+            this.saveWallsMBT.CheckOnClick = true;
+            this.saveWallsMBT.Name = "saveWallsMBT";
+            this.saveWallsMBT.Size = new System.Drawing.Size(224, 26);
+            this.saveWallsMBT.Text = "Save Walls";
+            this.saveWallsMBT.Click += new System.EventHandler(this.saveWallsMBT_Click);
             // 
             // Form1
             // 
@@ -735,6 +745,7 @@
         private System.Windows.Forms.ToolStripMenuItem fullScreenBT;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rulebookMBT;
+        private System.Windows.Forms.ToolStripMenuItem saveWallsMBT;
     }
 }
 
