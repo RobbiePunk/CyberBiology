@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RulebookForm));
             this.CellColorBT = new System.Windows.Forms.Button();
             this.backBT = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -96,6 +97,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.backBT);
             this.Controls.Add(this.CellColorBT);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RulebookForm";
             this.Text = "Rulebook";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

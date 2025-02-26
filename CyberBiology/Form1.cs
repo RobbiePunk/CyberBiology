@@ -69,6 +69,7 @@ namespace CyberBiology
             InitializeComponent();
             AdaptElements();
 
+
             prevWidth = this.Width;
             prevHeight = this.Height;
 
@@ -1107,6 +1108,7 @@ namespace CyberBiology
                                 else
                                     AddCell(mouseX, mouseY);
 
+                                Console.WriteLine($"{mouseX}, {mouseY}");
                                 UpdateScreen();
                             }
                         }
@@ -1298,6 +1300,7 @@ namespace CyberBiology
         {
             keepWalls = saveWallsMBT.Checked;
         }
+
     }
     #endregion
 }
