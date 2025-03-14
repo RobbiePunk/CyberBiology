@@ -16,6 +16,7 @@ using static CyberBiology.CellFunctions;
 using static CyberBiology.CellAditionalFunctions;
 using static CyberBiology.ServiceFunctions;
 using static CyberBiology.Templates;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
 
 
 namespace CyberBiology
@@ -41,6 +42,7 @@ namespace CyberBiology
 
         bool wantToDraw = true;
         int drawInterval = 100;
+        int LogFrequency = 1000;
 
         bool saveWorld = false;
         bool saveImage = false;
@@ -63,6 +65,7 @@ namespace CyberBiology
         int prevHeight;
 
         public List<InspectForm> inspectForm = new List<InspectForm>();
+        public List<StaticsticsForm> statForms = new List<StaticsticsForm>();
 
         public Form1()
         {
@@ -79,6 +82,8 @@ namespace CyberBiology
             SetWorldSize(180, 96);
 
             newSimulationBT.PerformClick();
+
+            ClearLogs();
         }
 
         public void OneStep()
@@ -115,6 +120,22 @@ namespace CyberBiology
 
             if (aliveCellCount == 0 || stopIteration == age)
                 GO = false;
+
+            if (LogFrequency > 0 && age % LogFrequency == 0)
+            {
+                try
+                {
+                    int dead = cellCount - aliveCellCount;
+                    SaveCellCountLog(age, aliveCellCount, dead);
+                    //foreach (StaticsticsForm sf in statForms)
+                    //sf.DrawCellCountStat();
+                }
+                catch
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                    throw;
+                }
+            }
 
         }
 
@@ -546,6 +567,16 @@ namespace CyberBiology
             foreach(InspectForm inspectF in inspectForm)
                 inspectF.UpdateInfo();
 
+            try
+            {
+                foreach (StaticsticsForm sf in statForms)
+                    sf.DrawCellCountStat();
+            }
+            catch
+            {
+
+            }
+
             isDrawing = false;
         }
 
@@ -900,6 +931,8 @@ namespace CyberBiology
 
                 Refresh();
             }
+
+            ClearLogs();
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -971,7 +1004,7 @@ namespace CyberBiology
                 Stop_Play(sender, e);
                 simulationThread.Join();
             }
-            
+
             OneStep();
             UpdateScreen();
         }
@@ -1301,6 +1334,31 @@ namespace CyberBiology
             keepWalls = saveWallsMBT.Checked;
         }
 
+        private void CellCountLog(object sender, EventArgs e)
+        {
+            StaticsticsForm staticsticsForm = new StaticsticsForm();
+
+            staticsticsForm.mainForm = this;
+            statForms.Add(staticsticsForm);
+            staticsticsForm.Show();
+        }
+
+        private void ChangeLogFrequency(object sender, EventArgs e)
+        {
+            int newLogFrequency;
+            if (int.TryParse(toolStripTextBox2.Text, out newLogFrequency) == false)
+                return;
+
+            LogFrequency = newLogFrequency;
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == 'f' || e.KeyChar == 'а')
+            {
+                fullScreenBT.PerformClick();
+            }
+        }
     }
     #endregion
 }

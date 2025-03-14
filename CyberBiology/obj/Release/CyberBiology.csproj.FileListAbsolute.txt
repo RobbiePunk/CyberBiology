@@ -69,3 +69,4 @@ C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiolo
 C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.exe
 C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.pdb
 C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.RulebookForm.resources
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Release\CyberBiology.StaticsticsForm.resources

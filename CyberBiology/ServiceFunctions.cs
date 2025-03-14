@@ -20,6 +20,7 @@ namespace CyberBiology
     {
         public static string[] modeStrings = { "Normal Mode", "Colony Mode", "Energy Mode", "Age Mode", "Clan Mode" };
 
+        public static bool writingLogs = true;
         public static Color originColor = Color.OrangeRed;
 
         public static String SaveDirectory;
@@ -404,6 +405,73 @@ namespace CyberBiology
                         Count++;
                     }
                 }
+        }
+
+        public static void SaveCellCountLog(int age, int aliveCount, int count)
+        {
+            writingLogs = true;
+
+            string catalogName = @"Logs\";
+            string path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            try
+            {
+                StreamWriter sw = new StreamWriter(path + "CellCountLog.txt", true);
+                sw.WriteLine($"{age} {aliveCount} {count}");
+
+                sw.Dispose();
+            }
+            catch
+            {
+
+            }
+            
+
+            writingLogs = false;
+        }
+
+        public static Dictionary<int, int> LoadCellCountLog(int param)
+        {
+            if (writingLogs)
+                return new Dictionary<int, int>();
+
+            string catalogName = @"Logs\";
+            string path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
+            if (!Directory.Exists(path))
+                return new Dictionary<int, int>();
+
+            Dictionary<int, int> res = new Dictionary<int, int>();
+
+            if (writingLogs)
+                return new Dictionary<int, int>();
+
+            writingLogs = true;
+            String[] Str = File.ReadAllLines(path + "CellCountLog.txt");
+            writingLogs = false;
+
+            for (int i = 0; i < Str.Length; i++)
+            {
+                String[] s = Str[i].Split(' ');
+                res.Add(int.Parse(s[0]), int.Parse(s[param]));
+            }
+
+            return res;
+        }
+
+        public static void ClearLogs()
+        {
+            string catalogName = @"Logs\";
+            string path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
+            if (Directory.Exists(path))
+            {
+                StreamWriter sw = new StreamWriter(path + "CellCountLog.txt");
+                sw.WriteLine($"{0} {1} {1}");
+                sw.Dispose();
+            }
+
         }
 
         static Color GetCellColor(int x, int y, float size, int mode)

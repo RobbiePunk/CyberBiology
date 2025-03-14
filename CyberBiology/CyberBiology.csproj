@@ -94,6 +94,12 @@
     </Compile>
     <Compile Include="ServiceFunctions.cs" />
     <Compile Include="Simulation.cs" />
+    <Compile Include="StatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatisticsForm.Designer.cs">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Templates.cs" />
     <Compile Include="WorldSettingsForm.cs">
       <SubType>Form</SubType>
@@ -122,6 +128,9 @@
     </Compile>
     <EmbeddedResource Include="RulebookForm.resx">
       <DependentUpon>RulebookForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatisticsForm.resx">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorldSettingsForm.resx">
       <DependentUpon>WorldSettingsForm.cs</DependentUpon>

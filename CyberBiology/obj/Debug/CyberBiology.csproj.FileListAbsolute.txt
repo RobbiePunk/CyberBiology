@@ -38,3 +38,4 @@ C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Debug\CyberBiology
 C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Debug\CyberBiology.csproj.CoreCompileInputs.cache
 C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Debug\CyberBiology.exe
 C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Debug\CyberBiology.pdb
+C:\Users\RobbiePunk\Projects\C#\CyberBiology\CyberBiology\obj\Debug\CyberBiology.StaticsticsForm.resources
