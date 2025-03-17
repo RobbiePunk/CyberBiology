@@ -64,6 +64,9 @@ namespace CyberBiology
         int prevWidth;
         int prevHeight;
 
+        int prevDrawX;
+        int prevDrawY;
+
         public List<InspectForm> inspectForm = new List<InspectForm>();
         public List<StaticsticsForm> statForms = new List<StaticsticsForm>();
 
@@ -497,6 +500,33 @@ namespace CyberBiology
 
         #region Service
 
+        public void TryToDraw(int mouseX, int mouseY)
+        {
+            if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0
+                        && mouseY < (WORLD_HEIGHT + 1) && addWorld)
+            {
+                if (world[mouseX, mouseY] != addType)
+                {
+                    if (!saveDrawing || world[mouseX, mouseY] <= 0)
+                    {
+                        if (world[mouseX, mouseY] > 0)
+                            DeleteCell(world[mouseX, mouseY]);
+
+
+
+
+                        if (addType <= 0)
+                            world[mouseX, mouseY] = addType;
+                        else
+                            AddCell(mouseX, mouseY);
+
+                        Console.WriteLine($"{mouseX}, {mouseY}");
+                        //UpdateScreen();
+                    }
+                }
+            }
+        }
+
         public void ChangeSaveBitmap()
         {
             if (drawInfo)
@@ -754,7 +784,7 @@ namespace CyberBiology
 
         private void WORLD_BOX_Paint(object sender, PaintEventArgs e)
         {
-            if (isDrawing || !wantToDraw || !GO || tryToSave)
+            if (isDrawing && GO || !wantToDraw || !GO || tryToSave)
                 return;
 
             UpdateScreen();
@@ -1007,6 +1037,7 @@ namespace CyberBiology
 
             OneStep();
             UpdateScreen();
+            WORLD_BOX.Refresh();
         }
 
         private void TurnWorldSaving(object sender, EventArgs e)
@@ -1076,6 +1107,9 @@ namespace CyberBiology
             {
                 addWorld = true;
 
+                prevDrawX = (e.X - 40) / (int)Math.Ceiling(worldSize) + xDrawStartIndex;
+                prevDrawY = (e.Y - 40) / (int)Math.Ceiling(worldSize) + yDrawStartIndex;
+
                 WORLD_BOX_MouseMove(sender, e);
             }
             else if(e.Button == MouseButtons.Right)
@@ -1115,6 +1149,9 @@ namespace CyberBiology
 
         private void WORLD_BOX_MouseMove(object sender, MouseEventArgs e)
         {
+            if (!addWorld)
+                return;
+
             if (!GO && (age == 0 || !saveDrawing))
             {
                 int mouseX = e.X;
@@ -1126,26 +1163,37 @@ namespace CyberBiology
                     mouseX = (mouseX - 40) / (int)Math.Ceiling(worldSize) + xDrawStartIndex;
                     mouseY = (mouseY - 40) / (int)Math.Ceiling(worldSize) + yDrawStartIndex;
 
-                    if (mouseX >= 0 && mouseX < WORLD_WIDTH && mouseY > 0 
-                        && mouseY < (WORLD_HEIGHT + 1) && addWorld)
+                    //Алгоритм брезенхема
+                    int deltaX = Math.Abs(mouseX - prevDrawX);
+                    int deltaY = Math.Abs(mouseY - prevDrawY);
+                    int signX = prevDrawX < mouseX ? 1 : -1;
+                    int signY = prevDrawY < mouseY ? 1 : -1;
+
+                    int error = deltaX - deltaY;
+
+
+                    TryToDraw(mouseX, mouseY);
+
+                    while(prevDrawX != mouseX || prevDrawY != mouseY)
                     {
-                        if (world[mouseX, mouseY] != addType)
+                        TryToDraw(prevDrawX, prevDrawY);
+                        int error2 = error * 2;
+                        if(error2 > -deltaY)
                         {
-                            if (!saveDrawing || world[mouseX, mouseY] <= 0)
-                            {
-                                if (world[mouseX, mouseY] > 0)
-                                    DeleteCell(world[mouseX, mouseY]);
-
-                                if (addType <= 0)
-                                    world[mouseX, mouseY] = addType;
-                                else
-                                    AddCell(mouseX, mouseY);
-
-                                Console.WriteLine($"{mouseX}, {mouseY}");
-                                UpdateScreen();
-                            }
+                            error -= deltaY;
+                            prevDrawX += signX;
+                        }
+                        if(error2 < deltaX)
+                        {
+                            error += deltaX;
+                            prevDrawY += signY;
                         }
                     }
+
+                    prevDrawX = mouseX;
+                    prevDrawY = mouseY;
+                    UpdateScreen();
+                    WORLD_BOX.Refresh();
                 }
             }
         }
