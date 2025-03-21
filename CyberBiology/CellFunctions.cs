@@ -430,6 +430,13 @@ namespace CyberBiology
                 int ma = rand.Next() % MIND_SIZE;
                 int mc = rand.Next() % MIND_SIZE;
                 cells[newcell, ma] = mc;
+
+                //проверка для логов
+                if(!isConsumersExists && (mc == 28 || mc == 29))
+                {
+                    WriteIntoLog($"Появился первый хищник! Итерация - {age}, X = {XFromVectorR(num, n)}, Y = {YFromVectorR(num, n)}");
+                    isConsumersExists = true;
+                }
             }
 
             cells[newcell, ADR] = 0;
@@ -503,6 +510,12 @@ namespace CyberBiology
             cells[num, MINERAL] = cells[newcell, MINERAL];
             cells[newcell, X_COORD] = XFromVectorR(num, n);
             cells[newcell, Y_COORD] = YFromVectorR(num, n);
+
+            if(!isColonyExists)
+            {
+                isColonyExists = true;
+                WriteIntoLog($"Появилась первая колония! Итерация - {age}, X = {cells[newcell, X_COORD]}, Y = {cells[newcell, Y_COORD]}");
+            }
 
             world[cells[newcell, X_COORD], cells[newcell, Y_COORD]] = newcell;
 

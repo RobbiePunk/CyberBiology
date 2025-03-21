@@ -13,6 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace CyberBiology
 {
@@ -268,7 +269,7 @@ namespace CyberBiology
                 muteChance = reader.ReadInt32();
                 season_str = reader.ReadString();
                 viewMode = reader.ReadInt32();
-                worldSize = reader.ReadInt32();
+                worldSize = reader.ReadDouble();
                 ETM = reader.ReadInt32();
                 MTE = reader.ReadInt32();
                 ETL = reader.ReadInt32();
@@ -368,7 +369,7 @@ namespace CyberBiology
                 muteChance = int.Parse(Str[2]); ;
                 season_str = Str[3];
                 viewMode = int.Parse(Str[4]);
-                worldSize = int.Parse(Str[5]);
+                worldSize = double.Parse(Str[5]);
                 ETM = int.Parse(Str[6]);
                 MTE = int.Parse(Str[7]);
                 ETL = int.Parse(Str[8]);
@@ -462,6 +463,31 @@ namespace CyberBiology
             return res;
         }
 
+        public static void WriteIntoLog(string message)
+        {
+            writingLogs = true;
+
+            string catalogName = @"Logs\";
+            string path = $"{Directory.GetCurrentDirectory()}/{catalogName}";
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            try
+            {
+                StreamWriter sw = new StreamWriter(path + "EventLog.txt", true);
+                sw.WriteLine(message);
+
+                sw.Dispose();
+            }
+            catch
+            {
+
+            }
+
+            writingLogs = false;
+        }
+
         public static void ClearLogs()
         {
             string catalogName = @"Logs\";
@@ -473,9 +499,11 @@ namespace CyberBiology
                 sw.Dispose();
             }
 
+            File.Delete(path + "EventLog.txt");
+
         }
 
-        static Color GetCellColor(int x, int y, float size, int mode)
+        static Color GetCellColor(int x, int y, double size, int mode)
         {
             if(x > WORLD_WIDTH || y > WORLD_HEIGHT + 2)
                 return Color.White;
@@ -557,7 +585,7 @@ namespace CyberBiology
             }
         }
 
-        public static void DrawWorld(Graphics graphics, int mode, float size, int xDrawStartIndex, int yDrawStartIndex, float ips = -1)
+        public static void DrawWorld(Graphics graphics, int mode, double size, int xDrawStartIndex, int yDrawStartIndex, float ips = -1)
         {
             SolidBrush BR = new SolidBrush(Color.White);
             graphics.Clear(Color.White);

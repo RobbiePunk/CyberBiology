@@ -67,11 +67,15 @@ namespace CyberBiology
         public static int printAliveCellCount;
 
         public static int viewMode = 1;
-        public static float worldSize = 6;
+        public static double worldSize = 6;
 
         public static bool isPressure = false;
         public static bool isAutoDivide = true;
         public static int newCellType = CT_FOTOSINTEZ;
+
+
+        public static bool isConsumersExists = false;
+        public static bool isColonyExists = false;
 
     }
 }
