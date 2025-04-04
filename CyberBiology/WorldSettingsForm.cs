@@ -30,11 +30,13 @@ namespace CyberBiology
             ySizeTB.Text = WORLD_HEIGHT.ToString();
             pressureCB.Checked = isPressure;
             autoDivideCB.Checked = isAutoDivide;
+            agingMutationCB.Checked = agingMutation;
             mutationChanceNum.Value = mainForm.customMuteChance;
 
             ETL_Num.Value = ETL;
             MTE_Num.Value = MTE;
             ETM_Num.Value = ETM;
+            agingFactorNUD.Value = agingFactor;
 
             seasonTimeTB.Text = seasonTime.ToString();
 
@@ -58,6 +60,7 @@ namespace CyberBiology
 
             isPressure = pressureCB.Checked;
             isAutoDivide = autoDivideCB.Checked;
+            agingMutation = agingMutationCB.Checked;
 
             mainForm.customMuteChance = (int)mutationChanceNum.Value;
 
@@ -83,6 +86,8 @@ namespace CyberBiology
             MTE = (int)MTE_Num.Value;
             ETM = (int)ETM_Num.Value;
 
+            agingFactor = (int)agingFactorNUD.Value;
+
             if(int.Parse(seasonTimeTB.Text) > 0)
                 seasonTime = int.Parse(seasonTimeTB.Text);
 
@@ -97,12 +102,15 @@ namespace CyberBiology
 
             isPressure = false;
             isAutoDivide = true;
+            agingMutation = true;
             mainForm.customMuteChance = 10;
             mainForm.SetWorldSettings();
 
             ETL = 3;
             MTE = 2;
             ETM = 5;
+
+            agingFactor = 10;
 
             seasonTime = 10000;
 
@@ -140,6 +148,11 @@ namespace CyberBiology
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             isAutoDivide = autoDivideCB.Checked;
+        }
+
+        private void agingMutationCB_CheckedChanged(object sender, EventArgs e)
+        {
+            agingMutation = autoDivideCB.Checked;
         }
     }
 }

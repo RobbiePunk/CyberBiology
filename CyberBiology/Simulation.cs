@@ -71,6 +71,9 @@ namespace CyberBiology
 
         public static bool isPressure = false;
         public static bool isAutoDivide = true;
+        public static bool agingMutation = true;
+
+        public static int agingFactor = 10;
         public static int newCellType = CT_FOTOSINTEZ;
 
 

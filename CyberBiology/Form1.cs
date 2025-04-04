@@ -484,7 +484,7 @@ namespace CyberBiology
                 if (cells[num,MINERAL] > 499) { cells[num, MINERAL] = 499; }
 
                 cells[num, CELL_AGE]++;
-                if(!performanceTest && cells[num, CELL_AGE] % 10000 == 0)
+                if(!performanceTest && agingMutation && cells[num, CELL_AGE] % agingFactor == 0)
                 {
                     int vi = rand.Next();
                     if (vi % 100 < muteChance)
